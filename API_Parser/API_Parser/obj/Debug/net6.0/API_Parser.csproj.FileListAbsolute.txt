@@ -1,0 +1,15 @@
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\API_Parser\API_Parser\bin\Debug\net6.0\API_Parser.exe
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\API_Parser\API_Parser\bin\Debug\net6.0\API_Parser.deps.json
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\API_Parser\API_Parser\bin\Debug\net6.0\API_Parser.runtimeconfig.json
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\API_Parser\API_Parser\bin\Debug\net6.0\API_Parser.dll
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\API_Parser\API_Parser\bin\Debug\net6.0\API_Parser.pdb
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\API_Parser\API_Parser\obj\Debug\net6.0\API_Parser.csproj.AssemblyReference.cache
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\API_Parser\API_Parser\obj\Debug\net6.0\API_Parser.GeneratedMSBuildEditorConfig.editorconfig
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\API_Parser\API_Parser\obj\Debug\net6.0\API_Parser.AssemblyInfoInputs.cache
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\API_Parser\API_Parser\obj\Debug\net6.0\API_Parser.AssemblyInfo.cs
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\API_Parser\API_Parser\obj\Debug\net6.0\API_Parser.csproj.CoreCompileInputs.cache
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\API_Parser\API_Parser\obj\Debug\net6.0\API_Parser.dll
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\API_Parser\API_Parser\obj\Debug\net6.0\refint\API_Parser.dll
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\API_Parser\API_Parser\obj\Debug\net6.0\API_Parser.pdb
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\API_Parser\API_Parser\obj\Debug\net6.0\API_Parser.genruntimeconfig.cache
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\API_Parser\API_Parser\obj\Debug\net6.0\ref\API_Parser.dll

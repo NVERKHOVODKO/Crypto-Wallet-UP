@@ -1,0 +1,6 @@
+﻿  ConsoleApplication1.cpp
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(10,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(35,65): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(41,26): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(51,53): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+  ConsoleApplication1.vcxproj -> C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\ConsoleApplication1\x64\Debug\ConsoleApplication1.exe

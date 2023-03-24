@@ -1,0 +1,12 @@
+﻿  ConsoleApplication2.cpp
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\ConsoleApplication1\ConsoleApplication2\ConsoleApplication2.cpp(33,58): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\ConsoleApplication1\ConsoleApplication2\ConsoleApplication2.cpp(35,66): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+ConsoleApplication2.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_closesocket в функции main.
+ConsoleApplication2.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_htons в функции main.
+ConsoleApplication2.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_inet_addr в функции main.
+ConsoleApplication2.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_recvfrom в функции main.
+ConsoleApplication2.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_sendto в функции main.
+ConsoleApplication2.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_socket в функции main.
+ConsoleApplication2.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_WSAStartup в функции main.
+ConsoleApplication2.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_WSACleanup в функции main.
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\ConsoleApplication1\x64\Debug\ConsoleApplication2.exe : fatal error LNK1120: неразрешенных внешних элементов: 8

@@ -126,19 +126,5 @@ namespace UP.Controllers
                 return BadRequest("Password not changed");
             }
         }
-        
-        [HttpGet, Route("getUserList")]
-        public async Task<ActionResult> GetUserList()
-        {
-            var ur = new Repositories.UserRepository();
-            try
-            {
-                return Ok(ur.GetUserList());
-            }
-            catch(Exception)
-            {
-                return BadRequest("Unable to return userList");
-            }
-        }
     }
 }

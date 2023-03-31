@@ -30,27 +30,29 @@ namespace UP.Controllers
             {
                 if (password.Length < 4)
                 {
-                    return BadRequest("Passwords must be more that 4 symbols");
+                    return UnprocessableEntity("Passwords must be more that 4 symbols");
                 }
                 if (password != passwordRepeat)
                 {
-                    return BadRequest("Passwords doesn't match");
+                    return UnprocessableEntity("Passwords doesn't match");
                 }
                 var ur = new Repositories.UserRepository();
                 if (ur.IsLoginUnique(login))
                 {
-                    return BadRequest("Username already used");
+                    return UnprocessableEntity("Username already used");
                 }
-                if (email.Length < 6)
+
+                var ar = new Repositories.AuthorizationRepository();
+                if (ar.IsValidEmail(email))
                 {
-                    return BadRequest("Email isn't correct");
+                    return UnprocessableEntity("Email isn't correct");
                 }
                 ur.WriteNewUserToDatabase(login, password, email);
                 return Ok("User created successfully");
             }
             catch (Exception)
             {
-                return BadRequest("User not created");
+                return UnprocessableEntity("User not created");
             }
         }
     }

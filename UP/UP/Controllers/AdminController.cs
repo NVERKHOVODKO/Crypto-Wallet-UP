@@ -15,18 +15,47 @@ namespace UP.Controllers
     [Route("[controller]")]
     public class AdminController: ControllerBase
     {
-        [HttpPut, Route("blockUser")]
+        [HttpPost, Route("blockUser")]
         public async Task<ActionResult> BlockUser(int id, String reason)
         {
             var ar = new Repositories.AdminRepository();
             try
             {
-                //ar.BlockUser(id, reason);
-                return Ok(reason);
+                ar.BlockUser(id, reason);
+                return Ok("User blocked");
             }
             catch(Exception)
             {
-                return BadRequest("Account not blocked");
+                return BadRequest("User not blocked");
+            }
+        }
+        
+        [HttpPost, Route("deleteUser")]
+        public async Task<ActionResult> DeleteUser(int id)
+        {
+            var ar = new Repositories.AdminRepository();
+            try
+            {
+                ar.DeleteUser(id);
+                return Ok("User deleted");
+            }
+            catch(Exception)
+            {
+                return BadRequest("User not deleted");
+            }
+        }
+        
+        [HttpGet, Route("getUserList")]
+        public async Task<ActionResult> GetUserList()
+        {
+            var ar = new Repositories.AdminRepository();
+            try
+            {
+                return Ok(ar.GetUserList());
+            }
+            catch(Exception)
+            {
+                return BadRequest("Unable to return userList");
             }
         }
     }

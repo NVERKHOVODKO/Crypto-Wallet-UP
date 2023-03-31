@@ -5,7 +5,77 @@
     <projectFile profileName="UP">UP/UP.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6241624-7c7a-4e8e-ad5a-bab9e517f10f" name="Changes" comment="init commit" />
+    <list default="true" id="d6241624-7c7a-4e8e-ad5a-bab9e517f10f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/UP/Models/CoinList.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UP/Repositories/AuthorizationRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/.idea/.idea.Databse/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/.idea/.idea.Databse/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/.idea/.idea.Databse/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/.idea/.idea.Databse/.idea/indexLayout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/.idea/.idea.Databse/.idea/sqlDataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/.vs/Databse/DesignTimeBuild/.dtbcache.v2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/.vs/Databse/FileContentIndex/243a00d7-c585-454b-af2f-5706e2a211c3.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/.vs/Databse/FileContentIndex/read.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/.vs/Databse/v17/.futdcache.v2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/.vs/Databse/v17/.suo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/.vs/ProjectEvaluation/databse.metadata.v5.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/.vs/ProjectEvaluation/databse.projects.v5.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse.sln" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/DB.pgerd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/Databse.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/Main.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/User.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/bin/Debug/net6.0/Databse.deps.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/bin/Debug/net6.0/Databse.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/bin/Debug/net6.0/Databse.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/bin/Debug/net6.0/Databse.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/bin/Debug/net6.0/Databse.runtimeconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/bin/Debug/net6.0/Microsoft.Extensions.Logging.Abstractions.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/bin/Debug/net6.0/Npgsql.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/Databse.csproj.nuget.dgspec.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/Databse.csproj.nuget.g.props" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/Databse.csproj.nuget.g.targets" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/Debug/net6.0/Databse.AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/Debug/net6.0/Databse.AssemblyInfoInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/Debug/net6.0/Databse.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/Debug/net6.0/Databse.GlobalUsings.g.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/Debug/net6.0/Databse.assets.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/Debug/net6.0/Databse.csproj.AssemblyReference.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/Debug/net6.0/Databse.csproj.BuildWithSkipAnalyzers" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/Debug/net6.0/Databse.csproj.CopyComplete" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/Debug/net6.0/Databse.csproj.CoreCompileInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/Debug/net6.0/Databse.csproj.FileListAbsolute.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/Debug/net6.0/Databse.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/Debug/net6.0/Databse.genruntimeconfig.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/Debug/net6.0/Databse.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/Debug/net6.0/apphost.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/Debug/net6.0/ref/Databse.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/Debug/net6.0/refint/Databse.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/project.assets.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/project.nuget.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/project.packagespec.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Databse/Databse/obj/rider.project.restore.info" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Controllers/AdminController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/AdminController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Controllers/AuthorizationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/AuthorizationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Controllers/CurrencyСontroller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/CurrencyСontroller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Models/CoinsInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Models/CoinsInformation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Repositories/AdminRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Repositories/AdminRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Repositories/UserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Repositories/UserRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/bin/Debug/net6.0/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/bin/Debug/net6.0/UP.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/bin/Debug/net6.0/UP.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/UP/bin/Debug/net6.0/UP.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net6.0/UP.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net6.0/UP.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net6.0/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net6.0/UP.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net6.0/UP.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net6.0/UP.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net6.0/ref/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net6.0/ref/UP.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net6.0/refint/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net6.0/refint/UP.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Записка/0203.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../Записка/0203.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Записка/0203.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../Записка/0203.pdf" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -115,7 +185,10 @@
       <workItem from="1679601770588" duration="1282000" />
       <workItem from="1679646826033" duration="591000" />
       <workItem from="1679655620538" duration="2955000" />
-      <workItem from="1679685123844" duration="3161000" />
+      <workItem from="1679685123844" duration="3721000" />
+      <workItem from="1679725266857" duration="781000" />
+      <workItem from="1680251591085" duration="6724000" />
+      <workItem from="1680281327612" duration="1751000" />
     </task>
     <servers />
   </component>

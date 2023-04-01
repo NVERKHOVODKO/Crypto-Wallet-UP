@@ -5,6 +5,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using UP.Models;
 using System.Net;
+using System.Security.Cryptography;
 
 namespace UP.Repositories;
 
@@ -24,16 +25,17 @@ public class UserRepository: RepositoryBase
                 while (reader.Read())
                 {
                     int id = reader.GetInt32(0);
-                    String login = reader.GetString(1);
-                    String password = reader.GetString(2);
-                    String email = reader.GetString(3);
+                    string login = reader.GetString(1);
+                    string password = reader.GetString(2);
+                    string email = reader.GetString(3);
                     DateTime creationDate = reader.GetDateTime(4);
                     DateTime modificationDate = reader.GetDateTime(5);
                     Boolean isDeleted = reader.GetBoolean(6);
                     int roleId = reader.GetInt32(7);
                     Boolean isBlocked = reader.GetBoolean(8);
+                    string salt = reader.GetString(9);
                     user = new Models.User(id, login, password, email, creationDate, 
-                        modificationDate, isDeleted, isBlocked, roleId);
+                        modificationDate, isDeleted, isBlocked, roleId, salt);
                     connection.Close();
                     return user;
                 }
@@ -68,14 +70,19 @@ public class UserRepository: RepositoryBase
         return passwords;
     }
     
-    public void WriteNewUserToDatabase(String login, String password, String email)
+    public void WriteNewUserToDatabase(string login, string password, string email)
     {
+        var ar = new AuthorizationRepository();
+        string salt = ar.GetSalt();
+        password = Convert.ToString(ar.Hash(password));
+        password = Convert.ToString(ar.Hash(password + salt));
         DateTime curDateTime = DateTime.Now;
         DateTime modificationDateTime = DateTime.Now;
-        var user = new Models.User(1, login, password, email, curDateTime, modificationDateTime, false, false, 1);
+        var user = new Models.User(1, login, password, email, curDateTime, 
+            modificationDateTime, false, false, 1, salt);
         using var connection = new NpgsqlConnection(connectionString);
-        var sql = "INSERT INTO users (login, password, email, creation_date, modification_date, is_deleted, is_blocked, role_id) " +
-                  "VALUES (@login, @password, @email, @creation_date, @modification_date, @is_deleted, @is_blocked, @role_id)";
+        var sql = "INSERT INTO users (login, password, email, creation_date, modification_date, is_deleted, is_blocked, role_id, salt) " +
+                  "VALUES (@login, @password, @email, @creation_date, @modification_date, @is_deleted, @is_blocked, @role_id, @salt)";
         using var command = new NpgsqlCommand(sql, connection);
         command.Parameters.AddWithValue("@login", user.Login);
         command.Parameters.AddWithValue("@password", user.Password);
@@ -85,6 +92,7 @@ public class UserRepository: RepositoryBase
         command.Parameters.AddWithValue("@is_deleted", user.IsDeleted);
         command.Parameters.AddWithValue("@is_blocked", user.IsBlocked);
         command.Parameters.AddWithValue("@role_id", user.RoleId);
+        command.Parameters.AddWithValue("@salt", user.Salt);
         OpenConnection(connection);
         command.ExecuteNonQuery();
         CloseConnection(connection);
@@ -315,12 +323,28 @@ public class UserRepository: RepositoryBase
         command.ExecuteNonQuery();
         CloseConnection(connection);
     }
+
+    public int GetUserIdByLogin(string login)
+    {
+        using var connection = new NpgsqlConnection(connectionString);
+        var sql = "SELECT id FROM users WHERE login = @login LIMIT 1;";
+        using var command = new NpgsqlCommand(sql, connection);
+        command.Parameters.AddWithValue("@login", login);
+        OpenConnection(connection);
+        int coinId = Convert.ToInt32(command.ExecuteScalar());
+        CloseConnection(connection);
+        return coinId;
+    }
         
-    public Models.User Login(String login, String password)
+    
+    public Models.User Login(string login, string password)
     {
         NpgsqlConnection connection = new NpgsqlConnection(connectionString);
         Models.User user;
         connection.Open();
+        int userId = GetUserIdByLogin(login);
+        //получить пользователя       и получить пароль и тьбд
+        
         var sql = "SELECT * FROM users WHERE login = @login AND password = @password";
         using (var command = new NpgsqlCommand(sql, connection))
         {
@@ -333,14 +357,15 @@ public class UserRepository: RepositoryBase
                     int id = reader.GetInt32(0);
                     login = reader.GetString(1);
                     password = reader.GetString(2);
-                    String email = reader.GetString(3);
+                    string email = reader.GetString(3);
                     DateTime creationDate = reader.GetDateTime(4);
                     DateTime modificationDate = reader.GetDateTime(5);
                     Boolean isDeleted = reader.GetBoolean(6);
                     Boolean isBlocked = reader.GetBoolean(7);
                     int roleId = reader.GetInt32(8);
+                    string salt = reader.GetString(9);
                     user = new Models.User(id, login, password, email, creationDate, 
-                        modificationDate, isDeleted, isBlocked, roleId);
+                        modificationDate, isDeleted, isBlocked, roleId, salt);
                     connection.Close();
                     return user;
                 }

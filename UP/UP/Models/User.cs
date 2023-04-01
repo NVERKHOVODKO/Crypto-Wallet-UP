@@ -11,9 +11,11 @@
         public Boolean IsDeleted { get; set; }
         public Boolean IsBlocked { get; set; }
         public int RoleId { get; set; }
+        public string Salt { get; set; }
+
 
         public User(int id, String login, String password, String email, DateTime creationData,
-            DateTime modificationDate, Boolean isDeleted, Boolean isBlocked, int roleId)
+            DateTime modificationDate, Boolean isDeleted, Boolean isBlocked, int roleId, string salt)
         {
             Id = id;
             Login = login;
@@ -24,6 +26,7 @@
             IsDeleted = isDeleted;
             IsBlocked = isBlocked;
             RoleId = roleId;
+            Salt = salt;
         }
 
         public override string ToString()

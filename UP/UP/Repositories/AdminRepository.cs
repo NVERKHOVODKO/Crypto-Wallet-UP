@@ -68,16 +68,17 @@ public class AdminRepository: RepositoryBase
                 while (reader.Read())
                 {
                     int id = reader.GetInt32(0);
-                    String login = reader.GetString(1);
-                    String password = reader.GetString(2);
-                    String email = reader.GetString(3);
+                    string login = reader.GetString(1);
+                    string password = reader.GetString(2);
+                    string email = reader.GetString(3);
                     DateTime creationDate = reader.GetDateTime(4);
                     DateTime modificationDate = reader.GetDateTime(5);
                     Boolean isDeleted = reader.GetBoolean(6);
                     Boolean isBlocked = reader.GetBoolean(7);
                     int roleId = reader.GetInt32(8);
+                    string salt = reader.GetString(9);
                     users.Add(new Models.User(id, login, password, email, creationDate, 
-                        modificationDate, isDeleted, isBlocked, roleId));
+                        modificationDate, isDeleted, isBlocked, roleId, salt));
                 }
             }
         }

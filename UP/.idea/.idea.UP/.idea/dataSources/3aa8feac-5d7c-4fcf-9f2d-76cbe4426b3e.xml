@@ -3,7 +3,7 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.45">
     <root id="1">
       <DateStyle>dmy</DateStyle>
-      <IntrospectionStateNumber>1698</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1712</IntrospectionStateNumber>
       <ServerVersion>14.7</ServerVersion>
       <StartupTime>1680251227</StartupTime>
       <TimeZones>true ACDT
@@ -258,12 +258,12 @@ true America/Yellowknife
 false Antarctica/Casey
 false Antarctica/Davis
 false Antarctica/DumontDUrville
-true Antarctica/Macquarie
+false Antarctica/Macquarie
 false Antarctica/Mawson
-true Antarctica/McMurdo
+false Antarctica/McMurdo
 false Antarctica/Palmer
 false Antarctica/Rothera
-true Antarctica/South_Pole
+false Antarctica/South_Pole
 false Antarctica/Syowa
 true Antarctica/Troll
 false Antarctica/Vostok
@@ -379,29 +379,29 @@ false Atlantic/Reykjavik
 false Atlantic/South_Georgia
 false Atlantic/St_Helena
 false Atlantic/Stanley
-true Australia/ACT
-true Australia/Adelaide
+false Australia/ACT
+false Australia/Adelaide
 false Australia/Brisbane
-true Australia/Broken_Hill
-true Australia/Canberra
-true Australia/Currie
+false Australia/Broken_Hill
+false Australia/Canberra
+false Australia/Currie
 false Australia/Darwin
 false Australia/Eucla
-true Australia/Hobart
-true Australia/LHI
+false Australia/Hobart
+false Australia/LHI
 false Australia/Lindeman
-true Australia/Lord_Howe
-true Australia/Melbourne
-true Australia/NSW
+false Australia/Lord_Howe
+false Australia/Melbourne
+false Australia/NSW
 false Australia/North
 false Australia/Perth
 false Australia/Queensland
-true Australia/South
-true Australia/Sydney
-true Australia/Tasmania
-true Australia/Victoria
+false Australia/South
+false Australia/Sydney
+false Australia/Tasmania
+false Australia/Victoria
 false Australia/West
-true Australia/Yancowinna
+false Australia/Yancowinna
 true BDST
 false BDT
 false BNT
@@ -616,7 +616,7 @@ false KRAST
 false KRAT
 false KST
 false Kwajalein
-true LHDT
+false LHDT
 false LHST
 false LIGT
 false LINT
@@ -653,8 +653,8 @@ false NOVT
 false NPT
 false NST
 false NUT
-true NZ
-true NZ-CHAT
+false NZ
+false NZ-CHAT
 true NZDT
 false NZST
 false NZT
@@ -680,9 +680,9 @@ false PWT
 true PYST
 false PYT
 false Pacific/Apia
-true Pacific/Auckland
+false Pacific/Auckland
 false Pacific/Bougainville
-true Pacific/Chatham
+false Pacific/Chatham
 false Pacific/Chuuk
 true Pacific/Easter
 false Pacific/Efate
@@ -705,7 +705,7 @@ false Pacific/Marquesas
 false Pacific/Midway
 false Pacific/Nauru
 false Pacific/Niue
-true Pacific/Norfolk
+false Pacific/Norfolk
 false Pacific/Noumea
 false Pacific/Pago_Pago
 false Pacific/Palau
@@ -807,7 +807,7 @@ false Zulu
 13388||10|C|G
 13388||-9223372036854775808|U|G
 13388||10|U|G</Grants>
-      <IntrospectionStateNumber>1698</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1712</IntrospectionStateNumber>
       <ObjectId>13754</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
@@ -4246,7 +4246,7 @@ false Zulu
     <schema id="263" parent="3" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>1698</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1712</IntrospectionStateNumber>
       <ObjectId>2200</ObjectId>
       <StateNumber>527</StateNumber>
       <OwnerName>postgres</OwnerName>
@@ -4387,7 +4387,7 @@ false Zulu
     </table>
     <table id="284" parent="263" name="users">
       <ObjectId>16396</ObjectId>
-      <StateNumber>1656</StateNumber>
+      <StateNumber>1707</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
@@ -5093,7 +5093,14 @@ false Zulu
       <StateNumber>1667</StateNumber>
       <TypeId>16</TypeId>
     </column>
-    <index id="374" parent="284" name="users_pkey">
+    <column id="374" parent="284" name="salt">
+      <DasType>varchar|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>11</Position>
+      <StateNumber>1711</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="375" parent="284" name="users_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16402</ObjectId>
@@ -5102,14 +5109,14 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="375" parent="284" name="users_pkey">
+    <key id="376" parent="284" name="users_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16403</ObjectId>
       <Primary>1</Primary>
       <StateNumber>736</StateNumber>
       <UnderlyingIndexId>16402</UnderlyingIndexId>
     </key>
-    <column id="376" parent="285" name="id">
+    <column id="377" parent="285" name="id">
       <DasType>bigint|0s</DasType>
       <IdentityKind>always</IdentityKind>
       <NotNull>1</NotNull>
@@ -5118,35 +5125,35 @@ false Zulu
       <SequenceId>16943</SequenceId>
       <TypeId>20</TypeId>
     </column>
-    <column id="377" parent="285" name="date">
+    <column id="378" parent="285" name="date">
       <DasType>date|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>794</StateNumber>
       <TypeId>1082</TypeId>
     </column>
-    <column id="378" parent="285" name="quantity">
+    <column id="379" parent="285" name="quantity">
       <DasType>double precision|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>928</StateNumber>
       <TypeId>701</TypeId>
     </column>
-    <column id="379" parent="285" name="commission">
+    <column id="380" parent="285" name="commission">
       <DasType>double precision|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>929</StateNumber>
       <TypeId>701</TypeId>
     </column>
-    <column id="380" parent="285" name="user_id">
+    <column id="381" parent="285" name="user_id">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>1624</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="381" parent="285" name="withdrawals_userid_fkey">
+    <foreign-key id="382" parent="285" name="withdrawals_userid_fkey">
       <ColNames>user_id</ColNames>
       <ObjectId>16774</ObjectId>
       <OnDelete>cascade</OnDelete>
@@ -5158,7 +5165,7 @@ false Zulu
       <RefTableName>users</RefTableName>
       <RefTableKind>table</RefTableKind>
     </foreign-key>
-    <index id="382" parent="285" name="withdrawals_pkey">
+    <index id="383" parent="285" name="withdrawals_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16760</ObjectId>
@@ -5167,7 +5174,7 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="383" parent="285" name="withdrawals_pkey">
+    <key id="384" parent="285" name="withdrawals_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16761</ObjectId>
       <Primary>1</Primary>

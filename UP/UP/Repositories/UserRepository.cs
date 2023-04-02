@@ -324,31 +324,56 @@ public class UserRepository: RepositoryBase
         CloseConnection(connection);
     }
 
-    public int GetUserIdByLogin(string login)
+    public Models.User GetUserIdByLogin(string login)
     {
-        using var connection = new NpgsqlConnection(connectionString);
-        var sql = "SELECT id FROM users WHERE login = @login LIMIT 1;";
-        using var command = new NpgsqlCommand(sql, connection);
-        command.Parameters.AddWithValue("@login", login);
-        OpenConnection(connection);
-        int coinId = Convert.ToInt32(command.ExecuteScalar());
-        CloseConnection(connection);
-        return coinId;
+        NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+        Models.User user;
+        connection.Open();
+        var sql = "SELECT * FROM users WHERE login = @login LIMIT 1";
+        using (var command = new NpgsqlCommand(sql, connection))
+        {
+            command.Parameters.AddWithValue("@login", login);
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int id = reader.GetInt32(0);
+                    login = reader.GetString(1);
+                    string password = reader.GetString(2);
+                    string email = reader.GetString(3);
+                    DateTime creationDate = reader.GetDateTime(4);
+                    DateTime modificationDate = reader.GetDateTime(5);
+                    bool isDeleted = reader.GetBoolean(6);
+                    int roleId = reader.GetInt32(7);
+                    bool isBlocked = reader.GetBoolean(8);
+                    string salt = reader.GetString(9);
+                    user = new Models.User(id, login, password, email, creationDate, 
+                        modificationDate, isDeleted, isBlocked, roleId, salt);
+                    connection.Close();
+                    return user;
+                }
+            }
+        }
+        connection.Close(); // закрываем подключение
+        return null;
     }
+    
         
     
     public Models.User Login(string login, string password)
     {
         NpgsqlConnection connection = new NpgsqlConnection(connectionString);
-        Models.User user;
         connection.Open();
-        int userId = GetUserIdByLogin(login);
-        //получить пользователя       и получить пароль и тьбд
+        Models.User user = GetUserIdByLogin(login);
+
+        var ar = new Repositories.AuthorizationRepository();
+        password = ar.Hash(password);
+        password = ar.Hash(password + user.Salt);
         
         var sql = "SELECT * FROM users WHERE login = @login AND password = @password";
         using (var command = new NpgsqlCommand(sql, connection))
         {
-            command.Parameters.AddWithValue("login", login);
+            command.Parameters.AddWithValue("login", user.Login);
             command.Parameters.AddWithValue("password", password);
             using (var reader = command.ExecuteReader())
             {
@@ -360,9 +385,9 @@ public class UserRepository: RepositoryBase
                     string email = reader.GetString(3);
                     DateTime creationDate = reader.GetDateTime(4);
                     DateTime modificationDate = reader.GetDateTime(5);
-                    Boolean isDeleted = reader.GetBoolean(6);
-                    Boolean isBlocked = reader.GetBoolean(7);
-                    int roleId = reader.GetInt32(8);
+                    bool isDeleted = reader.GetBoolean(6);
+                    int roleId = reader.GetInt32(7);
+                    bool isBlocked = reader.GetBoolean(8);
                     string salt = reader.GetString(9);
                     user = new Models.User(id, login, password, email, creationDate, 
                         modificationDate, isDeleted, isBlocked, roleId, salt);

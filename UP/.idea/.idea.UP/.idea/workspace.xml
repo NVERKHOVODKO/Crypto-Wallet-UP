@@ -9,9 +9,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Models/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/Repositories/AdminRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Repositories/AdminRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/Repositories/AuthorizationRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Repositories/AuthorizationRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Controllers/AuthorizationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/AuthorizationController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/Repositories/UserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Repositories/UserRepository.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/bin/Debug/net6.0/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/bin/Debug/net6.0/UP.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/bin/Debug/net6.0/UP.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/UP/bin/Debug/net6.0/UP.pdb" afterDir="false" />
@@ -134,6 +132,7 @@
       <workItem from="1680251591085" duration="6724000" />
       <workItem from="1680281327612" duration="1751000" />
       <workItem from="1680382518516" duration="3125000" />
+      <workItem from="1680421217337" duration="1219000" />
     </task>
     <servers />
   </component>
@@ -142,6 +141,17 @@
   </component>
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="init commit" />

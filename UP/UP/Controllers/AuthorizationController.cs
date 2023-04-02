@@ -18,7 +18,7 @@ namespace UP.Controllers
                     return NotFound("There is no such user. Try again");
                 }
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
                 return BadRequest("Error");
             }

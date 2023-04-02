@@ -54,6 +54,12 @@ namespace UP.Repositories
                 CloseConnection(connection);
             }
         }
+        
+        public void SendCrypto(int receiverId, int senderId, string shortname, double quantity)
+        {
+            SubtractCoinFromUser(senderId, shortname, quantity);
+            AddCryptoToUserWallet(receiverId, shortname, quantity);
+        }
 
         public bool IsCoinAlreadyPurchased(List<Models.Coin> coins, string shortName)
         {

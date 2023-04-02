@@ -59,8 +59,6 @@ namespace UP.Controllers
 
                 double priceRatio =   (double)json[shortNameFinal.ToUpper()];
                 
-                
-                
                 //double priceRatio = 1;
                 double finalQuantity = priceRatio * quantity;
                 var ur = new Repositories.UserRepository();
@@ -100,51 +98,79 @@ namespace UP.Controllers
         [HttpPost, Route("buyCrypto")]
         public async Task<ActionResult> BuyCrypto(int userId, string coinName, double quantity)
         {
-            if (quantity == 0)
-            {
-                return UnprocessableEntity("Quantity must be above than zero");
-            }
-            string apiKey = "4da2c4791b9c285b22c1bf08bc36f304ab2ca80bc901504742b9a42a814c4614";
-            using var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("X-MBX-APIKEY", apiKey);
-            string url = $"https://min-api.cryptocompare.com/data/price?fsym=" + coinName + "&tsyms=USD";
-            var response = await httpClient.GetAsync(url);
-            var responseContent = await response.Content.ReadAsStringAsync();
-            JObject json = JObject.Parse(responseContent);
-            //double price = (double)json[coinName.ToUpper()];
-            var cr = new Repositories.CurrencyRepository();
-            cr.BuyCrypto(userId, coinName, quantity);
-
-            return Ok();
-        }
-        
-        
-        [HttpPut, Route("sellCrypto")]
-        public async Task<ActionResult> SellCrypto(int userId, string coinName, double quantity)
-        {
             try
             {
                 if (quantity == 0)
                 {
                     return UnprocessableEntity("Quantity must be above than zero");
                 }
-                string apiKey = "4da2c4791b9c285b22c1bf08bc36f304ab2ca80bc901504742b9a42a814c4614";
-                using var httpClient = new HttpClient();
-                httpClient.DefaultRequestHeaders.Add("X-MBX-APIKEY", apiKey);
-                string url = $"https://min-api.cryptocompare.com/data/price?fsym=" + coinName + "&tsyms=USD";
-                var response = await httpClient.GetAsync(url);
-                var responseContent = await response.Content.ReadAsStringAsync();
-                JObject json = JObject.Parse(responseContent);
-                //double price = (double)json[coinName.ToUpper()];
-
+                var ur = new Repositories.UserRepository();
                 var cr = new Repositories.CurrencyRepository();
-                cr.SellCrypto(userId, coinName, quantity);
-
-                return Ok();
+                double quantityUSDTInUserWallet = ur.GetCoinQuantityInUserWallet(userId, "usdt");
+                if (quantityUSDTInUserWallet < await cr.GetCoinPrice(quantity, coinName))
+                {
+                    return UnprocessableEntity("Not enough balance");
+                }
+                cr.SubtractCoinFromUser(userId, "usdt", await cr.GetCoinPrice(quantity, coinName));
+                cr.AddCryptoToUserWallet(userId, coinName, quantity);
+                return Ok("Transaction completed successfully");
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return BadRequest("Error. Coin wasn't purchased");
+                return BadRequest("Transaction wasn't completed");
+            }
+        }
+        
+        
+        [HttpPut, Route("sellCrypto")]
+        public async Task<ActionResult> SellCrypto(int userId, string coinName, double quantityForSell)
+        {
+            try
+            {
+                if (quantityForSell == 0)
+                {
+                    return UnprocessableEntity("Quantity must be above than zero");
+                }
+                var ur = new Repositories.UserRepository();
+                var cr = new Repositories.CurrencyRepository();
+                double quantityInUserWallet = ur.GetCoinQuantityInUserWallet(userId, coinName);
+                if (quantityInUserWallet < quantityForSell)
+                {
+                    return UnprocessableEntity("Not enough coins");
+                }
+                cr.SubtractCoinFromUser(userId, coinName, quantityForSell);
+                cr.AddCryptoToUserWallet(userId, "usdt", await cr.GetCoinPrice(quantityForSell, coinName));
+                return Ok("Transaction completed successfully");
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Transaction wasn't completed");
+            }
+        }
+        
+        [HttpPost, Route("sendCrypto")]
+        public async Task<ActionResult> SendCrypto(int receiverId, int senderId, string coinName, double quantityForSend)
+        {
+            try
+            {
+                if (quantityForSend == 0)
+                {
+                    return UnprocessableEntity("Quantity must be above than zero");
+                }
+                var ur = new Repositories.UserRepository();
+                var cr = new Repositories.CurrencyRepository();
+                double quantityInUserWallet = ur.GetCoinQuantityInUserWallet(senderId, coinName);
+                if (quantityInUserWallet < quantityForSend)
+                {
+                    return UnprocessableEntity("Not enough coins");
+                }
+                cr.SubtractCoinFromUser(senderId, coinName, quantityForSend);
+                cr.AddCryptoToUserWallet(receiverId, coinName, quantityForSend);
+                return Ok("Transfer completed successfully");
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Transfer wasn't completed");
             }
         }
         

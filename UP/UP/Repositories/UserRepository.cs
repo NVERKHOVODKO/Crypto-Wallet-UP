@@ -41,7 +41,7 @@ public class UserRepository: RepositoryBase
                 }
             }
         }
-        connection.Close(); // закрываем подключение
+        connection.Close();
         return null;
     }
     

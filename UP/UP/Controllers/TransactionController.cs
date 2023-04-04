@@ -166,6 +166,7 @@ namespace UP.Controllers
                 }
                 cr.SubtractCoinFromUser(senderId, coinName, quantityForSend);
                 cr.AddCryptoToUserWallet(receiverId, coinName, quantityForSend);
+                cr.WriteTransactionToDatabase(coinName, quantityForSend, senderId, receiverId);
                 return Ok("Transfer completed successfully");
             }
             catch (Exception e)

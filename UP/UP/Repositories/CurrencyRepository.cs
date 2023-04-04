@@ -1,10 +1,12 @@
-﻿using System.Xml.Serialization;
+﻿using System.Data;
+using System.Xml.Serialization;
 using Npgsql;
 using System.Globalization;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Mvc;
 using UP.Models;
 using System.Net;
+using UP.Models.Base;
 
 namespace UP.Repositories
 {
@@ -188,6 +190,71 @@ namespace UP.Repositories
             CloseConnection(connection);
         }
 
+        //3 sec
+        public async Task<double> GetDailyPriceImpact(string shortName)
+        {
+            string apiKey = "4da2c4791b9c285b22c1bf08bc36f304ab2ca80bc901504742b9a42a814c4614";
+            using var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("X-MBX-APIKEY", apiKey);
+            string url = $"https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" + shortName + "&tsyms=USD";
+            var response = await httpClient.GetAsync(url);
+            var responseContent = await response.Content.ReadAsStringAsync();
+            var data = JObject.Parse(responseContent);
+            var priceData = data["RAW"]["BTC"]["USD"];
+            var priceChange = (double)priceData["CHANGEDAY"];
+            return priceChange;
+        }
+
+        /*public async Task<CoinsInformation> GetFullCoinInformation(string shortName) 10 sec
+        {
+            var coin = new CoinsInformation();
+            Dictionary<string, string> cryptoDictionary = CoinList.GetCryptoDictionary();
+            string fullName = cryptoDictionary[shortName];
+            string apiKey = "4da2c4791b9c285b22c1bf08bc36f304ab2ca80bc901504742b9a42a814c4614";
+            using var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("X-MBX-APIKEY", apiKey);
+            string url = $"https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" + shortName + "&tsyms=USD";
+            var response = await httpClient.GetAsync(url);
+            var responseContent = await response.Content.ReadAsStringAsync();//server response
+            var data = JObject.Parse(responseContent);
+            var priceData = data["RAW"][shortName.ToUpper()]["USD"];
+            var priceChange = (double)priceData["CHANGEDAY"];
+            var dailyVolume = (double)priceData["VOLUME24HOUR"];
+            var price = (double)priceData["PRICE"];
+            
+            return new CoinsInformation(fullName, shortName, @"C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\cryptoicons_png\128\" + shortName.ToUpper(), dailyVolume, priceChange, price);
+        }*/
+        
+        private static readonly HttpClient httpClient = new HttpClient();
+        private const string ApiKey = "4da2c4791b9c285b22c1bf08bc36f304ab2ca80bc901504742b9a42a814c4614";
+        private const string CryptoCompareApiUrl = "https://min-api.cryptocompare.com";
+
+        public async Task<CoinsInformation> GetFullCoinInformation(string shortName)
+        {
+            Dictionary<string, string> cryptoDictionary = CoinList.GetCryptoDictionary();
+            string fullName = cryptoDictionary[shortName];
+
+            string url = $"{CryptoCompareApiUrl}/data/pricemultifull?fsyms={shortName}&tsyms=USD";
+            using var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Add("X-MBX-APIKEY", ApiKey);
+            using var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new HttpRequestException($"Failed to get coin information: {response.StatusCode}");
+            }
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+            var data = JObject.Parse(responseContent);
+            var priceData = data["RAW"][shortName.ToUpper()]["USD"];
+            var priceChange = (double)priceData["CHANGEDAY"];
+            var dailyVolume = (double)priceData["VOLUME24HOUR"];
+            var price = (double)priceData["PRICE"];
+            var previousPrice = price - priceChange;
+            var percentagePriceChangePerDay = (priceChange / previousPrice) * 100;
+            return new CoinsInformation(fullName, shortName, @"C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\cryptoicons_png\128\" + shortName.ToUpper(), dailyVolume, priceChange, price, percentagePriceChangePerDay);
+        }
+
         public void UpdateCoinQuantity(int id, double quantity)
         {
             using var connection = new NpgsqlConnection(connectionString);
@@ -195,6 +262,22 @@ namespace UP.Repositories
             using var command = new NpgsqlCommand(sql, connection);
             command.Parameters.AddWithValue("@id", id);
             command.Parameters.AddWithValue("@quantity", quantity);
+            OpenConnection(connection);
+            command.ExecuteNonQuery();
+            CloseConnection(connection);
+        }
+        
+        public void WriteTransactionToDatabase(string coinName, double quantity, int senderId, int receiverId)
+        {
+            using var connection = new NpgsqlConnection(connectionString);
+            var sql = "INSERT INTO transactions (coin_name, quantity, date, sender_id, receiver_id) VALUES " +
+                      "(@coin_name, @quantity, @date, @sender_id, @receiver_id)";
+            using var command = new NpgsqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@coin_name", coinName);
+            command.Parameters.AddWithValue("@quantity", quantity);
+            command.Parameters.AddWithValue("@date", DateTime.Now);
+            command.Parameters.AddWithValue("@sender_id", senderId);
+            command.Parameters.AddWithValue("@receiver_id", receiverId);
             OpenConnection(connection);
             command.ExecuteNonQuery();
             CloseConnection(connection);

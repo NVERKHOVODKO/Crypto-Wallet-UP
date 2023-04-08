@@ -9,18 +9,19 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/Controllers/CurrencyСontroller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/CurrencyСontroller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Controllers/AdminController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/AdminController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Controllers/AuthorizationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/AuthorizationController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/Controllers/TransactionController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/TransactionController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/Models/CoinsInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Models/CoinsInformation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Repositories/AdminRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Repositories/AdminRepository.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/Repositories/CurrencyRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Repositories/CurrencyRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/Repositories/UserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Repositories/UserRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Startup.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/bin/Debug/net6.0/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/bin/Debug/net6.0/UP.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/bin/Debug/net6.0/UP.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/UP/bin/Debug/net6.0/UP.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net6.0/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net6.0/UP.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net6.0/UP.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net6.0/UP.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net6.0/ref/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net6.0/ref/UP.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net6.0/refint/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net6.0/refint/UP.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,6 +143,12 @@
       <workItem from="1680553764205" duration="820000" />
       <workItem from="1680596333916" duration="6421000" />
       <workItem from="1680625270730" duration="2731000" />
+      <workItem from="1680684226055" duration="1841000" />
+      <workItem from="1680860242245" duration="293000" />
+      <workItem from="1680956123853" duration="678000" />
+      <workItem from="1680957231466" duration="234000" />
+      <workItem from="1680983514501" duration="1656000" />
+      <workItem from="1680986233864" duration="618000" />
     </task>
     <servers />
   </component>

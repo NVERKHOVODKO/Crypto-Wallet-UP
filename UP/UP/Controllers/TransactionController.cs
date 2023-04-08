@@ -153,6 +153,10 @@ namespace UP.Controllers
         {
             try
             {
+                if (receiverId == senderId)
+                {
+                    return UnprocessableEntity("You can't send cryptocurrency to yourself");
+                }
                 if (quantityForSend == 0)
                 {
                     return UnprocessableEntity("Quantity must be above than zero");
@@ -175,6 +179,7 @@ namespace UP.Controllers
             }
         }
         
+        
         [HttpPost, Route("replenishTheBalance")]
         public async Task<ActionResult> ReplenishTheBalance(int userId, double quantityUsd)
         {
@@ -191,12 +196,23 @@ namespace UP.Controllers
         }
         
         [HttpPut, Route("withdrawUSDT")]// TODO how return error not enoght crypto
-        public async Task<ActionResult> WithdrawUSDT(int userId, double quantityUsd)
+        public async Task<ActionResult> WithdrawUSDT(int userId, double quantityForWithdraw)
         {
             var tr = new Repositories.TransactionsRepository();
             try
             {
-                tr.WithdrawUSDT(userId, quantityUsd);
+                if (quantityForWithdraw == 0)
+                {
+                    return UnprocessableEntity("Quantity must be above than zero");
+                }
+                var ur = new Repositories.UserRepository();
+                var cr = new Repositories.CurrencyRepository();
+                double quantityInUserWallet = ur.GetCoinQuantityInUserWallet(userId, "usdt");
+                if (quantityInUserWallet < quantityForWithdraw)
+                {
+                    return UnprocessableEntity("Not enough balance");
+                }
+                cr.SubtractCoinFromUser(userId, "usdt", quantityForWithdraw);
                 return Ok("Transaction was successful");
             }
             catch(Exception)
@@ -206,7 +222,7 @@ namespace UP.Controllers
         }
         
         [HttpGet, Route("getUserWithdrawalsHistory")]
-        public async Task<ActionResult> GetUserWithdrawalsHistory(int userId)
+        public async Task<IActionResult> GetUserWithdrawalsHistory(int userId)
         {
             var tr = new Repositories.TransactionsRepository();
             try

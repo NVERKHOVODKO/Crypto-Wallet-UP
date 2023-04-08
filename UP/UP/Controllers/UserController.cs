@@ -34,22 +34,7 @@ namespace UP.Controllers
                 return BadRequest("Can't get user's previous passwords");
             }
         }
-        
-        [HttpPut, Route("setStatusDel")]
-        public async Task<ActionResult> SetStatusDel(int id, bool status)
-        {
-            try
-            {
-                var ur = new Repositories.UserRepository();
-                ur.SetUserStatusDel(id, status);
-                return Ok("Status changed");
-            }
-            catch(Exception)
-            {
-                return BadRequest("Status not changed");
-            }
-        }
-        
+
         [HttpDelete, Route("deleteAccount")]
         public async Task<ActionResult> DeleteAccount(int id)
         {
@@ -62,21 +47,6 @@ namespace UP.Controllers
             catch(Exception)
             {
                 return BadRequest("Account not deleted");
-            }
-        }
-        
-        [HttpPut, Route("setStatusBlock")]
-        public async Task<ActionResult> SetStatusBlock(int id, bool status)
-        {
-            try
-            {
-                var ur = new Repositories.UserRepository();
-                ur.SetUserStatusBlock(id, status);
-                return Ok("Status changed");
-            }
-            catch(Exception)
-            {
-                return BadRequest("Status not changed");
             }
         }
         

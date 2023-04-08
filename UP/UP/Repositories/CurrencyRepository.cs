@@ -1,11 +1,6 @@
-﻿using System.Data;
-using System.Xml.Serialization;
+﻿using Newtonsoft.Json.Linq;
 using Npgsql;
-using System.Globalization;
-using Newtonsoft.Json.Linq;
-using Microsoft.AspNetCore.Mvc;
 using UP.Models;
-using System.Net;
 using UP.Models.Base;
 
 namespace UP.Repositories
@@ -19,8 +14,8 @@ namespace UP.Repositories
 
         public void AddCryptoToUserWallet(int userId, string shortname, double quantity)
         {
-            var ur = new Repositories.UserRepository();
-            List<Models.Coin> coins = ur.GetUserCoins(userId);
+            var ur = new UserRepository();
+            List<Coin> coins = ur.GetUserCoins(userId);
             
             if (IsCoinAlreadyPurchased(coins, shortname)) {
                 int coinId = GetPurchasedCoinId(coins, shortname);
@@ -63,7 +58,7 @@ namespace UP.Repositories
             AddCryptoToUserWallet(receiverId, shortname, quantity);
         }
 
-        public bool IsCoinAlreadyPurchased(List<Models.Coin> coins, string shortName)
+        public bool IsCoinAlreadyPurchased(List<Coin> coins, string shortName)
         {
             try
             {
@@ -82,7 +77,7 @@ namespace UP.Repositories
             }
         }
         
-        private int GetPurchasedCoinId(List<Models.Coin> coins, string shortName)
+        private int GetPurchasedCoinId(List<Coin> coins, string shortName)
         {
             try
             {
@@ -101,7 +96,7 @@ namespace UP.Repositories
             }
         }
         
-        private int GetPurchasedCoinNumberInTheList(List<Models.Coin> coins, string shortName)
+        private int GetPurchasedCoinNumberInTheList(List<Coin> coins, string shortName)
         {
             try
             {
@@ -125,8 +120,8 @@ namespace UP.Repositories
         
         public async void SellCrypto(int userId, string shortname, double quantityForSale)
         {
-            var ur = new Repositories.UserRepository();
-            var cr = new Repositories.CurrencyRepository();
+            var ur = new UserRepository();
+            var cr = new CurrencyRepository();
             double quantityInUserWallet = ur.GetCoinQuantityInUserWallet(userId, "usdt");
             if (await cr.GetCoinPrice(quantityInUserWallet, "usdt") < await cr.GetCoinPrice(quantityForSale, shortname))
             {
@@ -137,13 +132,13 @@ namespace UP.Repositories
         
         public void SubtractCoinFromUser(int userId, string shortname, double quantityForSubtract)
         {
-            var ur = new Repositories.UserRepository();
-            List<Models.Coin> coins = ur.GetUserCoins(userId);
+            var ur = new UserRepository();
+            List<Coin> coins = ur.GetUserCoins(userId);
             int coinId = GetPurchasedCoinId(coins, shortname);
             int coinIdInTheList = GetPurchasedCoinNumberInTheList(coins, shortname);
             if (coinId != -1)
             {
-                var coin = new Models.Coin(coins[coinIdInTheList].id, coins[coinIdInTheList].quantity, coins[coinIdInTheList].shortName);
+                var coin = new Coin(coins[coinIdInTheList].id, coins[coinIdInTheList].quantity, coins[coinIdInTheList].shortName);
                 double finalQuantity = coin.quantity - quantityForSubtract;
                 if (finalQuantity == 0) {
                     DeleteCoin(coin.id);
@@ -169,8 +164,8 @@ namespace UP.Repositories
         
         public async Task<double> GetUserBalance(int userId)
         {
-            var ur = new Repositories.UserRepository();
-            List<Models.Coin> coins = ur.GetUserCoins(userId);
+            var ur = new UserRepository();
+            List<Coin> coins = ur.GetUserCoins(userId);
             double balance = 0;
             foreach (var i in coins)
             {
@@ -249,10 +244,24 @@ namespace UP.Repositories
             var priceData = data["RAW"][shortName.ToUpper()]["USD"];
             var priceChange = (double)priceData["CHANGEDAY"];
             var dailyVolume = (double)priceData["VOLUME24HOUR"];
+            
+            double number = dailyVolume;
+            string formatted;
+
+            if (number < 1000000)
+            {
+                formatted = (number / 1000).ToString("0K");
+            }
+            else
+            {
+                formatted = (number / 1000000).ToString("0M");
+            }
+            Console.WriteLine(formatted);
+            
             var price = (double)priceData["PRICE"];
             var previousPrice = price - priceChange;
             var percentagePriceChangePerDay = (priceChange / previousPrice) * 100;
-            return new CoinsInformation(fullName, shortName, @"C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\cryptoicons_png\128\" + shortName.ToUpper(), dailyVolume, priceChange, price, percentagePriceChangePerDay);
+            return new CoinsInformation(fullName, shortName, @"C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\cryptoicons_png\128\" + shortName.ToLower(), dailyVolume, priceChange, price, percentagePriceChangePerDay);
         }
 
         public void UpdateCoinQuantity(int id, double quantity)

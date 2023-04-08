@@ -1,0 +1,130 @@
+body {
+    background-color: #11131a;
+    font-family: Arial, sans-serif;
+    color: #242d3c;
+    font-size: 16px;
+    line-height: 1.5;
+    font-family: 'MyCustomFont', sans-serif;
+}
+.LogoLBL {
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: -50px;
+    color: #ffffff;
+}
+.form1 {
+    background-color: #11131a;
+    margin-right: 500;
+    padding-top: 120px;
+    max-width: 400px;
+    color: #ffffff;
+    font-size: 13px;
+}
+a{
+    text-decoration: none;
+    color: #008cdd;
+}
+.container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+label{
+    font-size: 10px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    font-size: 13px;
+    background-color: #11131a;
+    color: gray;
+    text-align: center;
+    font-family: 'MyCustomFont', sans-serif;
+}
+.form-wrapper {
+	flex: 1;
+	margin-left: 350px;
+    margin-top: 80px;
+    font-family: 'MyCustomFont', sans-serif;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url('assets/fonts/Ropoto') format('truetype');
+  }
+.fast-safe-reliable {
+	flex: 1;
+    margin-left: 900px;
+    margin-top: -340px;
+    font-size: 100px;
+    color: #008cdd;
+    font-family: 'MyCustomFont', sans-serif;
+}
+.logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+}
+.qr-wrapper{
+    margin-left: 870px;
+    margin-top: 20px;
+}
+.qpCodeImg{
+    height: 200px;
+}
+.QRcodeLBL{
+    margin-left: 870px;
+    margin-top: -300px;
+    color: #ffffff;
+    font-family: 'MyCustomFont', sans-serif;
+    font-size: 25px;
+}
+.quick-login{
+    margin-left: 400px;
+    text-align: center;
+    color: gray;
+    font-family: 'MyCustomFont', sans-serif;
+}
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+input[type="text"], input[type="password"] {
+    border: none;
+    background-color: #11131a;
+    border: 1px solid gray;
+    padding: 10px;
+    border-radius: 2px;
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #ffffff;
+}
+input:focus {
+    border: 2px solid #008cdd;
+}
+input[type="submit"] {
+    background-color: #008cdd;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align:center;
+    transition: background-color 0.3s ease;
+}
+input[type="submit"]:hover {
+    background-color: #005daa;
+}
+.create-new-account {
+    color: #ffffff;
+    font-size: 14px;
+    margin-bottom: 10px;
+    text-align: center;
+}

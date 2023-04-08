@@ -1,0 +1,89 @@
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100%;
+    background-color: #11131a;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.nav a {
+    color: white;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+.nav img {
+    width: 50%;
+    margin-bottom: 20px;
+}
+.content {
+    margin-left: 220px;
+    margin-top: 50px;
+} 
+body{
+    background-color: #11131a;
+}
+.scrollable-list {
+    max-height: 200px; /* задайте максимальную высоту для списка */
+    overflow: auto; /* разрешить прокрутку при превышении высоты */
+}
+body{
+    background-color: #222745;
+}
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100%;
+  background-color: #28314e;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.nav a {
+  color: white;
+  text-decoration: none;
+  margin-bottom: 10px;
+  text-align: left;
+  font-size: 18px;
+  color: #ffffff;
+}
+.nav img {
+  width: 50%;
+  margin-bottom: 20px;
+}
+.content {
+  margin-left: 220px;
+  margin-top: 50px;
+}
+.logo{
+    margin-top: -300px;
+}
+.MenuCase:focus,.MenuCase:hover {
+    color: #008cdd;
+}
+.MenuCase{
+    text-align: left;
+}
+.crypto-panel{
+    width: 100px;
+    height: calc(50% - 10px);
+    background-color: black;
+    margin-bottom: 20px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.crypto-list{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

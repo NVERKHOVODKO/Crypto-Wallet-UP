@@ -41,7 +41,6 @@ namespace UP.Controllers
                 {
                     return UnprocessableEntity("Username already used");
                 }
-
                 var ar = new Repositories.AuthorizationRepository();
                 if (ar.IsValidEmail(email))
                 {

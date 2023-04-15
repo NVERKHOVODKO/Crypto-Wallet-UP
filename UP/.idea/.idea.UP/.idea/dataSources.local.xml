@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="dataSourceStorageLocal" created-in="RD-223.8617.53">
+  <component name="dataSourceStorageLocal" created-in="RD-231.8109.212">
     <data-source name="postgres@localhost" uuid="3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e">
       <database-info product="PostgreSQL" version="14.7" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.5.0" dbms="POSTGRES" exact-version="14.7" exact-driver-version="42.5">
         <identifier-quote-string>&quot;</identifier-quote-string>
@@ -14,7 +14,10 @@
             <node kind="database" qname="@">
               <node kind="schema" qname="@" />
             </node>
-            <node kind="database" qname="postgres" />
+            <node kind="database">
+              <name qname="postgres" />
+              <name qname="cw_up" />
+            </node>
           </node>
         </introspection-scope>
       </schema-mapping>

@@ -4,23 +4,32 @@
     <projectFile profileName="IIS Express">UP/UP.csproj</projectFile>
     <projectFile profileName="UP">UP/UP.csproj</projectFile>
   </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="d6241624-7c7a-4e8e-ad5a-bab9e517f10f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../UP HTML CSS/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../UP HTML CSS/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP.sln" beforeDir="false" afterPath="$PROJECT_DIR$/UP.sln" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/Controllers/AdminController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/AdminController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/Controllers/AuthorizationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/AuthorizationController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/Controllers/TransactionController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/TransactionController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/UserController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/Repositories/AdminRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Repositories/AdminRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/Repositories/CurrencyRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Repositories/CurrencyRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/bin/Debug/net6.0/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/bin/Debug/net6.0/UP.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/bin/Debug/net6.0/UP.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/UP/bin/Debug/net6.0/UP.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net6.0/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net6.0/UP.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net6.0/UP.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net6.0/UP.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net6.0/ref/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net6.0/ref/UP.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net6.0/refint/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net6.0/refint/UP.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Controllers/CurrencyСontroller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/CurrencyСontroller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Repositories/UserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Repositories/UserRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/UP.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/UP/UP.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net6.0/UP.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net6.0/UP.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net6.0/UP.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net6.0/UP.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/UP.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/UP.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/UP.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/UP.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/UP.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/UP.csproj.nuget.g.targets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/project.packagespec.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,8 +37,13 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c6354d55b4c1fdbe22621ea48185af62cdeadcf4f28d9ed0890dfdf36c6/ControllerBase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/UP/ClientApp/package-lock.json" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/UP/Controllers/AdminController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/UP/Repositories/AdminRepository.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -46,8 +60,13 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -55,8 +74,8 @@
       &quot;postgresql&quot;
     ],
     &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\user\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\user\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\user\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\user\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\SourcesCache&quot;,
       &quot;C:\\Users\\user\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
@@ -98,6 +117,41 @@
       <method v="2">
         <option name="Build" />
       </method>
+    </configuration>
+    <configuration name="UP/Dockerfile" type="docker-deploy" factoryName="dockerfile">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="imageTag" value="up" />
+          <option name="containerName" value="up" />
+          <option name="contextFolderPath" value="C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\UP" />
+          <option name="sourceFilePath" value="UP/Dockerfile" />
+        </settings>
+      </deployment>
+      <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="true" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="false" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
+      <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="true" />
+      <method v="2" />
     </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -149,6 +203,15 @@
       <workItem from="1680957231466" duration="234000" />
       <workItem from="1680983514501" duration="1656000" />
       <workItem from="1680986233864" duration="618000" />
+      <workItem from="1681071902374" duration="1078000" />
+      <workItem from="1681131919393" duration="147000" />
+      <workItem from="1681132092530" duration="614000" />
+      <workItem from="1681212226154" duration="61000" />
+      <workItem from="1681212638298" duration="232000" />
+      <workItem from="1681213369692" duration="407000" />
+      <workItem from="1681213822335" duration="105000" />
+      <workItem from="1681214127284" duration="3363000" />
+      <workItem from="1681465127302" duration="2611000" />
     </task>
     <servers />
   </component>

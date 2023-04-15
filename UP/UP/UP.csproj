@@ -1,20 +1,31 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AfominDotCom.AspNetCore.AngularCLI" Version="1.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="5.0.0-preview.8.20414.8" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Npgsql" Version="7.0.2" />
+    <PackageReference Include="Numind.AspNetCore.SpaServices.Extensions" Version="1.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Services\Implementations\" />
     <Folder Include="Services\Interfaces\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="ClientApp\angular.json" />
+    <_ContentIncludedByDefault Remove="ClientApp\package-lock.json" />
+    <_ContentIncludedByDefault Remove="ClientApp\package.json" />
+    <_ContentIncludedByDefault Remove="ClientApp\tsconfig.json" />
   </ItemGroup>
 
 </Project>

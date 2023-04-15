@@ -1,13 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Converters;
 using UP.Models;
-using Newtonsoft.Json.Linq;
 using UP.Models.Base;
 using UP.Repositories;
 
@@ -22,7 +14,7 @@ namespace UP.Controllers
         {
             try
             {
-                var ur = new Repositories.UserRepository();
+                var ur = new UserRepository();
                 return Ok(ur.GetUserCoins(userId));
             }
             catch (Exception e)
@@ -37,7 +29,7 @@ namespace UP.Controllers
         {
             try
             {
-                var cr = new Repositories.CurrencyRepository();
+                var cr = new CurrencyRepository();
                 double balance = await cr.GetUserBalance(userId);
                 return Ok(balance);
             }
@@ -53,7 +45,7 @@ namespace UP.Controllers
         {
             try
             {
-                var cr = new Repositories.CurrencyRepository();
+                var cr = new CurrencyRepository();
                 double price = await cr.GetCoinPrice(quantity, coinName);
                 return Ok(price);
             }
@@ -72,8 +64,8 @@ namespace UP.Controllers
                 Dictionary<string, string> cryptoDictionary = CoinList.GetCryptoDictionary();
                 var coins = new List<CoinsInformation>();
                 int i = 0;
-                var cr = new Repositories.CurrencyRepository();
-                CoinsInformation coin = new CoinsInformation();
+                var cr = new CurrencyRepository();
+                var coin = new CoinsInformation();
                 foreach (string key in cryptoDictionary.Keys)
                 {
                     coin = await cr.GetFullCoinInformation(key);

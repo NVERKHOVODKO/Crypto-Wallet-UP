@@ -1,20 +1,16 @@
-﻿using System.Data;
-using System.Xml.Serialization;
+﻿using System.Net;
+using System.Net.Sockets;
 using Npgsql;
-using System.Globalization;
-using Microsoft.AspNetCore.Mvc;
 using UP.Models;
-using System.Net;
-using System.Security.Cryptography;
 
 namespace UP.Repositories;
 
 public class UserRepository: RepositoryBase
 {
-    public Models.User GetUserById(int userId)
+    public User? GetUserById(int userId)
     {
         NpgsqlConnection connection = new NpgsqlConnection(connectionString);
-        Models.User user;
+        User user;
         connection.Open();
         var sql = "SELECT * FROM users WHERE id = @userId";
         using (var command = new NpgsqlCommand(sql, connection))
@@ -34,7 +30,7 @@ public class UserRepository: RepositoryBase
                     int roleId = reader.GetInt32(7);
                     Boolean isBlocked = reader.GetBoolean(8);
                     string salt = reader.GetString(9);
-                    user = new Models.User(id, login, password, email, creationDate, 
+                    user = new User(id, login, password, email, creationDate, 
                         modificationDate, isDeleted, isBlocked, roleId, salt);
                     connection.Close();
                     return user;
@@ -46,10 +42,10 @@ public class UserRepository: RepositoryBase
     }
     
     
-    public List<Models.PreviosPasswords> GetUserPasswordsHistory(int userId)
+    public List<PreviosPasswords> GetUserPasswordsHistory(int userId)
     {
         NpgsqlConnection connection = new NpgsqlConnection(connectionString);
-        List<Models.PreviosPasswords> passwords = new List<PreviosPasswords>();
+        List<PreviosPasswords> passwords = new List<PreviosPasswords>();
         connection.Open();
         var sql = "SELECT * FROM previos_passwords WHERE user_id = @user_id";
         using (var command = new NpgsqlCommand(sql, connection))
@@ -78,7 +74,7 @@ public class UserRepository: RepositoryBase
         password = Convert.ToString(ar.Hash(password + salt));
         DateTime curDateTime = DateTime.Now;
         DateTime modificationDateTime = DateTime.Now;
-        var user = new Models.User(1, login, password, email, curDateTime, 
+        var user = new User(1, login, password, email, curDateTime, 
             modificationDateTime, false, false, 1, salt);
         using var connection = new NpgsqlConnection(connectionString);
         var sql = "INSERT INTO users (login, password, email, creation_date, modification_date, is_deleted, is_blocked, role_id, salt) " +
@@ -102,19 +98,21 @@ public class UserRepository: RepositoryBase
     {
         try
         {
-            string ipAddress = Dns.GetHostEntry(Dns.GetHostName()).AddressList
-                .FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                ?.ToString();
+            string? ipAddress = Dns.GetHostEntry(Dns.GetHostName()).AddressList
+                .FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork)?.ToString();
             var sql = "INSERT INTO login_history (ip, date, user_id) " +
                       "VALUES (@ip, @date, @user_id)";
             NpgsqlConnection connection = new NpgsqlConnection(connectionString);
             using var command = new NpgsqlCommand(sql, connection);
-            command.Parameters.AddWithValue("@ip", ipAddress);
-            command.Parameters.AddWithValue("@date", DateTime.Now);
-            command.Parameters.AddWithValue("@user_id", id);
-            OpenConnection(connection);
-            command.ExecuteNonQuery();
-            CloseConnection(connection);
+            if (ipAddress != null)
+            {
+                command.Parameters.AddWithValue("@ip", ipAddress);
+                command.Parameters.AddWithValue("@date", DateTime.Now);
+                command.Parameters.AddWithValue("@user_id", id);
+                OpenConnection(connection);
+                command.ExecuteNonQuery();
+                CloseConnection(connection);
+            }
         }
         catch (Exception e)
         {
@@ -122,7 +120,7 @@ public class UserRepository: RepositoryBase
         }
     }
 
-    public List<Models.Coin> GetUserCoins(int userId)
+    public List<Coin> GetUserCoins(int userId)
     {
         using (var connection = new NpgsqlConnection(connectionString))
         {
@@ -131,7 +129,7 @@ public class UserRepository: RepositoryBase
                            "FROM coins c " +
                            "INNER JOIN l_users_coins l ON l.coin_id = c.id " +
                            "WHERE l.user_id = @userId";
-            List<Models.Coin> coins = new List<Coin>();
+            List<Coin> coins = new List<Coin>();
             using (var cmd = new NpgsqlCommand(query, connection))
             {
                 cmd.Parameters.AddWithValue("@userId", userId);
@@ -163,7 +161,7 @@ public class UserRepository: RepositoryBase
                                "FROM coins c " +
                                "INNER JOIN l_users_coins l ON l.coin_id = c.id " +
                                "WHERE l.user_id = @userId AND c.shortname = @coinShortname";
-                List<Models.Coin> coins = new List<Coin>();
+                List<Coin> coins = new List<Coin>();
                 using (var cmd = new NpgsqlCommand(query, connection))
                 {
                     cmd.Parameters.AddWithValue("@userId", userId);
@@ -215,8 +213,20 @@ public class UserRepository: RepositoryBase
         CloseConnection(connection);
         return Convert.ToBoolean(count);
     }
+    
+    public string? GetUserBlockingReason(int userId)
+    {
+        using var connection = new NpgsqlConnection(connectionString);
+        var sql = "SELECT cause FROM blocking WHERE user_id = @userId";
+        using var command = new NpgsqlCommand(sql, connection);
+        command.Parameters.AddWithValue("@userId", userId);
+        OpenConnection(connection);
+        string? reason = command.ExecuteScalar()?.ToString();
+        CloseConnection(connection);
+        return reason;
+    }
         
-    public void EditUser(int id,Models.User user)
+    public void EditUser(int id,User user)
     {
         using var connection = new NpgsqlConnection(connectionString);
         var sql = "UPDATE users SET (login, password, email, creation_date, modification_date, is_deleted, is_blocked, role_id) " +
@@ -324,10 +334,10 @@ public class UserRepository: RepositoryBase
         CloseConnection(connection);
     }
 
-    public Models.User GetUserIdByLogin(string login)
+    public User? GetUserIdByLogin(string login)
     {
         NpgsqlConnection connection = new NpgsqlConnection(connectionString);
-        Models.User user;
+        User user;
         connection.Open();
         var sql = "SELECT * FROM users WHERE login = @login LIMIT 1";
         using (var command = new NpgsqlCommand(sql, connection))
@@ -347,7 +357,7 @@ public class UserRepository: RepositoryBase
                     int roleId = reader.GetInt32(7);
                     bool isBlocked = reader.GetBoolean(8);
                     string salt = reader.GetString(9);
-                    user = new Models.User(id, login, password, email, creationDate, 
+                    user = new User(id, login, password, email, creationDate, 
                         modificationDate, isDeleted, isBlocked, roleId, salt);
                     connection.Close();
                     return user;
@@ -360,13 +370,13 @@ public class UserRepository: RepositoryBase
     
         
     
-    public Models.User Login(string login, string password)
+    public User? Login(string login, string password)
     {
         NpgsqlConnection connection = new NpgsqlConnection(connectionString);
         connection.Open();
-        Models.User user = GetUserIdByLogin(login);
+        User? user = GetUserIdByLogin(login);
 
-        var ar = new Repositories.AuthorizationRepository();
+        var ar = new AuthorizationRepository();
         password = ar.Hash(password);
         password = ar.Hash(password + user.Salt);
         
@@ -389,7 +399,7 @@ public class UserRepository: RepositoryBase
                     int roleId = reader.GetInt32(7);
                     bool isBlocked = reader.GetBoolean(8);
                     string salt = reader.GetString(9);
-                    user = new Models.User(id, login, password, email, creationDate, 
+                    user = new User(id, login, password, email, creationDate, 
                         modificationDate, isDeleted, isBlocked, roleId, salt);
                     connection.Close();
                     return user;

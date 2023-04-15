@@ -7,12 +7,20 @@ namespace UP.Controllers
         
         [HttpGet, Route("authorization")]
         public async Task<ActionResult> Login(string login, string password) {
-            try
+            /*try
             {
                 var ur = new Repositories.UserRepository();
                 var user = ur.Login(login, password);
                 if (user != null) {
                     ur.SaveAccountLoginHistory(user.Id);
+                    if (user.IsBlocked)
+                    {
+                        return BadRequest("Your account is blocked: " + ur.GetUserBlockingReason(user.Id));
+                    }
+                    if (user.IsDeleted)
+                    {
+                        return NotFound("There is no such user. Try again");
+                    }
                     return Ok(user);
                 } else {
                     return NotFound("There is no such user. Try again");
@@ -21,6 +29,22 @@ namespace UP.Controllers
             catch (Exception exception)
             {
                 return BadRequest("Error");
+            }*/
+            var ur = new Repositories.UserRepository();
+            var user = ur.Login(login, password);
+            if (user != null) {
+                ur.SaveAccountLoginHistory(user.Id);
+                if (user.IsBlocked)
+                {
+                    return BadRequest("Your account is blocked: " + ur.GetUserBlockingReason(user.Id));
+                }
+                if (user.IsDeleted)
+                {
+                    return NotFound("There is no such user. Try again");
+                }
+                return Ok(user);
+            } else {
+                return NotFound("There is no such user. Try again");
             }
         }
 

@@ -1,13 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Converters;
-using UP.Models;
-using Newtonsoft.Json.Linq;
+using UP.Repositories;
 
 namespace UP.Controllers
 {
@@ -18,7 +10,7 @@ namespace UP.Controllers
         [HttpPost, Route("blockUser")]
         public async Task<ActionResult> BlockUser(int id, String reason)
         {
-            var ar = new Repositories.AdminRepository();
+            var ar = new AdminRepository();
             try
             {
                 ar.BlockUser(id, reason);
@@ -33,7 +25,7 @@ namespace UP.Controllers
         [HttpPost, Route("deleteUser")]
         public async Task<ActionResult> DeleteUser(int id)
         {
-            var ar = new Repositories.AdminRepository();
+            var ar = new AdminRepository();
             try
             {
                 ar.DeleteUser(id);
@@ -50,7 +42,7 @@ namespace UP.Controllers
         {
             try
             {
-                var ur = new Repositories.UserRepository();
+                var ur = new UserRepository();
                 ur.SetUserStatusDel(id, status);
                 return Ok("Status changed");
             }
@@ -65,7 +57,7 @@ namespace UP.Controllers
         {
             try
             {
-                var ur = new Repositories.UserRepository();
+                var ur = new UserRepository();
                 ur.SetUserStatusBlock(id, status);
                 return Ok("Status changed");
             }
@@ -78,16 +70,15 @@ namespace UP.Controllers
         [HttpGet, Route("getUserList")]
         public async Task<ActionResult> GetUserList()
         {
-            var ar = new Repositories.AdminRepository();
-            return Ok(ar.GetUserList());
-            /*try
+            try
             {
+                var ar = new AdminRepository();
                 return Ok(ar.GetUserList());
             }
             catch(Exception)
             {
                 return BadRequest("Unable to return userList");
-            }*/
+            }
         }
     }
 }

@@ -15,7 +15,8 @@ namespace UP
                 configuration.RootPath = "ClientApp/dist";
             });
         }
- 
+        
+        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

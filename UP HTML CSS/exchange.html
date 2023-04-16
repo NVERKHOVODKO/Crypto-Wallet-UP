@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Exchange</title>
+  <link rel="stylesheet" href="assets/css/exchange.css">
+  <link rel="stylesheet" href="assets/css/mainMenuStyle.css">
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+ 
+
+  <link rel="icon" href="assets/images/UP_logo.png" type="image/png">
+
+</head>
+
+<body>
+  <div class="container">
+    <h1>Exchange</h1>
+      <div class="nav">
+        <div class="logo-container">
+          <img class="logo" src="assets/images/UP_logo.png" alt="Logo">
+        </div>
+      <div class="login-container">
+        nverkhovodko
+      </div>
+  
+      <div class="balance-container">
+        ~542.35$
+      </div>
+      <a class="MenuCase" href="mainMenu.html"> <img src="assets/images/standart_menu_icons/wallet.png" alt="Wallet icon">
+        Wallet</a>
+      <a class="MenuCase" href="exchange.html"> <img src="assets/images/standart_menu_icons/two-arrows.png" alt="Exchange icon">
+        Exchange</a>
+      <a class="MenuCase" href="#"> <img src="assets/images/standart_menu_icons/credit-card.png" alt="Buy icon"> Buy
+        crypto</a>
+      <a class="MenuCase" href="#"> <img src="assets/images/standart_menu_icons/history.png" alt="History icon">
+        History</a>
+      <a class="MenuCase" href="#"> <img src="assets/images/standart_menu_icons/stake.png" alt="Staking icon">
+        Staking</a>
+      <a class="MenuCase" href="#"> <img src="assets/images/standart_menu_icons/settings.png" alt="Settings icon">
+        Settings</a>
+      <a class="MenuCase" href="#"> <img src="assets/images/standart_menu_icons/question.png" alt="Support icon">
+        Support</a>
+      <a class="MenuCase" href="#"> <img src="assets/images/standart_menu_icons/money.png" alt="Send icon">
+        Send crypto</a>
+      <a class="MenuCase" href="index.html" target="_self"> <img src="assets/images/standart_menu_icons/power-off.png"
+          alt="Support icon"> Exit</a>
+    </div>
+    <form>
+      <div class="form-group">
+        <label>Source currency:</label>
+        <select id="fromCurrency">
+          <option value="BTC">Bitcoin (BTC)</option>
+          <option value="ETH">Ethereum (ETH)</option>
+          <option value="LTC">Litecoin (LTC)</option>
+          <option value="APT">Aptos (APT)</option>
+          <option value="Doge">Dogecoin (Doge)</option>
+          <option value="Ilv">Illuvium (ILV)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Target currency:</label>
+        <select id="toCurrency">
+          <option value="USD">US Dollar (USD)</option>
+          <option value="EUR">Euro (EUR)</option>
+          <option value="JPY">Japanese Yen (JPY)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Quantity:</label>
+        <input type="number" id="amount" placeholder="Enter quantity">
+      </div>
+      <button type="submit">Exchange</button>
+    </form>
+    <div id="result"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>

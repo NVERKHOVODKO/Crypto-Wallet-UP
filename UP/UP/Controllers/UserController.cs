@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UP.DTO;
 
 namespace UP.Controllers
 {
@@ -27,7 +28,10 @@ namespace UP.Controllers
             var ur = new Repositories.UserRepository();
             try
             {
-                return Ok(ur.GetUserPasswordsHistory(id));
+                var passwords = ur.GetUserPasswordsHistory(id);
+                if (passwords.Count == 0)
+                    return Ok("There is no passwords");
+                return Ok(passwords);
             }
             catch(Exception)
             {
@@ -66,29 +70,29 @@ namespace UP.Controllers
         }
         
         [HttpPut, Route("changePassword")]
-        public async Task<ActionResult> ChangePassword(int id, String password, String passwordRepeat)
+        public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
         {
             var ur = new Repositories.UserRepository();
-            var user = ur.GetUserById(id);
+            var user = ur.GetUserById(request.Id);
             try
             {
-                if (password != passwordRepeat)
+                if (request.Password != request.PasswordRepeat)
                 {
                     return UnprocessableEntity("Passwords doesn't match");
                 }
-                if (password.Length == 0)
+                if (request.Password.Length == 0)
                 {
                     return UnprocessableEntity("Fill in the fields");
                 }
-                if (password.Length > 32)
+                if (request.Password.Length > 32)
                 {
                     return UnprocessableEntity("Password must be less than 32 symbols");
                 }
-                if (password.Length < 4)
+                if (request.Password.Length < 4)
                 {
                     return UnprocessableEntity("Password must be above than 3 symbols");
                 }
-                ur.ChangePassword(id, password);
+                ur.ChangePassword(request.Id, request.Password);
                 return Ok("Password changed");
             }
             catch(Exception)

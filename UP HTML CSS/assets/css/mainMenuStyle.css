@@ -1,89 +1,128 @@
 .nav {
-    position: fixed;
     top: 0;
     left: 0;
+    position: fixed;
     width: 200px;
     height: 100%;
-    background-color: #11131a;
-    color: white;
-    display: flex;
+    background-color: #28314e;
+    color: #a4a4a4;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
 }
-.nav a {
-    color: white;
-    text-decoration: none;
-    margin-bottom: 10px;
+
+.header {
+    top: 10;
+    left: 500;
+    width: 1400px;
+    height: 100px;
+    background-color: #28314e;
+    color: #a4a4a4;
 }
+
 .nav img {
     width: 50%;
-    margin-bottom: 20px;
 }
+
 .content {
-    margin-left: 220px;
+    margin-left: 320px;
     margin-top: 50px;
-} 
-body{
+}
+
+body {
+    height: 100%;
     background-color: #11131a;
 }
-.scrollable-list {
-    max-height: 200px; /* задайте максимальную высоту для списка */
-    overflow: auto; /* разрешить прокрутку при превышении высоты */
+
+.login-container{
+    font-size: 25px;
+    margin-top: 10px;
+    text-align: center;
 }
-body{
-    background-color: #222745;
-}
-.nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 200px;
-  height: 100%;
-  background-color: #28314e;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.nav a {
-  color: white;
-  text-decoration: none;
-  margin-bottom: 10px;
-  text-align: left;
-  font-size: 18px;
-  color: #ffffff;
-}
-.nav img {
-  width: 50%;
-  margin-bottom: 20px;
-}
-.content {
-  margin-left: 220px;
-  margin-top: 50px;
-}
-.logo{
-    margin-top: -300px;
-}
-.MenuCase:focus,.MenuCase:hover {
-    color: #008cdd;
-}
-.MenuCase{
-    text-align: left;
-}
-.crypto-panel{
-    width: 100px;
-    height: calc(50% - 10px);
-    background-color: black;
-    margin-bottom: 20px;
-    color: white;
+
+.logo-container {
     display: flex;
     justify-content: center;
-    align-items: center;
+    margin-top: 100px;
 }
-.crypto-list{
+
+.logo {
+    margin-top: -100px;
+}
+
+.MenuCase:focus,
+.MenuCase:hover {
+    color: #008cdd;
+}
+
+.MenuCase {
+    color: #a4a4a4;
+    text-decoration: none;
+    font-size: 18px;
+    margin: 8px;
+    margin-left: 20px;
+}
+
+.crypto-panel {
+    width: 1318px;
+    height: 100px;
+    background-color: #28314e;
+    color: white;
     display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #161d3a;
+}
+
+.crypto-list {
     flex-direction: column;
-    justify-content: space-between;
+    margin-bottom: 0px;
+    margin-left: 169px;
+}
+
+.main {
+    display: flex;
+    box-sizing: border-box;
+    background-color: #11131a;
+
+}
+
+.MenuCase img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.balance-container {
+    font-size: 30px;
+    margin: 15px;
+    text-align: center;
+}
+
+.crypto-price {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0;
+}
+
+.crypto-market-cap {
+    margin: 0;
+}
+
+.crypto-panel img {
+    width: 80px;
+    height: 80px;
+    margin-right: 40px;
+    vertical-align: middle;
+}
+
+.crypto-details {
+    display: inline-block;
+}
+
+.crypto-details h4,
+.crypto-details h5 {
+    display: inline-block;
+    margin: 0;
+    vertical-align: middle;
+    margin-right: 115px;
 }

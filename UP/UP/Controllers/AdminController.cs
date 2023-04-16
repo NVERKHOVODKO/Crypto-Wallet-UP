@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using UP.Repositories;
 
 namespace UP.Controllers
@@ -67,6 +68,7 @@ namespace UP.Controllers
             }
         }
         
+        [EnableCors]
         [HttpGet, Route("getUserList")]
         public async Task<ActionResult> GetUserList()
         {

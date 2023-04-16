@@ -1,5 +1,15 @@
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins("http://example.com",
+                "http://www.contoso.com", "http://localhost:3000").WithMethods("PUT", "DELETE", "GET");;
+        });
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -20,6 +30,11 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.UseRouting();
+
+app.UseCors();
+
 app.MapControllers();
 
 app.Run();
+

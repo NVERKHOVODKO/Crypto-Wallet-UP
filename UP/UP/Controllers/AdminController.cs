@@ -9,7 +9,7 @@ namespace UP.Controllers
     public class AdminController: ControllerBase
     {
         [HttpPost, Route("blockUser")]
-        public async Task<ActionResult> BlockUser(int id, String reason)
+        public async Task<ActionResult> BlockUser(int id, string reason)
         {
             var ar = new AdminRepository();
             try

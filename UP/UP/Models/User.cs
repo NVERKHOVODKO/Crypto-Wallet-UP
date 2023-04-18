@@ -28,10 +28,5 @@
             RoleId = roleId;
             Salt = salt;
         }
-
-        public override string ToString()
-        {
-            return base.ToString();
-        }
     }
 }

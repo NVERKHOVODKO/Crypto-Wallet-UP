@@ -65,12 +65,12 @@ body {
 .crypto-panel {
     width: 1318px;
     height: 100px;
-    background-color: #28314e;
+    background-color: #11131a;
     color: white;
     display: flex;
     align-items: center;
     padding: 10px;
-    border: 1px solid #161d3a;
+    border: 1px solid #008cdd;
 }
 
 .crypto-list {

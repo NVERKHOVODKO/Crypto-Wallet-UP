@@ -37,16 +37,17 @@ public class AuthorizationRepository: RepositoryBase
         password = Hash(password + salt);
         return password == hashedPassword;
     }
-
+    
     public bool IsValidEmail(string email)
     {
-        // Шаблон для проверки email
-        string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-
-        // Создание объекта регулярного выражения
-        Regex regex = new Regex(pattern);
-
-        // Проверка соответствия email шаблону
-        return regex.IsMatch(email);
+        var pattern = @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";
+        if (Regex.Match(email, pattern).Success)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

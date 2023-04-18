@@ -9,22 +9,51 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6241624-7c7a-4e8e-ad5a-bab9e517f10f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/UP/DTO/AuthenticationRequest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UP/DTO/ChangePasswordRequest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UP/DTO/RegisterRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/UP/FileContentIndex/09b13def-2c75-4b5e-9197-e29e9f2a2ce7.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/UP/FileContentIndex/6551a232-cd53-49f3-8c5b-14f354e5110e.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/UP/FileContentIndex/8f84980c-e2d6-4633-9217-8bebaa6438f6.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/UP/FileContentIndex/9e25661c-5040-4428-8bfe-435cef6aa264.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/UP/FileContentIndex/e8bad5ab-d7fc-41ee-82a5-ee6d7c7fd6f4.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/UP/v17/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/UP/v17/.suo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/UP/v17/Browse.VC.db" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/UP/v17/Browse.VC.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/UP/v17/workspaceFileList.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/UP/v17/workspaceFileList.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/VSWorkspaceState.json" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/VSWorkspaceState.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/slnx.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/slnx.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UP HTML CSS/assets/css/mainMenuStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/../UP HTML CSS/assets/css/mainMenuStyle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UP HTML CSS/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/../UP HTML CSS/assets/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UP HTML CSS/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../UP HTML CSS/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/Controllers/AdminController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/AdminController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/Controllers/AuthorizationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/AuthorizationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Controllers/TransactionController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/TransactionController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Models/Coin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Models/Coin.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Models/Conversion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Models/Conversion.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Models/User.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Repositories/AuthorizationRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Repositories/AuthorizationRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Repositories/CurrencyRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Repositories/CurrencyRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Repositories/TransactionsRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Repositories/TransactionsRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Repositories/UserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Repositories/UserRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/UP.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/UP/UP.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/bin/Debug/net8.0/UP.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/UP/bin/Debug/net8.0/UP.deps.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/bin/Debug/net8.0/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/bin/Debug/net8.0/UP.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/bin/Debug/net8.0/UP.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/UP/bin/Debug/net8.0/UP.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.csproj.AssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/ref/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/ref/UP.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/refint/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/refint/UP.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/UP.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/UP.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/UP.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/UP.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,6 +237,13 @@
       <workItem from="1681465127302" duration="2611000" />
       <workItem from="1681591583233" duration="3874000" />
       <workItem from="1681633220695" duration="2436000" />
+      <workItem from="1681731093699" duration="1299000" />
+      <workItem from="1681736503649" duration="1407000" />
+      <workItem from="1681738215379" duration="1567000" />
+      <workItem from="1681741457259" duration="650000" />
+      <workItem from="1681758657222" duration="6053000" />
+      <workItem from="1681817729926" duration="553000" />
+      <workItem from="1681837103183" duration="2285000" />
     </task>
     <servers />
   </component>

@@ -55,7 +55,7 @@ namespace UP.Controllers
         }
         
         [HttpPut, Route("changeLogin")]
-        public async Task<ActionResult> ChangeUserName(int id, String newLogin)
+        public async Task<ActionResult> ChangeUserName(int id, string newLogin)
         {
             var ur = new Repositories.UserRepository();
             try

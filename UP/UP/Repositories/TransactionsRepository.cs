@@ -16,7 +16,7 @@ namespace UP.Repositories
             var sql = "INSERT INTO conversions (commission, begin_coin_quantity, end_coin_quantity, quantity_usd, begin_coin_shortname, end_coin_shortname, user_id, date) " +
                       "VALUES (@commission, @begin_coin_quantity, @end_coin_quantity, @quantity_usd, @begin_coin_shortname, @end_coin_shortname, @user_id, @date)";
             using var command = new NpgsqlCommand(sql, connection);
-            command.Parameters.AddWithValue("@commission", conversion.Comission);
+            command.Parameters.AddWithValue("@commission", conversion.Commission);
             command.Parameters.AddWithValue("@begin_coin_quantity", conversion.BeginCoinQuantity);
             command.Parameters.AddWithValue("@end_coin_quantity", conversion.EndCoinQuantity);
             command.Parameters.AddWithValue("@quantity_usd", conversion.QuantityUsd);

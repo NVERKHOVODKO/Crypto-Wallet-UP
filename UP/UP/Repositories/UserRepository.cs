@@ -179,7 +179,7 @@ public class UserRepository: RepositoryBase
                     }
                 }
                 connection.Close();
-                return coins[0].quantity;
+                return coins[0].Quantity;
             }
 
             /*string sql = "SELECT c.quantity " +

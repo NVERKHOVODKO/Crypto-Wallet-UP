@@ -6,7 +6,7 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins("http://example.com",
-                "http://www.contoso.com", "http://localhost:3000").WithMethods("PUT", "DELETE", "GET");;
+                "http://www.contoso.com", "http://localhost:3000/Authorization", "http://localhost:3000").WithMethods("PUT", "POST", "GET");;
         });
 });
 

@@ -22,8 +22,8 @@ namespace UP.Repositories
                 int coinIdInTheList = GetPurchasedCoinNumberInTheList(coins, shortname);
                 if (coinId != -1)
                 {
-                    double finalQuantity = coins[coinIdInTheList].quantity + quantity; 
-                    UpdateCoinQuantity(coins[coinIdInTheList].id, finalQuantity);
+                    double finalQuantity = coins[coinIdInTheList].Quantity + quantity; 
+                    UpdateCoinQuantity(coins[coinIdInTheList].Id, finalQuantity);
                 }
             }
             else
@@ -64,7 +64,7 @@ namespace UP.Repositories
             {
                 foreach (var i in coins)
                 {
-                    if (i.shortName == shortName)
+                    if (i.ShortName == shortName)
                     {
                         return true;
                     }
@@ -83,9 +83,9 @@ namespace UP.Repositories
             {
                 foreach (var i in coins)
                 {
-                    if (i.shortName == shortName)
+                    if (i.ShortName == shortName)
                     {
-                        return i.id;
+                        return i.Id;
                     }
                 }
                 return -1;
@@ -103,7 +103,7 @@ namespace UP.Repositories
                 int j = 0;
                 foreach (var i in coins)
                 {
-                    if (i.shortName == shortName)
+                    if (i.ShortName == shortName)
                     {
                         return j;
                     }
@@ -138,12 +138,12 @@ namespace UP.Repositories
             int coinIdInTheList = GetPurchasedCoinNumberInTheList(coins, shortname);
             if (coinId != -1)
             {
-                var coin = new Coin(coins[coinIdInTheList].id, coins[coinIdInTheList].quantity, coins[coinIdInTheList].shortName);
-                double finalQuantity = coin.quantity - quantityForSubtract;
+                var coin = new Coin(coins[coinIdInTheList].Id, coins[coinIdInTheList].Quantity, coins[coinIdInTheList].ShortName);
+                double finalQuantity = coin.Quantity - quantityForSubtract;
                 if (finalQuantity == 0) {
-                    DeleteCoin(coin.id);
+                    DeleteCoin(coin.Id);
                 }else if(finalQuantity > 0) {
-                    UpdateCoinQuantity(coin.id, finalQuantity);
+                    UpdateCoinQuantity(coin.Id, finalQuantity);
                 }
             }
         }
@@ -169,7 +169,7 @@ namespace UP.Repositories
             double balance = 0;
             foreach (var i in coins)
             {
-                balance += await GetCoinPrice(i.quantity, i.shortName);
+                balance += await GetCoinPrice(i.Quantity, i.ShortName);
             }
             return balance;
         }

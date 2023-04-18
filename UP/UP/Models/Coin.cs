@@ -2,16 +2,16 @@
 {
     public class Coin
     {
-        public int id { get; set; }
-        public double quantity { get; set; }
+        public int Id { get; set; }
+        public double Quantity { get; set; }
 
-        public string shortName { get; set; }
+        public string ShortName { get; set; }
 
         public Coin(int id, double quantity, string shortName)
         {
-            this.id = id;
-            this.quantity = quantity;
-            this.shortName = shortName;
+            Id = id;
+            Quantity = quantity;
+            ShortName = shortName;
         }
 
         public Coin()

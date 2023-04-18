@@ -39,7 +39,7 @@ namespace UP.Controllers
         }
         
         [HttpPut, Route("setStatusDel")]
-        public async Task<ActionResult> SetStatusDel(int id, bool status)
+        public async Task<IActionResult> SetStatusDel(int id, bool status)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace UP.Controllers
         }
 
         [HttpPut, Route("setStatusBlock")]
-        public async Task<ActionResult> SetStatusBlock(int id, bool status)
+        public async Task<IActionResult> SetStatusBlock(int id, bool status)
         {
             try
             {

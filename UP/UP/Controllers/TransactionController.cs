@@ -8,6 +8,13 @@ namespace UP.Controllers
     [Route("[controller]")]
     public class TransactionController: ControllerBase
     {
+        private readonly ILogger<TransactionController> _logger;
+
+        public TransactionController(ILogger<TransactionController> logger)
+        {
+            _logger = logger;
+        }
+        
         [HttpGet, Route("getUserConversationsHistory")]
         public async Task<ActionResult> GetUserList(int id)
         {
@@ -18,6 +25,7 @@ namespace UP.Controllers
             }
             catch(Exception)
             {
+                _logger.LogInformation($"Unable to return user transactions history");
                 return BadRequest("Unable to return user transactions history");
             }
         }
@@ -32,6 +40,7 @@ namespace UP.Controllers
             }
             catch(Exception)
             {
+                _logger.LogInformation($"Unable to return user transactions history");
                 return BadRequest("Unable to return user transactions history");
             }
         }
@@ -76,6 +85,7 @@ namespace UP.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogInformation($"Error. Currencies have not been converted");
                 return BadRequest("Error. Currencies have not been converted");
             }
         }
@@ -117,6 +127,7 @@ namespace UP.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogInformation($"Transaction wasn't completed");
                 return BadRequest("Transaction wasn't completed");
             }
         }
@@ -129,6 +140,7 @@ namespace UP.Controllers
             {
                 if (quantityForSell == 0)
                 {
+                    _logger.LogInformation($"Quantity must be above than zero");
                     return UnprocessableEntity("Quantity must be above than zero");
                 }
                 var ur = new Repositories.UserRepository();
@@ -136,6 +148,7 @@ namespace UP.Controllers
                 double quantityInUserWallet = ur.GetCoinQuantityInUserWallet(userId, coinName);
                 if (quantityInUserWallet < quantityForSell)
                 {
+                    _logger.LogInformation($"Not enough coins");
                     return UnprocessableEntity("Not enough coins");
                 }
                 cr.SubtractCoinFromUser(userId, coinName, quantityForSell);
@@ -144,6 +157,7 @@ namespace UP.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogInformation($"Transaction wasn't completed");
                 return BadRequest("Transaction wasn't completed");
             }
         }
@@ -175,6 +189,7 @@ namespace UP.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogInformation($"Transfer wasn't completed");
                 return BadRequest("Transfer wasn't completed");
             }
         }
@@ -190,7 +205,8 @@ namespace UP.Controllers
                 return Ok("Balance replenished successfully");
             }
             catch(Exception)
-            {
+            { 
+                _logger.LogInformation($"Unable to replenish the balance");
                 return BadRequest("Unable to replenish the balance");
             }
         }
@@ -210,6 +226,7 @@ namespace UP.Controllers
                 double quantityInUserWallet = ur.GetCoinQuantityInUserWallet(userId, "usdt");
                 if (quantityInUserWallet < quantityForWithdraw)
                 {
+                    _logger.LogInformation($"Not enough balance");
                     return UnprocessableEntity("Not enough balance");
                 }
                 cr.SubtractCoinFromUser(userId, "usdt", quantityForWithdraw);
@@ -217,6 +234,7 @@ namespace UP.Controllers
             }
             catch(Exception)
             {
+                _logger.LogInformation($"Unable to withdraw the balance");
                 return BadRequest("Unable to withdraw the balance");
             }
         }
@@ -231,6 +249,7 @@ namespace UP.Controllers
             }
             catch(Exception)
             {
+                _logger.LogInformation($"Unable to get user withdrawals history");
                 return BadRequest("Unable to get user withdrawals history");
             }
         }

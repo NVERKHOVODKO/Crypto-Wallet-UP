@@ -38,3 +38,5 @@ C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\UP\UP\obj\Debug\net8.0\ref
 C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\UP\UP\obj\Debug\net8.0\UP.pdb
 C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\UP\UP\obj\Debug\net8.0\UP.genruntimeconfig.cache
 C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\UP\UP\obj\Debug\net8.0\ref\UP.dll
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\UP\UP\bin\Debug\net8.0\NLog.dll
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\UP\UP\bin\Debug\net8.0\Serilog.dll

@@ -40,3 +40,8 @@ C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\UP\UP\obj\Debug\net8.0\UP.
 C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\UP\UP\obj\Debug\net8.0\ref\UP.dll
 C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\UP\UP\bin\Debug\net8.0\NLog.dll
 C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\UP\UP\bin\Debug\net8.0\Serilog.dll
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\UP\UP\bin\Debug\net8.0\System.Web.Cors.dll
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\UP\UP\bin\Debug\net8.0\System.Net.Http.Formatting.dll
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\UP\UP\bin\Debug\net8.0\System.Web.Http.dll
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\UP\UP\bin\Debug\net8.0\System.Web.Http.Cors.dll
+C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\UP\UP\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll

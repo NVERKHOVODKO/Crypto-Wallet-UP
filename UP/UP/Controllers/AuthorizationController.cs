@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using UP.DTO;
+using System.Web;
+using System.Web.Http.Cors; 
 
 namespace UP.Controllers
 {
     [Route("[controller]")]
+    //[System.Web.Http.Cors.EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AuthorizationController : ControllerBase
     {
         private readonly ILogger<AuthorizationController> _logger;
@@ -14,8 +17,8 @@ namespace UP.Controllers
             _logger = logger;
         }
         
-        [EnableCors]
         [HttpPost]
+        [System.Web.Http.Cors.EnableCors(origins: "*", headers: "*", methods: "*")]//разрешаю использовать
         public async Task<IActionResult> Login([FromBody] AuthenticationRequest request) {
             _logger.LogInformation($"Index request at {DateTime.Now:hh:mm:ss}");
             try

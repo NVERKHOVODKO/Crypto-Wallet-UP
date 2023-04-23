@@ -44,6 +44,10 @@
               "target": "Package",
               "version": "[1.0.7, )"
             },
+            "Microsoft.AspNet.WebApi.Cors": {
+              "target": "Package",
+              "version": "[5.3.0-preview1, )"
+            },
             "Microsoft.AspNetCore.SpaServices": {
               "target": "Package",
               "version": "[5.0.0-preview.8.20414.8, )"

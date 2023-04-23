@@ -9,13 +9,36 @@ namespace UP.Controllers
     [Route("[controller]")]
     public class CurrencyController : ControllerBase
     {
+        private readonly ILogger<CurrencyController> _logger;
+
+        public CurrencyController(ILogger<CurrencyController> logger)
+        {
+            _logger = logger;
+        }
+        
         [HttpGet, Route("getUserCoins")]
         public async Task<ActionResult> GetUserCoins(int userId)
         {
             try
             {
+                _logger.LogInformation($"Return user coinList. Id: " + userId);
                 var ur = new UserRepository();
                 return Ok(ur.GetUserCoins(userId));
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Error. Can't return coinList");
+            }
+        }
+        
+        [HttpGet, Route("getUserCoinsFull")]
+        public async Task<IActionResult> GetUserCoinsFull(int userId)
+        {
+            try
+            {
+                _logger.LogInformation($"Return user coinList. Id: " + userId);
+                var ur = new UserRepository();
+                return Ok(await ur.GetUserCoinsFull(userId));
             }
             catch (Exception e)
             {

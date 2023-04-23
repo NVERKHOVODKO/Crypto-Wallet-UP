@@ -2,6 +2,7 @@
 using System.Net.Sockets;
 using Npgsql;
 using UP.Models;
+using UP.Models.Base;
 
 namespace UP.Repositories;
 
@@ -149,6 +150,22 @@ public class UserRepository: RepositoryBase
             return coins;
         }
     }
+    
+    public async Task<List<CoinsInformation>> GetUserCoinsFull(int userId)
+    {
+        var coins = GetUserCoins(userId);
+        List<CoinsInformation>  coinsFull = new List<CoinsInformation>();
+        int i = 0;
+        var cr = new CurrencyRepository();
+        foreach (var coin in coins)
+        {
+            CoinsInformation temp = await cr.GetFullCoinInformation(coin.ShortName);
+            coinsFull.Add(new (i, coin.ShortName, temp.FullName, temp.IconPath, temp.DailyVolume, temp.DailyImpact, temp.Price, temp.PercentagePriceChangePerDay));
+            i++;
+        }
+
+        return coinsFull;
+    }
 
     public double GetCoinQuantityInUserWallet(int userId, string coinShortname)
     {
@@ -166,7 +183,7 @@ public class UserRepository: RepositoryBase
                 {
                     cmd.Parameters.AddWithValue("@userId", userId);
                     cmd.Parameters.AddWithValue("@coinShortname", coinShortname);
-                    using (var reader = cmd.ExecuteReader())
+                    using (var reader = cmd.ExecuteReader( ))
                     {
                         while (reader.Read())
                         {

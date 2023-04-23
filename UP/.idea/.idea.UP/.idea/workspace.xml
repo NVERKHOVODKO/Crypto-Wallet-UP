@@ -9,13 +9,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6241624-7c7a-4e8e-ad5a-bab9e517f10f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/UP/DTO/BuyCryptoRequest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UP/DTO/ConvertRequest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UP/DTO/SellCryptoRequest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UP/DTO/SendCryptoRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/Controllers/AdminController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/AdminController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/Controllers/TransactionController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/TransactionController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Controllers/AuthorizationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/AuthorizationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Controllers/CurrencyСontroller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/CurrencyСontroller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Models/CoinsInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Models/CoinsInformation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Repositories/CurrencyRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Repositories/CurrencyRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Repositories/UserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Repositories/UserRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/UP.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/UP/UP.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/bin/Debug/net8.0/UP.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/UP/bin/Debug/net8.0/UP.deps.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/bin/Debug/net8.0/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/bin/Debug/net8.0/UP.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/bin/Debug/net8.0/UP.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/UP/bin/Debug/net8.0/UP.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/ref/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/ref/UP.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/refint/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/refint/UP.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/UP.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/UP.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +46,8 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/UP/ClientApp/package-lock.json" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/911b49fdc09b4760818fecf967f28605b4e880/a1/1a2d8636/Action.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5b20caa11edefc0a29fd9d51441ec5312aec93f13c72f85f79a7bf134b12/CorsMiddlewareExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/UP/Controllers/AdminController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/UP/Repositories/AdminRepository.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -207,6 +228,13 @@
       <workItem from="1681817729926" duration="553000" />
       <workItem from="1681837103183" duration="2285000" />
       <workItem from="1681856692931" duration="888000" />
+      <workItem from="1681901018465" duration="421000" />
+      <workItem from="1681901458139" duration="12716000" />
+      <workItem from="1681936363841" duration="217000" />
+      <workItem from="1681937701814" duration="674000" />
+      <workItem from="1682173908001" duration="76000" />
+      <workItem from="1682245795736" duration="58000" />
+      <workItem from="1682245873280" duration="6424000" />
     </task>
     <servers />
   </component>

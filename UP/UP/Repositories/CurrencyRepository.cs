@@ -246,7 +246,7 @@ namespace UP.Repositories
             var dailyVolume = (double)priceData["VOLUME24HOUR"];
             
             double number = dailyVolume;
-            string formatted;
+            /*string formatted;
 
             if (number < 1000000)
             {
@@ -257,6 +257,7 @@ namespace UP.Repositories
                 formatted = (number / 1000000).ToString("0M");
             }
             Console.WriteLine(formatted);
+            */
             
             var price = (double)priceData["PRICE"];
             var previousPrice = price - priceChange;

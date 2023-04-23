@@ -67,7 +67,7 @@ namespace UP.Controllers
                 return BadRequest("Status not changed");
             }
         }
-        
+
         [EnableCors]
         [HttpGet, Route("getUserList")]
         public async Task<ActionResult> GetUserList()

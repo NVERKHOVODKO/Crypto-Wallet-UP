@@ -1,14 +1,6 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(
-        policy =>
-        {
-            policy.WithOrigins("http://example.com",
-                "http://www.contoso.com", "http://localhost:3000/Authorization", "http://localhost:3000").WithMethods("PUT", "POST", "GET");;
-        });
-});
+builder.Services.AddCors(opt => opt.AddDefaultPolicy(b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
 
 // Add services to the container.
 
@@ -37,4 +29,3 @@ app.UseCors();
 app.MapControllers();
 
 app.Run();
-

@@ -160,7 +160,7 @@ public class UserRepository: RepositoryBase
         foreach (var coin in coins)
         {
             CoinsInformation temp = await cr.GetFullCoinInformation(coin.ShortName);
-            coinsFull.Add(new (i, coin.ShortName, temp.FullName, temp.IconPath, temp.DailyVolume, temp.DailyImpact, temp.Price, temp.PercentagePriceChangePerDay));
+            coinsFull.Add(new (i, temp.ShortName, temp.FullName, temp.IconPath, temp.DailyVolume, temp.DailyImpact, temp.Price, temp.PercentagePriceChangePerDay));
             i++;
         }
 

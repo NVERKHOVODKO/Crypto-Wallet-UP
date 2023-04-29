@@ -10,8 +10,10 @@ public class CoinsInformation
     public double DailyImpact { get; set; }
     public double Price { get; set; }
     public double PercentagePriceChangePerDay { get; set; }
-
     
+    public double Quantity { get; set; }
+
+
     public CoinsInformation(int id, string fullName, string shortName, string iconPath, double dailyVolume, double dailyImpact, double price, double percentagePriceChangePerDay)
     {
         Id = id;
@@ -38,6 +40,16 @@ public class CoinsInformation
     public CoinsInformation()
     {
     }
-    
-    
+
+    public CoinsInformation(int id, string fullName, string shortName, double dailyVolume, double dailyImpact, double price, double percentagePriceChangePerDay, double quantity)
+    {
+        Id = id;
+        FullName = fullName;
+        ShortName = shortName;
+        DailyVolume = dailyVolume;
+        DailyImpact = dailyImpact;
+        Price = price;
+        PercentagePriceChangePerDay = percentagePriceChangePerDay;
+        Quantity = quantity;
+    }
 }

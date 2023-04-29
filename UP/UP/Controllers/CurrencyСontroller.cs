@@ -34,7 +34,10 @@ namespace UP.Controllers
         [HttpGet, Route("getUserCoinsFull")]
         public async Task<IActionResult> GetUserCoinsFull(int userId)
         {
-            try
+            _logger.LogInformation($"Return user coinList. Id: " + userId);
+            var ur = new UserRepository();
+            return Ok(await ur.GetUserCoinsFull(userId));
+            /*try
             {
                 _logger.LogInformation($"Return user coinList. Id: " + userId);
                 var ur = new UserRepository();
@@ -42,8 +45,9 @@ namespace UP.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogInformation($"Error. Can't return coinList");
                 return BadRequest("Error. Can't return coinList");
-            }
+            }*/
         }
         
         

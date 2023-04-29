@@ -10,12 +10,17 @@
   <component name="ChangeListManager">
     <list default="true" id="d6241624-7c7a-4e8e-ad5a-bab9e517f10f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/Controllers/AuthorizationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/AuthorizationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Controllers/CurrencyСontroller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/CurrencyСontroller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Controllers/TransactionController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/TransactionController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Models/CoinsInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Models/CoinsInformation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Repositories/CurrencyRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Repositories/CurrencyRepository.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/Repositories/UserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Repositories/UserRepository.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/bin/Debug/net8.0/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/bin/Debug/net8.0/UP.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/bin/Debug/net8.0/UP.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/UP/bin/Debug/net8.0/UP.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/ref/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/ref/UP.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/refint/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/refint/UP.dll" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +33,8 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/911b49fdc09b4760818fecf967f28605b4e880/a1/1a2d8636/Action.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5b20caa11edefc0a29fd9d51441ec5312aec93f13c72f85f79a7bf134b12/CorsMiddlewareExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6cc15bb238524366328027f6983c1afbcaf6a66e68aee75292cadfbd74effb98/Dictionary.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/fd95d879612718671e18e624f4f2c76dea6b83c7a262142ad2d3fa56bfffe54/List.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/UP/Controllers/AdminController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/UP/Repositories/AdminRepository.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -76,7 +83,7 @@
   <component name="RunManager" selected=".NET Launch Settings Profile.UP">
     <configuration name="UP" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/UP/UP.csproj" />
-      <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
+      <option name="LAUNCH_PROFILE_TFM" value="net8.0" />
       <option name="LAUNCH_PROFILE_NAME" value="UP" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <option name="USE_MONO" value="0" />
@@ -215,6 +222,22 @@
       <workItem from="1682173908001" duration="76000" />
       <workItem from="1682245795736" duration="58000" />
       <workItem from="1682245873280" duration="7822000" />
+      <workItem from="1682439475167" duration="59000" />
+      <workItem from="1682439562478" duration="1688000" />
+      <workItem from="1682516569745" duration="2537000" />
+      <workItem from="1682626536109" duration="15000" />
+      <workItem from="1682626594049" duration="1191000" />
+      <workItem from="1682662615053" duration="60000" />
+      <workItem from="1682662720658" duration="2691000" />
+      <workItem from="1682703861765" duration="1383000" />
+      <workItem from="1682747405547" duration="79000" />
+      <workItem from="1682747511693" duration="1152000" />
+      <workItem from="1682756301557" duration="628000" />
+      <workItem from="1682780679284" duration="33000" />
+      <workItem from="1682780734016" duration="41000" />
+      <workItem from="1682780799130" duration="109000" />
+      <workItem from="1682780925177" duration="1104000" />
+      <workItem from="1682795543234" duration="4418000" />
     </task>
     <servers />
   </component>

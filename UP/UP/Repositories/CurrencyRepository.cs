@@ -162,6 +162,12 @@ namespace UP.Repositories
             return price;
         }
         
+        public async Task<double> GetCoinQuantity(double quantityUSD, string shortName)
+        {
+            double price = await GetCoinPrice(1 , shortName);
+            return quantityUSD / price;
+        }
+        
         public async Task<double> GetUserBalance(int userId)
         {
             var ur = new UserRepository();

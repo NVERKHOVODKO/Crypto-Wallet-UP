@@ -16,6 +16,21 @@ namespace UP.Controllers
             _logger = logger;
         }
         
+        [HttpGet, Route("getCoinQuantity")]
+        public async Task<ActionResult> GetCoinQuantity(string coinName, double quantityUSD)
+        {
+            var cr = new Repositories.CurrencyRepository();
+            try
+            {
+                return Ok(await cr.GetCoinQuantity(quantityUSD, coinName));
+            }
+            catch(Exception)
+            {
+                _logger.LogInformation($"Unable to return coin quantity");
+                return BadRequest("Unable to return coin quantity");
+            }
+        }
+        
         [HttpGet, Route("getUserConversationsHistory")]
         public async Task<ActionResult> GetUserList(int id)
         {
@@ -110,10 +125,11 @@ namespace UP.Controllers
         [HttpPost, Route("buyCrypto")]
         public async Task<ActionResult> BuyCrypto([FromBody] BuyCryptoRequest request)
         {
-            try
+            /*try
             {
                 if (request.Quantity == 0)
                 {
+                    _logger.LogInformation($"Quantity must be above than zero");
                     return UnprocessableEntity("Quantity must be above than zero");
                 }
                 var ur = new Repositories.UserRepository();
@@ -121,10 +137,39 @@ namespace UP.Controllers
                 double quantityUSDTInUserWallet = ur.GetCoinQuantityInUserWallet(request.UserId, "usdt");
                 if (quantityUSDTInUserWallet < await cr.GetCoinPrice(request.Quantity, request.CoinName))
                 {
+                    _logger.LogInformation($"Not enough balance");
                     return UnprocessableEntity("Not enough balance");
                 }
                 cr.SubtractCoinFromUser(request.UserId, "usdt", await cr.GetCoinPrice(request.Quantity, request.CoinName));
                 cr.AddCryptoToUserWallet(request.UserId, request.CoinName, request.Quantity);
+                _logger.LogInformation($"UserId(" + request.UserId + ") bought " + request.Quantity + " " + request.CoinName);
+                return Ok("Transaction completed successfully");
+            }
+            catch (Exception e)
+            {
+                _logger.LogInformation($"Transaction wasn't completed");
+                return BadRequest("Transaction wasn't completed");
+            }*/
+            try
+            {
+                _logger.LogInformation($"UserId:" + request.UserId + "\nCoin quantity:" + request.Quantity + "\nCoin name: " + request.CoinName);
+                if (request.Quantity == 0)
+                {
+                    _logger.LogInformation($"Quantity must be above than zero");
+                    return UnprocessableEntity("Quantity must be above than zero");
+                }
+                var ur = new Repositories.UserRepository();
+                var cr = new Repositories.CurrencyRepository();
+                double quantityUSDTInUserWallet = ur.GetCoinQuantityInUserWallet(request.UserId, "usdt");
+                if (quantityUSDTInUserWallet < request.Quantity)
+                {
+                    _logger.LogInformation($"Not enough balance");
+                    return UnprocessableEntity("Not enough balance");
+                }
+                cr.SubtractCoinFromUser(request.UserId, "usdt", await cr.GetCoinPrice(request.Quantity, request.CoinName));
+                double coinQuantity = await cr.GetCoinQuantity(request.Quantity, request.CoinName);
+                cr.AddCryptoToUserWallet(request.UserId, request.CoinName, coinQuantity);
+                _logger.LogInformation($"UserId(" + request.UserId + ") bought " + coinQuantity + " " + request.CoinName);
                 return Ok("Transaction completed successfully");
             }
             catch (Exception e)

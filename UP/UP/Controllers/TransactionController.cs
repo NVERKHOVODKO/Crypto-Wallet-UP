@@ -165,7 +165,7 @@ namespace UP.Controllers
                     _logger.LogInformation($"Not enough balance");
                     return UnprocessableEntity("Not enough balance");
                 }
-                cr.SubtractCoinFromUser(request.UserId, "usdt", await cr.GetCoinPrice(request.Quantity, request.CoinName));
+                cr.SubtractCoinFromUser(request.UserId, "usdt", request.Quantity);
                 double coinQuantity = await cr.GetCoinQuantity(request.Quantity, request.CoinName);
                 cr.AddCryptoToUserWallet(request.UserId, request.CoinName, coinQuantity);
                 _logger.LogInformation($"UserId(" + request.UserId + ") bought " + coinQuantity + " " + request.CoinName);

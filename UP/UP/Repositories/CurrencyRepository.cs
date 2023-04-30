@@ -121,9 +121,8 @@ namespace UP.Repositories
         public async void SellCrypto(int userId, string shortname, double quantityForSale)
         {
             var ur = new UserRepository();
-            var cr = new CurrencyRepository();
             double quantityInUserWallet = ur.GetCoinQuantityInUserWallet(userId, "usdt");
-            if (await cr.GetCoinPrice(quantityInUserWallet, "usdt") < await cr.GetCoinPrice(quantityForSale, shortname))
+            if (await GetCoinPrice(quantityInUserWallet, "usdt") < await GetCoinPrice(quantityForSale, shortname))
             {
                 return;
             }
@@ -132,12 +131,14 @@ namespace UP.Repositories
         
         public void SubtractCoinFromUser(int userId, string shortname, double quantityForSubtract)
         {
+            Console.WriteLine("Id: " + userId + " Name: " + shortname + " quantityForSubtract: " + quantityForSubtract);
             var ur = new UserRepository();
             List<Coin> coins = ur.GetUserCoins(userId);
             int coinId = GetPurchasedCoinId(coins, shortname);
             int coinIdInTheList = GetPurchasedCoinNumberInTheList(coins, shortname);
             if (coinId != -1)
             {
+                Console.WriteLine("Id: " + coins[coinIdInTheList].Id + " Quantity: " + coins[coinIdInTheList].Quantity + " ShortName: " + coins[coinIdInTheList].ShortName);
                 var coin = new Coin(coins[coinIdInTheList].Id, coins[coinIdInTheList].Quantity, coins[coinIdInTheList].ShortName);
                 double finalQuantity = coin.Quantity - quantityForSubtract;
                 if (finalQuantity == 0) {
@@ -150,7 +151,6 @@ namespace UP.Repositories
         
         public async Task<double> GetCoinPrice(double quantity, string shortName)
         {
-            string apiKey = "4da2c4791b9c285b22c1bf08bc36f304ab2ca80bc901504742b9a42a814c4614";
             using var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("X-MBX-APIKEY", apiKey);
             string url = $"https://min-api.cryptocompare.com/data/price?fsym=" + shortName + "&tsyms=USD";
@@ -194,7 +194,6 @@ namespace UP.Repositories
         //3 sec
         public async Task<double> GetDailyPriceImpact(string shortName)
         {
-            string apiKey = "4da2c4791b9c285b22c1bf08bc36f304ab2ca80bc901504742b9a42a814c4614";
             using var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("X-MBX-APIKEY", apiKey);
             string url = $"https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" + shortName + "&tsyms=USD";
@@ -227,7 +226,6 @@ namespace UP.Repositories
         }*/
         
         private static readonly HttpClient httpClient = new HttpClient();
-        private const string ApiKey = "4da2c4791b9c285b22c1bf08bc36f304ab2ca80bc901504742b9a42a814c4614";
         private const string CryptoCompareApiUrl = "https://min-api.cryptocompare.com";
 
         public async Task<CoinsInformation> GetFullCoinInformation(string shortName)
@@ -237,7 +235,7 @@ namespace UP.Repositories
 
             string url = $"{CryptoCompareApiUrl}/data/pricemultifull?fsyms={shortName}&tsyms=USD";
             using var request = new HttpRequestMessage(HttpMethod.Get, url);
-            request.Headers.Add("X-MBX-APIKEY", ApiKey);
+            request.Headers.Add("X-MBX-APIKEY", apiKey);
             using var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
 
             if (!response.IsSuccessStatusCode)

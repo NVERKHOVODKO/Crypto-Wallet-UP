@@ -250,21 +250,7 @@ namespace UP.Repositories
             var priceData = data["RAW"][shortName.ToUpper()]["USD"];
             var priceChange = (double)priceData["CHANGEDAY"];
             var dailyVolume = (double)priceData["VOLUME24HOUR"];
-            
             double number = dailyVolume;
-            /*string formatted;
-
-            if (number < 1000000)
-            {
-                formatted = (number / 1000).ToString("0K");
-            }
-            else
-            {
-                formatted = (number / 1000000).ToString("0M");
-            }
-            Console.WriteLine(formatted);
-            */
-            
             var price = (double)priceData["PRICE"];
             var previousPrice = price - priceChange;
             var percentagePriceChangePerDay = (priceChange / previousPrice) * 100;

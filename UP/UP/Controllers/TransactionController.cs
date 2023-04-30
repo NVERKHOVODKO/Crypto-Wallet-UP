@@ -66,14 +66,14 @@ namespace UP.Controllers
         {
             try
             {
+                _logger.LogInformation($"User:" + request.UserId + "Converted " + request.Quantity + " " + request.ShortNameStart + " to " + request.ShortNameFinal);
                 if (request.Quantity == 0)
                 {
+                    _logger.LogInformation($"Error. Quantity must be above than zero");
                     return BadRequest("Error. Quantity must be above than zero");
                 }
-                
                 // TODO govnokod
                 //double priceRatio = await GetPriceRatio(shortNameStart, shortNameFinal);
-                
                 string apiKey = "4da2c4791b9c285b22c1bf08bc36f304ab2ca80bc901504742b9a42a814c4614";
                 using var httpClient = new HttpClient();
                 httpClient.DefaultRequestHeaders.Add("X-MBX-APIKEY", apiKey);
@@ -81,15 +81,13 @@ namespace UP.Controllers
                 var response = await httpClient.GetAsync(url);
                 var responseContent = await response.Content.ReadAsStringAsync();
                 JObject json = JObject.Parse(responseContent);
-
                 double priceRatio =   (double)json[request.ShortNameFinal.ToUpper()];
-                
-                //double priceRatio = 1;
                 double finalQuantity = priceRatio * request.Quantity;
                 var ur = new Repositories.UserRepository();
                 double startCoinQuantityInUserWallet = ur.GetCoinQuantityInUserWallet(request.UserId, request.ShortNameStart);
                 if (startCoinQuantityInUserWallet < request.Quantity)
                 {
+                    _logger.LogInformation($"The user doesn't have enough coins to complete the conversion");
                     return BadRequest("The user doesn't have enough coins to complete the conversion");
                 }
                 var cr = new Repositories.CurrencyRepository();
@@ -98,6 +96,7 @@ namespace UP.Controllers
                 var tr = new Repositories.TransactionsRepository();
                 tr.WriteNewConversionDataToDatabase(new Conversion(1, 0, request.Quantity, finalQuantity, await cr.GetCoinPrice(request.Quantity, request.ShortNameStart),
                     request.ShortNameStart, request.ShortNameFinal, request.UserId, DateTime.Now));
+                _logger.LogInformation($"Converted successfully");
                 return Ok("Converted successfully");
             }
             catch (Exception e)
@@ -214,12 +213,15 @@ namespace UP.Controllers
         {
             try
             {
+                _logger.LogInformation($"Sended: " + request.QuantityForSend + " " + request.CoinName + " by user( " + request.SenderId + ") to user(" + request.ReceiverId + ")");
                 if (request.ReceiverId == request.SenderId)
                 {
+                    _logger.LogInformation($"You can't send cryptocurrency to yourself");
                     return UnprocessableEntity("You can't send cryptocurrency to yourself");
                 }
                 if (request.QuantityForSend == 0)
                 {
+                    _logger.LogInformation($"Quantity must be above than zero");
                     return UnprocessableEntity("Quantity must be above than zero");
                 }
                 var ur = new Repositories.UserRepository();
@@ -227,11 +229,13 @@ namespace UP.Controllers
                 double quantityInUserWallet = ur.GetCoinQuantityInUserWallet(request.SenderId, request.CoinName);
                 if (quantityInUserWallet < request.QuantityForSend)
                 {
+                    _logger.LogInformation($"Not enough coins");
                     return UnprocessableEntity("Not enough coins");
                 }
                 cr.SubtractCoinFromUser(request.SenderId, request.CoinName, request.QuantityForSend);
                 cr.AddCryptoToUserWallet(request.ReceiverId, request.CoinName, request.QuantityForSend);
                 cr.WriteTransactionToDatabase(request.CoinName, request.QuantityForSend, request.SenderId, request.ReceiverId);
+                _logger.LogInformation($"Transfer completed successfully");
                 return Ok("Transfer completed successfully");
             }
             catch (Exception e)

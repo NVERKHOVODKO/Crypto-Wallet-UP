@@ -66,6 +66,21 @@ namespace UP.Controllers
             }
         }
         
+        [HttpGet, Route("getCoinQuantityInUserWallet")]
+        public async Task<ActionResult> GetCoinQuantityInUserWallet(int userId, string coinName)
+        {
+            try
+            {
+                var ur = new UserRepository();
+                double quantity = ur.GetCoinQuantityInUserWallet(userId, coinName);
+                return Ok(quantity);
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Error. Can't return quantity");
+            }
+        }
+        
         
         [HttpGet, Route("getCoinPrice")]
         public async Task<ActionResult> GetCoinPrice(double quantity, string coinName)

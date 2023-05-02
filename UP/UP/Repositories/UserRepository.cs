@@ -328,6 +328,11 @@ public class UserRepository: RepositoryBase
     
     public void ChangeUserPassword(int id, string password)
     {
+        var ar = new Repositories.AuthorizationRepository();
+        var ur = new Repositories.UserRepository();
+        Models.User user = GetUserById(id);
+        password = Convert.ToString(ar.Hash(password));
+        password = Convert.ToString(ar.Hash(password + user.Salt));
         using var connection = new NpgsqlConnection(connectionString);
         var sql = "UPDATE users SET password = @password WHERE id = @id";
         using var command = new NpgsqlCommand(sql, connection);

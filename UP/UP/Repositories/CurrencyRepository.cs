@@ -282,5 +282,20 @@ namespace UP.Repositories
             command.ExecuteNonQuery();
             CloseConnection(connection);
         }
+        
+        public void WriteWithdrawToDatabase(double quantity, double commission, int userId)
+        {
+            using var connection = new NpgsqlConnection(connectionString);
+            var sql = "INSERT INTO withdrawals (date, quantity, commission, user_id) VALUES " +
+                      "(@date, @quantity, @quantity, @user_id)";
+            using var command = new NpgsqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@quantity", quantity);
+            command.Parameters.AddWithValue("@commission", commission);
+            command.Parameters.AddWithValue("@date", DateTime.Now);
+            command.Parameters.AddWithValue("@user_id", userId);
+            OpenConnection(connection);
+            command.ExecuteNonQuery();
+            CloseConnection(connection);
+        }
     }
 }

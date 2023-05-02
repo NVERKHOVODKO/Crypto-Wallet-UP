@@ -3,7 +3,7 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.48">
     <root id="1">
       <DateStyle>dmy</DateStyle>
-      <IntrospectionStateNumber>2269</IntrospectionStateNumber>
+      <IntrospectionStateNumber>2384</IntrospectionStateNumber>
       <ServerVersion>14.7</ServerVersion>
       <StartupTime>1682843548</StartupTime>
       <TimeZones>true ACDT
@@ -817,7 +817,7 @@ false Zulu
 13388||10|C|G
 13388||-9223372036854775808|U|G
 13388||10|U|G</Grants>
-      <IntrospectionStateNumber>2269</IntrospectionStateNumber>
+      <IntrospectionStateNumber>2384</IntrospectionStateNumber>
       <ObjectId>13754</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
@@ -7631,7 +7631,7 @@ false Zulu
     <schema id="509" parent="3" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>2269</IntrospectionStateNumber>
+      <IntrospectionStateNumber>2384</IntrospectionStateNumber>
       <ObjectId>2200</ObjectId>
       <StateNumber>527</StateNumber>
       <OwnerName>postgres</OwnerName>
@@ -7683,7 +7683,7 @@ false Zulu
     <sequence id="515" parent="509" name="login_history_id_seq">
       <DasType>bigint|0s</DasType>
       <ObjectId>16810</ObjectId>
-      <SequenceIdentity>1(201)</SequenceIdentity>
+      <SequenceIdentity>1(214)</SequenceIdentity>
       <StartValue>1</StartValue>
       <StateNumber>984</StateNumber>
       <OwnerName>postgres</OwnerName>
@@ -7701,7 +7701,7 @@ false Zulu
       <Cycled>1</Cycled>
       <DasType>bigint|0s</DasType>
       <ObjectId>16938</ObjectId>
-      <SequenceIdentity>0(12)</SequenceIdentity>
+      <SequenceIdentity>0(33)</SequenceIdentity>
       <StartValue>0</StartValue>
       <StateNumber>1594</StateNumber>
       <OwnerName>postgres</OwnerName>
@@ -7799,7 +7799,7 @@ false Zulu
     </table>
     <table id="532" parent="509" name="withdrawals">
       <ObjectId>16472</ObjectId>
-      <StateNumber>930</StateNumber>
+      <StateNumber>2383</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
@@ -8532,11 +8532,11 @@ false Zulu
       <TypeId>20</TypeId>
     </column>
     <column id="625" parent="532" name="date">
-      <DasType>date|0s</DasType>
+      <DasType>timestamp|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>794</StateNumber>
-      <TypeId>1082</TypeId>
+      <StateNumber>2383</StateNumber>
+      <TypeId>1114</TypeId>
     </column>
     <column id="626" parent="532" name="quantity">
       <DasType>double precision|0s</DasType>
@@ -8576,7 +8576,7 @@ false Zulu
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16760</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>930</StateNumber>
+      <StateNumber>2383</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>

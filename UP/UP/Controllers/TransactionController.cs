@@ -253,6 +253,18 @@ namespace UP.Controllers
             _logger.LogInformation($"Replenishment from user(" + request.UserId + "): " + request.QuantityUsd + "$");
             try
             {
+                if (request.QuantityUsd == null)
+                {
+                    return BadRequest("Quantity can't null");
+                }
+                if (request.QuantityUsd == 0)
+                {
+                    return BadRequest("Quantity can't be zero");
+                }
+                if (request.QuantityUsd < 0)
+                {
+                    return BadRequest("Quantity can't be less than zero");
+                }
                 tr.ReplenishTheBalance(request.UserId, request.QuantityUsd);
                 _logger.LogInformation($"Balance replenished successfully");
                 return Ok("Balance replenished successfully");
@@ -284,6 +296,7 @@ namespace UP.Controllers
                     return UnprocessableEntity("Not enough balance");
                 }
                 cr.SubtractCoinFromUser(request.UserId, "usdt", request.QuantityForWithdraw);
+                cr.WriteWithdrawToDatabase(request.QuantityForWithdraw, request.QuantityForWithdraw * 0.02, request.UserId);
                 return Ok("Transaction was successful");
             }
             catch(Exception)

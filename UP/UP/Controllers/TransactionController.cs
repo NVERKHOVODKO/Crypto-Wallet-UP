@@ -247,12 +247,14 @@ namespace UP.Controllers
         
         
         [HttpPost, Route("replenishTheBalance")]
-        public async Task<ActionResult> ReplenishTheBalance(int userId, double quantityUsd)
+        public async Task<ActionResult> ReplenishTheBalance([FromBody] DTO.ReplenishTheBalanceRequest request)
         {
             var tr = new Repositories.TransactionsRepository();
+            _logger.LogInformation($"Replenishment from user(" + request.UserId + "): " + request.QuantityUsd + "$");
             try
             {
-                tr.ReplenishTheBalance(userId, quantityUsd);
+                tr.ReplenishTheBalance(request.UserId, request.QuantityUsd);
+                _logger.LogInformation($"Balance replenished successfully");
                 return Ok("Balance replenished successfully");
             }
             catch(Exception)
@@ -263,24 +265,25 @@ namespace UP.Controllers
         }
         
         [HttpPut, Route("withdrawUSDT")]
-        public async Task<ActionResult> WithdrawUSDT(int userId, double quantityForWithdraw)
+        public async Task<ActionResult> WithdrawUSDT([FromBody] DTO.WithdrawRequest request)
         {
             var tr = new Repositories.TransactionsRepository();
+            _logger.LogInformation($"Withdraw from user(" + request.UserId + "): " + request.QuantityForWithdraw + "$");
             try
             {
-                if (quantityForWithdraw == 0)
+                if (request.QuantityForWithdraw == 0)
                 {
                     return UnprocessableEntity("Quantity must be above than zero");
                 }
                 var ur = new Repositories.UserRepository();
                 var cr = new Repositories.CurrencyRepository();
-                double quantityInUserWallet = ur.GetCoinQuantityInUserWallet(userId, "usdt");
-                if (quantityInUserWallet < quantityForWithdraw)
+                double quantityInUserWallet = ur.GetCoinQuantityInUserWallet(request.UserId, "usdt");
+                if (quantityInUserWallet < request.QuantityForWithdraw)
                 {
                     _logger.LogInformation($"Not enough balance");
                     return UnprocessableEntity("Not enough balance");
                 }
-                cr.SubtractCoinFromUser(userId, "usdt", quantityForWithdraw);
+                cr.SubtractCoinFromUser(request.UserId, "usdt", request.QuantityForWithdraw);
                 return Ok("Transaction was successful");
             }
             catch(Exception)

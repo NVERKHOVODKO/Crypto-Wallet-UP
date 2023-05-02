@@ -67,7 +67,32 @@ public class UserRepository: RepositoryBase
         return passwords;
     }
     
-    public void WriteNewUserToDatabase(string login, string password, string email)
+    public List<LoginHistory> GetUserLoginHistory(int userId)
+    {
+        NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+        List<LoginHistory> loginHistory = new List<LoginHistory>();
+        connection.Open();
+        var sql = "SELECT * FROM login_history WHERE user_id = @user_id ORDER BY id DESC";
+        using (var command = new NpgsqlCommand(sql, connection))
+        {
+            command.Parameters.AddWithValue("user_id", userId);
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int id = reader.GetInt32(0);
+                    string ip = reader.GetString(1);
+                    DateTime date = reader.GetDateTime(2);
+                    int userIdRead = reader.GetInt32(3);
+                    loginHistory.Add(new LoginHistory(id, ip, date, userIdRead));
+                }
+            }
+        }
+        connection.Close();
+        return loginHistory;
+    }
+    
+    public void WriteNewUserToDatabase(string login, string password)
     {
         var ar = new AuthorizationRepository();
         string salt = ar.GetSalt();
@@ -75,7 +100,7 @@ public class UserRepository: RepositoryBase
         password = Convert.ToString(ar.Hash(password + salt));
         DateTime curDateTime = DateTime.Now;
         DateTime modificationDateTime = DateTime.Now;
-        var user = new User(1, login, password, email, curDateTime, 
+        var user = new User(1, login, password, "emailAdress", curDateTime, 
             modificationDateTime, false, false, 1, salt);
         using var connection = new NpgsqlConnection(connectionString);
         var sql = "INSERT INTO users (login, password, email, creation_date, modification_date, is_deleted, is_blocked, role_id, salt) " +
@@ -288,6 +313,47 @@ public class UserRepository: RepositoryBase
         UpdateModificationDate(id);
     }
         
+    public void ChangeUserLogin(int id, string login)
+    {
+        using var connection = new NpgsqlConnection(connectionString);
+        var sql = "UPDATE users SET login = @login WHERE id = @id";
+        using var command = new NpgsqlCommand(sql, connection);
+        command.Parameters.AddWithValue("@id", id);
+        command.Parameters.AddWithValue("@login", login);
+        OpenConnection(connection);
+        command.ExecuteNonQuery();
+        CloseConnection(connection);
+        UpdateModificationDate(id);
+    }
+    
+    public void ChangeUserPassword(int id, string password)
+    {
+        using var connection = new NpgsqlConnection(connectionString);
+        var sql = "UPDATE users SET password = @password WHERE id = @id";
+        using var command = new NpgsqlCommand(sql, connection);
+        command.Parameters.AddWithValue("@id", id);
+        command.Parameters.AddWithValue("@password", password);
+        OpenConnection(connection);
+        command.ExecuteNonQuery();
+        CloseConnection(connection);
+        UpdateModificationDate(id);
+    }
+    
+    public void ChangeUserEmail(int id, string email)
+    {
+        using var connection = new NpgsqlConnection(connectionString);
+        var sql = "UPDATE users SET email = @email WHERE id = @id";
+        using var command = new NpgsqlCommand(sql, connection);
+        command.Parameters.AddWithValue("@id", id);
+        command.Parameters.AddWithValue("@email", email);
+        OpenConnection(connection);
+        command.ExecuteNonQuery();
+        CloseConnection(connection);
+        UpdateModificationDate(id);
+    }
+    
+    
+    
     public void DeleteUser(int id)
     {
         using var connection = new NpgsqlConnection(connectionString);

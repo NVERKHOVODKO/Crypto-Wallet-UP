@@ -7,14 +7,40 @@ namespace UP.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase 
     {
-        [HttpPut, Route("editUser")]
-        public async Task<ActionResult> EditUser(int id, Models.User user)
+        private readonly ILogger<UserController> _logger;
+
+        public UserController(ILogger<UserController> logger)
         {
+            _logger = logger;
+        }
+        
+        [HttpPut, Route("editUser")]
+        public async Task<ActionResult> EditUser([FromBody] DTO.EditUserRequest request)
+        {
+            _logger.LogInformation($"Edit: login: (" + request.Login + ")\npassword: (" + request.Password + ")\npasswordRep: (" + request.PasswordRepeat + ")\nemail: " + request.Email);
             var ur = new Repositories.UserRepository();
             try
             {
-                ur.EditUser(id, user);
-                return Ok("Status changed");
+                if (request.Login != null)
+                {
+                    ur.ChangeUserLogin(request.Id, request.Login);
+                }
+                if (request.Password != null)
+                {
+                    if (request.Password == request.PasswordRepeat)
+                    {
+                        ur.ChangeUserPassword(request.Id, request.Password);
+                    }
+                    else
+                    {
+                        return BadRequest("Passwords are doesn't match");
+                    }
+                }
+                if (request.Email != null)
+                {
+                    ur.ChangeUserEmail(request.Id, request.Email);
+                }
+                return Ok("User edited");
             }
             catch(Exception)
             {
@@ -36,6 +62,21 @@ namespace UP.Controllers
             catch(Exception)
             {
                 return BadRequest("Can't get user's previous passwords");
+            }
+        }
+        
+        [HttpGet, Route("getUserLoginHistory")]
+        public async Task<IActionResult> GetUserLoginHistory(int id)
+        {
+            var ur = new Repositories.UserRepository();
+            try
+            {
+                var loginHistories = ur.GetUserLoginHistory(id);
+                return Ok(loginHistories);
+            }
+            catch(Exception)
+            {
+                return BadRequest("Can't return user's login history");
             }
         }
 

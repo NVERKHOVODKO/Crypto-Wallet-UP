@@ -57,25 +57,26 @@ namespace UP.Controllers
         public async Task<IActionResult> RegisterNewUser([FromBody] RegisterRequest request) {
             try
             {
+                _logger.LogInformation($"Login: " + request.Login + "\nPassword: " + request.Password + "\nPasswordRep: " + request.PasswordRepeat);
                 if (request.Password.Length < 4)
                 {
+                    _logger.LogInformation($"Passwords must be more that 4 symbols");
                     return UnprocessableEntity("Passwords must be more that 4 symbols");
                 }
                 if (request.Password != request.PasswordRepeat)
                 {
+                    _logger.LogInformation($"Passwords doesn't match");
                     return UnprocessableEntity("Passwords doesn't match");
                 }
                 var ur = new Repositories.UserRepository();
                 if (ur.IsLoginUnique(request.Login))
                 {
+                    _logger.LogInformation($"Username already used");
                     return UnprocessableEntity("Username already used");
                 }
                 var ar = new Repositories.AuthorizationRepository();
-                if (!ar.IsValidEmail(request.Email))
-                {
-                    return UnprocessableEntity("Email isn't correct");
-                }
-                ur.WriteNewUserToDatabase(request.Login, request.Password, request.Email);
+                ur.WriteNewUserToDatabase(request.Login, request.Password);
+                _logger.LogInformation($"User created successfully");
                 _logger.LogInformation($"User created successfully");
                 return Ok("User created successfully");
             }

@@ -82,6 +82,7 @@ namespace UP.Controllers
                     return BadRequest("The user doesn't have enough coins to complete the conversion");
                 }
                 var cr = new Repositories.CurrencyRepository();
+                _logger.LogInformation($"User:" + userId + "Converted " + quantity + "(" + shortNameStart + ") to " + shortNameFinal + "(" + finalQuantity + ")");
                 return Ok(finalQuantity);
             }
             catch (Exception e)

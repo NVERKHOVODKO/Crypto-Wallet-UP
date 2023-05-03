@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using UP.Models;
 using UP.Models.Base;
 using UP.Repositories;
@@ -48,6 +49,46 @@ namespace UP.Controllers
                 _logger.LogInformation($"Error. Can't return coinList");
                 return BadRequest("Error. Can't return coinList");
             }*/
+        }
+        
+        
+        [HttpGet, Route("getQuantityAfterConversion")]
+        public async Task<IActionResult> GetQuantityAfterConversion(string shortNameStart, string shortNameFinal, double quantity, int userId)
+        {
+            try
+            {
+                _logger.LogInformation($"User:" + userId + "Converted " + quantity + " " + shortNameStart + " to " + shortNameFinal);
+                if (quantity == 0)
+                {
+                    _logger.LogInformation($"Error. Quantity must be above than zero");
+                    return BadRequest("Error. Quantity must be above than zero");
+                }
+                // TODO govnokod
+                //double priceRatio = await GetPriceRatio(shortNameStart, shortNameFinal);
+                string apiKey = "4da2c4791b9c285b22c1bf08bc36f304ab2ca80bc901504742b9a42a814c4614";
+                using var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Add("X-MBX-APIKEY", apiKey);
+                string url = $"https://min-api.cryptocompare.com/data/price?fsym=" + shortNameStart + "&tsyms=" + shortNameFinal;
+                var response = await httpClient.GetAsync(url);
+                var responseContent = await response.Content.ReadAsStringAsync();
+                JObject json = JObject.Parse(responseContent);
+                double priceRatio =   (double)json[shortNameFinal.ToUpper()];
+                double finalQuantity = priceRatio * quantity;
+                var ur = new Repositories.UserRepository();
+                double startCoinQuantityInUserWallet = ur.GetCoinQuantityInUserWallet(userId, shortNameStart);
+                if (startCoinQuantityInUserWallet < quantity)
+                {
+                    _logger.LogInformation($"The user doesn't have enough coins to complete the conversion");
+                    return BadRequest("The user doesn't have enough coins to complete the conversion");
+                }
+                var cr = new Repositories.CurrencyRepository();
+                return Ok(finalQuantity);
+            }
+            catch (Exception e)
+            {
+                _logger.LogInformation($"Error. Currencies have not been converted");
+                return BadRequest("Error. Currencies have not been converted");
+            }
         }
         
         

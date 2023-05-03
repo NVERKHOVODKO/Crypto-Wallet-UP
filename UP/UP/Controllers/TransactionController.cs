@@ -72,6 +72,11 @@ namespace UP.Controllers
                     _logger.LogInformation($"Error. Quantity must be above than zero");
                     return BadRequest("Error. Quantity must be above than zero");
                 }
+                if (request.Quantity < 0)
+                {
+                    _logger.LogInformation($"Error. Quantity must be above than zero");
+                    return BadRequest("Error. Quantity must be above than zero");
+                }
                 // TODO govnokod
                 //double priceRatio = await GetPriceRatio(shortNameStart, shortNameFinal);
                 string apiKey = "4da2c4791b9c285b22c1bf08bc36f304ab2ca80bc901504742b9a42a814c4614";
@@ -189,6 +194,11 @@ namespace UP.Controllers
                     _logger.LogInformation($"Quantity must be above than zero");
                     return UnprocessableEntity("Quantity must be above than zero");
                 }
+                if (request.QuantityForSell < 0)
+                {
+                    _logger.LogInformation($"Quantity must be above than zero");
+                    return BadRequest("Quantity must be above than zero");
+                }
                 var ur = new Repositories.UserRepository();
                 var cr = new Repositories.CurrencyRepository();
                 double quantityInUserWallet = ur.GetCoinQuantityInUserWallet(request.UserId, request.CoinName);
@@ -220,6 +230,11 @@ namespace UP.Controllers
                     return UnprocessableEntity("You can't send cryptocurrency to yourself");
                 }
                 if (request.QuantityForSend == 0)
+                {
+                    _logger.LogInformation($"Quantity must be above than zero");
+                    return UnprocessableEntity("Quantity must be above than zero");
+                }
+                if (request.QuantityForSend < 0)
                 {
                     _logger.LogInformation($"Quantity must be above than zero");
                     return UnprocessableEntity("Quantity must be above than zero");
@@ -287,6 +302,11 @@ namespace UP.Controllers
                 {
                     return UnprocessableEntity("Quantity must be above than zero");
                 }
+                if (request.QuantityForWithdraw < 0)
+                {
+                    _logger.LogInformation($"Quantity must be above than zero");
+                    return UnprocessableEntity("Quantity must be above than zero");
+                }
                 var ur = new Repositories.UserRepository();
                 var cr = new Repositories.CurrencyRepository();
                 double quantityInUserWallet = ur.GetCoinQuantityInUserWallet(request.UserId, "usdt");
@@ -296,7 +316,7 @@ namespace UP.Controllers
                     return UnprocessableEntity("Not enough balance");
                 }
                 cr.SubtractCoinFromUser(request.UserId, "usdt", request.QuantityForWithdraw);
-                cr.WriteWithdrawToDatabase(request.QuantityForWithdraw, request.QuantityForWithdraw * 0.02, request.UserId);
+                cr.WriteWithdrawToDatabase(request.QuantityForWithdraw, (request.QuantityForWithdraw * 0.02), request.UserId);
                 return Ok("Transaction was successful");
             }
             catch(Exception)

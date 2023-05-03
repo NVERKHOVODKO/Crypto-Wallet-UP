@@ -287,7 +287,7 @@ namespace UP.Repositories
         {
             using var connection = new NpgsqlConnection(connectionString);
             var sql = "INSERT INTO withdrawals (date, quantity, commission, user_id) VALUES " +
-                      "(@date, @quantity, @quantity, @user_id)";
+                      "(@date, @quantity, @commission, @user_id)";
             using var command = new NpgsqlCommand(sql, connection);
             command.Parameters.AddWithValue("@quantity", quantity);
             command.Parameters.AddWithValue("@commission", commission);

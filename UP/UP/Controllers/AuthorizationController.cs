@@ -18,10 +18,10 @@ namespace UP.Controllers
         }
         
         [HttpPost]
-        [System.Web.Http.Cors.EnableCors(origins: "*", headers: "*", methods: "*")]//разрешаю использовать
         public async Task<IActionResult> Login([FromBody] AuthenticationRequest request) {
             _logger.LogInformation($"Index request at {DateTime.Now:hh:mm:ss}");
             _logger.LogInformation($"Login: " + request.Login);
+            _logger.LogInformation($"Password: " + request.Password);
             try
             {
                 var ur = new Repositories.UserRepository();

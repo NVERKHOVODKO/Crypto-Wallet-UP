@@ -58,13 +58,6 @@ namespace UP.Controllers
             try
             {
                 _logger.LogInformation($"User:" + userId + "Converted " + quantity + " " + shortNameStart + " to " + shortNameFinal);
-                if (quantity == 0)
-                {
-                    _logger.LogInformation($"Error. Quantity must be above than zero");
-                    return BadRequest("Error. Quantity must be above than zero");
-                }
-                // TODO govnokod
-                //double priceRatio = await GetPriceRatio(shortNameStart, shortNameFinal);
                 string apiKey = "4da2c4791b9c285b22c1bf08bc36f304ab2ca80bc901504742b9a42a814c4614";
                 using var httpClient = new HttpClient();
                 httpClient.DefaultRequestHeaders.Add("X-MBX-APIKEY", apiKey);
@@ -75,13 +68,6 @@ namespace UP.Controllers
                 double priceRatio =   (double)json[shortNameFinal.ToUpper()];
                 double finalQuantity = priceRatio * quantity;
                 var ur = new Repositories.UserRepository();
-                double startCoinQuantityInUserWallet = ur.GetCoinQuantityInUserWallet(userId, shortNameStart);
-                if (startCoinQuantityInUserWallet < quantity)
-                {
-                    _logger.LogInformation($"The user doesn't have enough coins to complete the conversion");
-                    return BadRequest("The user doesn't have enough coins to complete the conversion");
-                }
-                var cr = new Repositories.CurrencyRepository();
                 _logger.LogInformation($"User:" + userId + "Converted " + quantity + "(" + shortNameStart + ") to " + shortNameFinal + "(" + finalQuantity + ")");
                 return Ok(finalQuantity);
             }

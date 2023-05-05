@@ -340,5 +340,21 @@ namespace UP.Controllers
                 return BadRequest("Unable to get user withdrawals history");
             }
         }
+        
+        
+        [HttpGet, Route("getUserTransactionsHistory")]
+        public async Task<IActionResult> GetUserTransactionsHistory(int userId)
+        {
+            var tr = new Repositories.TransactionsRepository();
+            try
+            {
+                return Ok(tr.GetUserTransactionsHistory(userId));
+            }
+            catch(Exception)
+            {
+                _logger.LogInformation($"Не удалось вернуть историю транзакций");
+                return BadRequest("Не удалось вернуть историю транзакций");
+            }
+        }
     }
 }

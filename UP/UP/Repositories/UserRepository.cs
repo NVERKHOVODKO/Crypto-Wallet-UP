@@ -463,11 +463,10 @@ public class UserRepository: RepositoryBase
         NpgsqlConnection connection = new NpgsqlConnection(connectionString);
         connection.Open();
         User? user = GetUserIdByLogin(login);
-
         var ar = new AuthorizationRepository();
         password = ar.Hash(password);
         password = ar.Hash(password + user.Salt);
-        
+
         var sql = "SELECT * FROM users WHERE login = @login AND password = @password";
         using (var command = new NpgsqlCommand(sql, connection))
         {

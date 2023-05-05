@@ -157,5 +157,36 @@ namespace UP.Repositories
                 return withdrawals;
             }
         }
+        
+        public List<Models.Transactions> GetUserTransactionsHistory(int userId)
+        {
+            using (var connection = new NpgsqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "SELECT * " +
+                               "FROM transactions c " +
+                               "WHERE sender_id = @userId OR receiver_id = @userId";
+                var transactions = new List<Transactions>();
+                using (var cmd = new NpgsqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int id = reader.GetInt32(0);
+                            string coinName = reader.GetString(1);
+                            double quantity = reader.GetDouble(2);
+                            DateTime dateTime = reader.GetDateTime(3);
+                            int senderId = reader.GetInt32(4);
+                            int receiverId = reader.GetInt32(5);
+                            transactions.Add(new Transactions(id, coinName, quantity, dateTime, receiverId, senderId));
+                        }
+                    }
+                }
+                connection.Close();
+                return transactions;
+            }
+        }
     }
 }

@@ -74,7 +74,7 @@ namespace UP.Controllers
             catch (Exception e)
             {
                 _logger.LogInformation($"Error. Currencies have not been converted");
-                return BadRequest("Error. Currencies have not been converted");
+                return BadRequest("Произошла неизвестная ошибка");
             }
         }
         

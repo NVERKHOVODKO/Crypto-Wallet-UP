@@ -28,17 +28,14 @@ namespace UP.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest("Error. Can't return coinList");
+                return BadRequest("Не удалось вернуть список монет");
             }
         }
         
         [HttpGet, Route("getUserCoinsFull")]
         public async Task<IActionResult> GetUserCoinsFull(int userId)
         {
-            _logger.LogInformation($"Return user coinList. Id: " + userId);
-            var ur = new UserRepository();
-            return Ok(await ur.GetUserCoinsFull(userId));
-            /*try
+            try
             {
                 _logger.LogInformation($"Return user coinList. Id: " + userId);
                 var ur = new UserRepository();
@@ -47,8 +44,8 @@ namespace UP.Controllers
             catch (Exception e)
             {
                 _logger.LogInformation($"Error. Can't return coinList");
-                return BadRequest("Error. Can't return coinList");
-            }*/
+                return BadRequest("Не удалось вернусь список монет");
+            }
         }
         
         
@@ -90,7 +87,7 @@ namespace UP.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest("Error. Can't count balance");
+                return BadRequest("Не удалось вернуть баланс пользователя");
             }
         }
         
@@ -105,7 +102,7 @@ namespace UP.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest("Error. Can't return quantity");
+                return BadRequest("Не удалось вернуть количество монет");
             }
         }
         
@@ -121,7 +118,7 @@ namespace UP.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest("Error. Can't get coin price");
+                return BadRequest("Не удалось вернуть цену");
             }
         }
 
@@ -145,7 +142,7 @@ namespace UP.Controllers
                 return Ok(coins);
             }catch (Exception e)
             {
-                return BadRequest("Error");
+                return BadRequest("Произошла неивестная ошибка");
             }
         }
     }

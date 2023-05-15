@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="UP.Controllers.AdminController">
+    <Position X="281.75" Y="264.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACEAAAAAAQAAAAEAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\AdminController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Controllers.AuthorizationController">
+    <Position X="281.75" Y="267" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Controllers\AuthorizationController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Controllers.CurrencyController">
+    <Position X="284.25" Y="264.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQgAAAAAABACIAAAABAIAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Controllers\CurrencyСontroller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Controllers.TransactionController">
+    <Position X="286.25" Y="270.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>IAAACAAAAAAAACBgAIAAAACAIAAAAEgAAAAAQAAAAAA=</HashCode>
+      <FileName>Controllers\TransactionController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Controllers.UserController">
+    <Position X="284" Y="270.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgABAAAAAAoAAAAAAAAAAAKAAAAAAAAAAAAQACAgA=</HashCode>
+      <FileName>Controllers\UserController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Models.Base.CoinsInformation">
+    <Position X="288.5" Y="267.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAgAQAAAIAACAAAAAEAEAAAAIAAAAAAgAAAAAA=</HashCode>
+      <FileName>Models\CoinsInformation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Models.Coin">
+    <Position X="279.75" Y="264.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAgAAAAAA=</HashCode>
+      <FileName>Models\Coin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Models.CoinList">
+    <Position X="288.5" Y="264.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Models\CoinList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Models.Conversion">
+    <Position X="281.75" Y="269.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACCAAAAAAAgAAAAAAAAAgAAAAAAAABAAABAAAAAAQ=</HashCode>
+      <FileName>Models\Conversion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Models.LoginHistory">
+    <Position X="286.5" Y="264.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAgAAAAAAAABAAAAAAAAIAA=</HashCode>
+      <FileName>Models\LoginHistory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Models.LUsersCoins">
+    <Position X="284.25" Y="268.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAgAAAAAAAAAAAAAgAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\LUsersCoins.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Models.PreviosPasswords">
+    <Position X="286.5" Y="267.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAgAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Models\PreviosPasswords.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Models.Replenishment">
+    <Position X="288.5" Y="271.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAgAAAAAAAABAAAAgAAAAAA=</HashCode>
+      <FileName>Models\Replenishment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Models.Transactions">
+    <Position X="275.75" Y="264.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAABAAABAABAhAAAAAA=</HashCode>
+      <FileName>Models\Transactions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Models.User">
+    <Position X="275.5" Y="273" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QABCAAIAACAAAAAAgAAAAAAAAAAAAgACAAAQAQAAAAA=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Models.Withdrawal">
+    <Position X="279.5" Y="273" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAgAAAAAAAABAAAAgAAAAAA=</HashCode>
+      <FileName>Models\Withdrawal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Repositories.AdminRepository">
+    <Position X="273.5" Y="267.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAgEAAQAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Repositories\AdminRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Repositories.AuthorizationRepository">
+    <Position X="273.5" Y="270" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAACAAAAQAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Repositories\AuthorizationRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Repositories.CurrencyRepository">
+    <Position X="277.75" Y="264.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAgAQEAACBgAAAAAABDAAgAAQhAAAQEIAAAAAg=</HashCode>
+      <FileName>Repositories\CurrencyRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Repositories.RepositoryBase">
+    <Position X="275.75" Y="267.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAiAAAAAABAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repositories\RepositoryBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Repositories.TransactionsRepository">
+    <Position X="277.5" Y="270.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAACAAAAAAAACAAAAAAFAAEAAAQAAAAAA=</HashCode>
+      <FileName>Repositories\TransactionsRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Repositories.UserRepository">
+    <Position X="279.75" Y="267.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABQIBAACgAAECAQAEAIEAAQAAAAAIAAxAAASgiA=</HashCode>
+      <FileName>Repositories\UserRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.Startup">
+    <Position X="288.5" Y="274.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAgAAACAAAAAA=</HashCode>
+      <FileName>Startup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.DTO.AuthenticationRequest">
+    <Position X="273.5" Y="272.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAQAAAAAAA=</HashCode>
+      <FileName>DTO\AuthenticationRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.DTO.BuyCryptoRequest">
+    <Position X="286.75" Y="274.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAABAgAAAAAA=</HashCode>
+      <FileName>DTO\BuyCryptoRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.DTO.ChangePasswordRequest">
+    <Position X="275.75" Y="270.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIACAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>DTO\ChangePasswordRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.DTO.ConvertRequest">
+    <Position X="283" Y="274" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAEAAAAAAAAAAAgAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>DTO\ConvertRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.DTO.EditUserEmailRequest">
+    <Position X="271.5" Y="274.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DTO\EditUserEmailRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.DTO.EditUserLoginRequest">
+    <Position X="271.5" Y="272.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>DTO\EditUserLoginRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.DTO.EditUserPasswordRequest">
+    <Position X="273.5" Y="274.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIACAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>DTO\EditUserPasswordRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.DTO.EditUserRequest">
+    <Position X="281.25" Y="273" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIACAAAAACAAAAAAAAAAAAAAAAAAAAACAAAQAAAAAAA=</HashCode>
+      <FileName>DTO\EditUserRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.DTO.GetQuantityAfterConversionRequest">
+    <Position X="277.5" Y="273" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAEAAAAAAAAAAAgAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>DTO\GetQuantityAfterConversionRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.DTO.RegisterRequest">
+    <Position X="273.75" Y="264.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAQAAAAAAA=</HashCode>
+      <FileName>DTO\RegisterRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.DTO.ReplenishTheBalanceRequest">
+    <Position X="271.5" Y="267.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>DTO\ReplenishTheBalanceRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.DTO.SellCryptoRequest">
+    <Position X="285" Y="274.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAABAAAAACAA=</HashCode>
+      <FileName>DTO\SellCryptoRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.DTO.SendCryptoRequest">
+    <Position X="271.5" Y="264.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAABAAAAAABABAAAAAA=</HashCode>
+      <FileName>DTO\SendCryptoRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UP.DTO.WithdrawRequest">
+    <Position X="271.5" Y="269.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>DTO\WithdrawRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

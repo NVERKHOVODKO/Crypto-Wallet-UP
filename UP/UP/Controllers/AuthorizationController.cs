@@ -31,25 +31,24 @@ namespace UP.Controllers
                     if (user.IsBlocked)
                     {
                         _logger.LogInformation($"Account is blocked");
-                        return BadRequest("Your account is blocked: " + ur.GetUserBlockingReason(user.Id));
+                        return BadRequest("Ваш аккаунт заблокирован: " + ur.GetUserBlockingReason(user.Id));
                     }
                     if (user.IsDeleted)
                     {
                         _logger.LogInformation($"There is no such user");
-                        return NotFound("There is no such user. Try again");
+                        return NotFound("Пользователь не найден");
                     }
                     _logger.LogInformation($"User login: {user.Login}", user.Login);
                     return Ok(user);
                 } else {
                     _logger.LogInformation($"There is no such user. Try again");
-                    return NotFound("There is no such user. Try again");
+                    return NotFound("Пользователь не найден");
                 }
             }
             catch (Exception exception)
             {
-                Console.WriteLine("Error");
                 _logger.LogInformation($"Unknown error");
-                return BadRequest("Error");
+                return BadRequest("Произошла неизвестная ошибка");
             }
         }
 
@@ -61,29 +60,29 @@ namespace UP.Controllers
                 if (request.Password.Length < 4)
                 {
                     _logger.LogInformation($"Passwords must be more that 4 symbols");
-                    return UnprocessableEntity("Passwords must be more that 4 symbols");
+                    return UnprocessableEntity("Пароль должен быть больше 4 символов");
                 }
                 if (request.Password != request.PasswordRepeat)
                 {
                     _logger.LogInformation($"Passwords doesn't match");
-                    return UnprocessableEntity("Passwords doesn't match");
+                    return UnprocessableEntity("Пароли не совпадают");
                 }
                 var ur = new Repositories.UserRepository();
                 if (ur.IsLoginUnique(request.Login))
                 {
                     _logger.LogInformation($"Username already used");
-                    return UnprocessableEntity("Username already used");
+                    return UnprocessableEntity("Имя пользователя уже занято");
                 }
                 var ar = new Repositories.AuthorizationRepository();
                 ur.WriteNewUserToDatabase(request.Login, request.Password);
                 _logger.LogInformation($"User created successfully");
                 _logger.LogInformation($"User created successfully");
-                return Ok("User created successfully");
+                return Ok("Аккаунт успешно создан");
             }
             catch (Exception)
             {
                 _logger.LogInformation($"User not created");
-                return UnprocessableEntity("User not created");
+                return UnprocessableEntity("Не удалось создать пользователя");
             }
         }
     }

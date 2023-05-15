@@ -9,15 +9,49 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6241624-7c7a-4e8e-ad5a-bab9e517f10f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/dataSources/3aa8feac-5d7c-4fcf-9f2d-76cbe4426b3e/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/UP/FileContentIndex/7675b6f8-3cb8-4fb9-89b6-02614fc37be5.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/UP/FileContentIndex/96527ccc-16e8-4534-bc86-b682f10ef1df.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/UP/FileContentIndex/a5fe5f1e-c752-4414-86fa-cbd74126cb19.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/UP/FileContentIndex/a7d8eb24-00c0-4344-8602-e35f9fc96d44.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/UP/FileContentIndex/bd423ffc-5ae3-46ae-a09a-a34b4ca47f21.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/UP/FileContentIndex/c99ae3aa-03d9-43ad-9b2e-37c45d56fa02.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/UP/FileContentIndex/db5a692f-cf42-432e-a38b-9f055fe0b425.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/UP/v17/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/UP/v17/.suo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/UP/v17/Browse.VC.db" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/UP/v17/Browse.VC.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/UP/v17/workspaceFileList.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/UP/v17/workspaceFileList.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/VSWorkspaceState.json" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/VSWorkspaceState.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/slnx.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/slnx.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UP/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UP/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/up.metadata.v5.1" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/up.metadata.v5.1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/up.projects.v5.1" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/up.projects.v5.1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/UP/FileContentIndex/177f647c-5a3e-4256-afef-1dbe71e06993.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/UP/FileContentIndex/2a84c432-59ac-431f-8714-a5525c35190f.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/UP/FileContentIndex/37aae995-fceb-4e9f-8f02-900b6ed5a47f.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/UP/FileContentIndex/9f42e5e2-16ef-4f85-be7d-e24944ae0018.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/UP/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/UP/v17/.futdcache.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/UP/v17/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/UP/v17/.suo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Controllers/AdminController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/AdminController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Controllers/AuthorizationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/AuthorizationController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/Controllers/CurrencyСontroller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/CurrencyСontroller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UP/Models/CoinList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Models/CoinList.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Controllers/TransactionController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/TransactionController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UP/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/Database/Database.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/bin/Debug/net8.0/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/bin/Debug/net8.0/UP.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/bin/Debug/net8.0/UP.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/UP/bin/Debug/net8.0/UP.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.csproj.CoreCompileInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/UP.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/ref/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/ref/UP.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Debug/net8.0/refint/UP.dll" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Debug/net8.0/refint/UP.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Release/net8.0/UP.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Release/net8.0/UP.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/Release/net8.0/UP.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/Release/net8.0/UP.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/UP.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/UP.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UP/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/UP/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Записка/use case.drawio" beforeDir="false" afterPath="$PROJECT_DIR$/../Записка/use case.drawio" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Записка/Блок-схема основного алгоритма.vsdx" beforeDir="false" afterPath="$PROJECT_DIR$/../Записка/Блок-схема основного алгоритма.vsdx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +90,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.uml&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -85,9 +119,9 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <option name="USE_MONO" value="0" />
       <option name="RUNTIME_ARGUMENTS" value="" />
-      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="0" />
       <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
-      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="SEND_DEBUG_REQUEST" value="0" />
       <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
       <method v="2">
         <option name="Build" />
@@ -254,6 +288,21 @@
       <workItem from="1683467643719" duration="1225000" />
       <workItem from="1683493572500" duration="1266000" />
       <workItem from="1683536081557" duration="3953000" />
+      <workItem from="1683666119118" duration="1870000" />
+      <workItem from="1683714782963" duration="87000" />
+      <workItem from="1683714896919" duration="230000" />
+      <workItem from="1683793411771" duration="1949000" />
+      <workItem from="1683801978469" duration="1155000" />
+      <workItem from="1683804467646" duration="699000" />
+      <workItem from="1683835611983" duration="221000" />
+      <workItem from="1683877915265" duration="46000" />
+      <workItem from="1683877977807" duration="44000" />
+      <workItem from="1683878077515" duration="626000" />
+      <workItem from="1684065497533" duration="2278000" />
+      <workItem from="1684084591290" duration="433000" />
+      <workItem from="1684085040802" duration="1013000" />
+      <workItem from="1684086126952" duration="15000" />
+      <workItem from="1684182734833" duration="685000" />
     </task>
     <servers />
   </component>
@@ -277,5 +326,9 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="init commit" />
     <option name="LAST_COMMIT_MESSAGE" value="init commit" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

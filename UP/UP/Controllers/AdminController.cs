@@ -15,11 +15,11 @@ namespace UP.Controllers
             try
             {
                 ar.BlockUser(id, reason);
-                return Ok("User blocked");
+                return Ok("Пользователь заблокирован");
             }
             catch(Exception)
             {
-                return BadRequest("User not blocked");
+                return BadRequest("Не удалось заблокировать пользователя");
             }
         }
         
@@ -30,11 +30,11 @@ namespace UP.Controllers
             try
             {
                 ar.DeleteUser(id);
-                return Ok("User deleted");
+                return Ok("Пльзователь удален");
             }
             catch(Exception)
             {
-                return BadRequest("User not deleted");
+                return BadRequest("Пользователь не был удален");
             }
         }
         
@@ -45,11 +45,11 @@ namespace UP.Controllers
             {
                 var ur = new UserRepository();
                 ur.SetUserStatusDel(id, status);
-                return Ok("Status changed");
+                return Ok("Статус изменен");
             }
             catch(Exception)
             {
-                return BadRequest("Status not changed");
+                return BadRequest("Не удалось изменить статус");
             }
         }
 
@@ -60,11 +60,11 @@ namespace UP.Controllers
             {
                 var ur = new UserRepository();
                 ur.SetUserStatusBlock(id, status);
-                return Ok("Status changed");
+                return Ok("Статус изменен");
             }
             catch(Exception)
             {
-                return BadRequest("Status not changed");
+                return BadRequest("Не удалось изменить статус");
             }
         }
 
@@ -79,7 +79,7 @@ namespace UP.Controllers
             }
             catch(Exception)
             {
-                return BadRequest("Unable to return userList");
+                return BadRequest("Не удалось вернуть список пользователя");
             }
         }
     }

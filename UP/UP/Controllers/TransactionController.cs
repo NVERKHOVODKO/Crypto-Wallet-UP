@@ -26,8 +26,8 @@ namespace UP.Controllers
             }
             catch(Exception)
             {
-                _logger.LogInformation($"Unable to return coin quantity");
-                return BadRequest("Unable to return coin quantity");
+                _logger.LogInformation($"Не получилось вернуть количество монет");
+                return BadRequest("Unable to return coins quantity");
             }
         }
         
@@ -42,7 +42,7 @@ namespace UP.Controllers
             catch(Exception)
             {
                 _logger.LogInformation($"Unable to return user transactions history");
-                return BadRequest("Unable to return user transactions history");
+                return BadRequest("Не получилось вернуть историю транзакций пользователя");
             }
         }
         
@@ -57,7 +57,7 @@ namespace UP.Controllers
             catch(Exception)
             {
                 _logger.LogInformation($"Unable to return user transactions history");
-                return BadRequest("Unable to return user transactions history");
+                return BadRequest("Не получилось вернуть историю транзакций пользовалетя");
             }
         }
         
@@ -70,15 +70,13 @@ namespace UP.Controllers
                 if (request.Quantity == 0)
                 {
                     _logger.LogInformation($"Error. Quantity must be above than zero");
-                    return BadRequest("Error. Quantity must be above than zero");
+                    return BadRequest("Количество должно быть больше нуля");
                 }
                 if (request.Quantity < 0)
                 {
                     _logger.LogInformation($"Error. Quantity must be above than zero");
-                    return BadRequest("Error. Quantity must be above than zero");
+                    return BadRequest("Количество должно быть больше нуля");
                 }
-                // TODO govnokod
-                //double priceRatio = await GetPriceRatio(shortNameStart, shortNameFinal);
                 string apiKey = "4da2c4791b9c285b22c1bf08bc36f304ab2ca80bc901504742b9a42a814c4614";
                 using var httpClient = new HttpClient();
                 httpClient.DefaultRequestHeaders.Add("X-MBX-APIKEY", apiKey);
@@ -93,7 +91,7 @@ namespace UP.Controllers
                 if (startCoinQuantityInUserWallet < request.Quantity)
                 {
                     _logger.LogInformation($"The user doesn't have enough coins to complete the conversion");
-                    return BadRequest("The user doesn't have enough coins to complete the conversion");
+                    return BadRequest("Недостаточно монет для совершения конвертации");
                 }
                 var cr = new Repositories.CurrencyRepository();
                 cr.SubtractCoinFromUser(request.UserId, request.ShortNameStart, request.Quantity);
@@ -102,12 +100,12 @@ namespace UP.Controllers
                 tr.WriteNewConversionDataToDatabase(new Conversion(1, 0, request.Quantity, finalQuantity, await cr.GetCoinPrice(request.Quantity, request.ShortNameStart),
                     request.ShortNameStart, request.ShortNameFinal, request.UserId, DateTime.Now));
                 _logger.LogInformation($"Converted successfully");
-                return Ok("Converted successfully");
+                return Ok("Конвертация совершена испешно");
             }
             catch (Exception e)
             {
                 _logger.LogInformation($"Error. Currencies have not been converted");
-                return BadRequest("Error. Currencies have not been converted");
+                return BadRequest("Валюты не были конвертированы");
             }
         }
         
@@ -129,38 +127,13 @@ namespace UP.Controllers
         [HttpPost, Route("buyCrypto")]
         public async Task<ActionResult> BuyCrypto([FromBody] BuyCryptoRequest request)
         {
-            /*try
-            {
-                if (request.Quantity == 0)
-                {
-                    _logger.LogInformation($"Quantity must be above than zero");
-                    return UnprocessableEntity("Quantity must be above than zero");
-                }
-                var ur = new Repositories.UserRepository();
-                var cr = new Repositories.CurrencyRepository();
-                double quantityUSDTInUserWallet = ur.GetCoinQuantityInUserWallet(request.UserId, "usdt");
-                if (quantityUSDTInUserWallet < await cr.GetCoinPrice(request.Quantity, request.CoinName))
-                {
-                    _logger.LogInformation($"Not enough balance");
-                    return UnprocessableEntity("Not enough balance");
-                }
-                cr.SubtractCoinFromUser(request.UserId, "usdt", await cr.GetCoinPrice(request.Quantity, request.CoinName));
-                cr.AddCryptoToUserWallet(request.UserId, request.CoinName, request.Quantity);
-                _logger.LogInformation($"UserId(" + request.UserId + ") bought " + request.Quantity + " " + request.CoinName);
-                return Ok("Transaction completed successfully");
-            }
-            catch (Exception e)
-            {
-                _logger.LogInformation($"Transaction wasn't completed");
-                return BadRequest("Transaction wasn't completed");
-            }*/
             try
             {
                 _logger.LogInformation($"UserId:" + request.UserId + "\nCoin quantity:" + request.Quantity + "\nCoin name: " + request.CoinName);
                 if (request.Quantity == 0)
                 {
                     _logger.LogInformation($"Quantity must be above than zero");
-                    return UnprocessableEntity("Quantity must be above than zero");
+                    return UnprocessableEntity("Количество должно быть больше нуля");
                 }
                 var ur = new Repositories.UserRepository();
                 var cr = new Repositories.CurrencyRepository();
@@ -168,7 +141,7 @@ namespace UP.Controllers
                 if (quantityUSDTInUserWallet < request.Quantity)
                 {
                     _logger.LogInformation($"Not enough balance");
-                    return UnprocessableEntity("Not enough balance");
+                    return UnprocessableEntity("Недостаточно монет");
                 }
                 cr.SubtractCoinFromUser(request.UserId, "usdt", request.Quantity);
                 double coinQuantity = await cr.GetCoinQuantity(request.Quantity, request.CoinName);
@@ -179,7 +152,7 @@ namespace UP.Controllers
             catch (Exception e)
             {
                 _logger.LogInformation($"Transaction wasn't completed");
-                return BadRequest("Transaction wasn't completed");
+                return BadRequest("Транзакция не была совершена");
             }
         }
         
@@ -192,12 +165,12 @@ namespace UP.Controllers
                 if (request.QuantityForSell == 0)
                 {
                     _logger.LogInformation($"Quantity must be above than zero");
-                    return UnprocessableEntity("Quantity must be above than zero");
+                    return UnprocessableEntity("Количество должно быть больше нуля");
                 }
                 if (request.QuantityForSell < 0)
                 {
                     _logger.LogInformation($"Quantity must be above than zero");
-                    return BadRequest("Quantity must be above than zero");
+                    return BadRequest("Количество должно быть больше нуля");
                 }
                 var ur = new Repositories.UserRepository();
                 var cr = new Repositories.CurrencyRepository();
@@ -205,7 +178,7 @@ namespace UP.Controllers
                 if (quantityInUserWallet < request.QuantityForSell)
                 {
                     _logger.LogInformation($"Not enough coins");
-                    return UnprocessableEntity("Not enough coins");
+                    return UnprocessableEntity("Недостаточно монет");
                 }
                 cr.SubtractCoinFromUser(request.UserId, request.CoinName, request.QuantityForSell);
                 cr.AddCryptoToUserWallet(request.UserId, "usdt", await cr.GetCoinPrice(request.QuantityForSell, request.CoinName));
@@ -214,7 +187,7 @@ namespace UP.Controllers
             catch (Exception e)
             {
                 _logger.LogInformation($"Transaction wasn't completed");
-                return BadRequest("Transaction wasn't completed");
+                return BadRequest("Транзакция не была выполнена");
             }
         }
         
@@ -227,17 +200,17 @@ namespace UP.Controllers
                 if (request.ReceiverId == request.SenderId)
                 {
                     _logger.LogInformation($"You can't send cryptocurrency to yourself");
-                    return UnprocessableEntity("You can't send cryptocurrency to yourself");
+                    return UnprocessableEntity("Невозможно отправить криптовалюту себе же");
                 }
                 if (request.QuantityForSend == 0)
                 {
                     _logger.LogInformation($"Quantity must be above than zero");
-                    return UnprocessableEntity("Quantity must be above than zero");
+                    return UnprocessableEntity("Количество должно быть больше нуля");
                 }
                 if (request.QuantityForSend < 0)
                 {
                     _logger.LogInformation($"Quantity must be above than zero");
-                    return UnprocessableEntity("Quantity must be above than zero");
+                    return UnprocessableEntity("Количество должно быть больше нуля");
                 }
                 var ur = new Repositories.UserRepository();
                 var cr = new Repositories.CurrencyRepository();
@@ -245,18 +218,18 @@ namespace UP.Controllers
                 if (quantityInUserWallet < request.QuantityForSend)
                 {
                     _logger.LogInformation($"Not enough coins");
-                    return UnprocessableEntity("Not enough coins");
+                    return UnprocessableEntity("Недостаточно монет");
                 }
                 cr.SubtractCoinFromUser(request.SenderId, request.CoinName, request.QuantityForSend);
                 cr.AddCryptoToUserWallet(request.ReceiverId, request.CoinName, request.QuantityForSend);
                 cr.WriteTransactionToDatabase(request.CoinName, request.QuantityForSend, request.SenderId, request.ReceiverId);
                 _logger.LogInformation($"Transfer completed successfully");
-                return Ok("Transfer completed successfully");
+                return Ok("Перевод выполнен успешно");
             }
             catch (Exception e)
             {
                 _logger.LogInformation($"Transfer wasn't completed");
-                return BadRequest("Transfer wasn't completed");
+                return BadRequest("Перевод не был выполнен");
             }
         }
         
@@ -270,24 +243,24 @@ namespace UP.Controllers
             {
                 if (request.QuantityUsd == null)
                 {
-                    return BadRequest("Quantity can't null");
+                    return BadRequest("Количество должно быть больше нуля");
                 }
                 if (request.QuantityUsd == 0)
                 {
-                    return BadRequest("Quantity can't be zero");
+                    return BadRequest("Количество должно быть больше нуля");
                 }
                 if (request.QuantityUsd < 0)
                 {
-                    return BadRequest("Quantity can't be less than zero");
+                    return BadRequest("Количество должно быть больше нуля");
                 }
                 tr.ReplenishTheBalance(request.UserId, request.QuantityUsd);
                 _logger.LogInformation($"Balance replenished successfully");
-                return Ok("Balance replenished successfully");
+                return Ok("Баланс пополнен успешно");
             }
             catch(Exception)
             { 
                 _logger.LogInformation($"Unable to replenish the balance");
-                return BadRequest("Unable to replenish the balance");
+                return BadRequest("Не получилось пополнить баланс");
             }
         }
         
@@ -300,12 +273,12 @@ namespace UP.Controllers
             {
                 if (request.QuantityForWithdraw == 0)
                 {
-                    return UnprocessableEntity("Quantity must be above than zero");
+                    return UnprocessableEntity("Количество должно быть больше нуля");
                 }
                 if (request.QuantityForWithdraw < 0)
                 {
                     _logger.LogInformation($"Quantity must be above than zero");
-                    return UnprocessableEntity("Quantity must be above than zero");
+                    return UnprocessableEntity("Количество должно быть больше нуля");
                 }
                 var ur = new Repositories.UserRepository();
                 var cr = new Repositories.CurrencyRepository();
@@ -313,16 +286,16 @@ namespace UP.Controllers
                 if (quantityInUserWallet < request.QuantityForWithdraw)
                 {
                     _logger.LogInformation($"Not enough balance");
-                    return UnprocessableEntity("Not enough balance");
+                    return UnprocessableEntity("Недостаточно монет");
                 }
                 cr.SubtractCoinFromUser(request.UserId, "usdt", request.QuantityForWithdraw);
                 cr.WriteWithdrawToDatabase(request.QuantityForWithdraw, (request.QuantityForWithdraw * 0.02), request.UserId);
-                return Ok("Transaction was successful");
+                return Ok("Транзакция выполнена успешно");
             }
             catch(Exception)
             {
                 _logger.LogInformation($"Unable to withdraw the balance");
-                return BadRequest("Unable to withdraw the balance");
+                return BadRequest("Не удалось вывести денежные средства");
             }
         }
         
@@ -337,7 +310,7 @@ namespace UP.Controllers
             catch(Exception)
             {
                 _logger.LogInformation($"Unable to get user withdrawals history");
-                return BadRequest("Unable to get user withdrawals history");
+                return BadRequest("Не удалось получить историю выводов");
             }
         }
         

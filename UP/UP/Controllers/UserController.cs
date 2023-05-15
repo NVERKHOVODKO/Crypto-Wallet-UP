@@ -160,12 +160,12 @@ namespace UP.Controllers
             {
                 var passwords = ur.GetUserPasswordsHistory(id);
                 if (passwords.Count == 0)
-                    return Ok("There is no passwords");
+                    return Ok("Пароли не найдены");
                 return Ok(passwords);
             }
             catch(Exception)
             {
-                return BadRequest("Can't get user's previous passwords");
+                return BadRequest("Не удалось вернуть вернуть список пароле");
             }
         }
         
@@ -180,7 +180,7 @@ namespace UP.Controllers
             }
             catch(Exception)
             {
-                return BadRequest("Can't return user's login history");
+                return BadRequest("Не удалось вернуть историю входов");
             }
         }
 
@@ -191,11 +191,11 @@ namespace UP.Controllers
             {
                 var ur = new Repositories.UserRepository();
                 ur.DeleteUser(id);
-                return Ok("Account deleted successfully");
+                return Ok("Аккаунт не был удален");
             }
             catch(Exception)
             {
-                return BadRequest("Account not deleted");
+                return BadRequest("Не удалось удалить аккаунт");
             }
         }
         
@@ -206,11 +206,11 @@ namespace UP.Controllers
             try
             {
                 ur.ChangeUserName(id, newLogin);
-                return Ok("Login changed");
+                return Ok("Не удалось изменить логин");
             }
             catch(Exception)
             {
-                return BadRequest("Status not changed");
+                return BadRequest("Логин УСПЕШНОК изменен");
             }
         }
         
@@ -223,26 +223,26 @@ namespace UP.Controllers
             {
                 if (request.Password != request.PasswordRepeat)
                 {
-                    return UnprocessableEntity("Passwords doesn't match");
+                    return UnprocessableEntity("Пароли не совпадают");
                 }
                 if (request.Password.Length == 0)
                 {
-                    return UnprocessableEntity("Fill in the fields");
+                    return UnprocessableEntity("Заполните данные");
                 }
                 if (request.Password.Length > 32)
                 {
-                    return UnprocessableEntity("Password must be less than 32 symbols");
+                    return UnprocessableEntity("Пароль должен быть короче 32 символов");
                 }
                 if (request.Password.Length < 4)
                 {
-                    return UnprocessableEntity("Password must be above than 3 symbols");
+                    return UnprocessableEntity("Пароль должен быть длиннее 4 символов");
                 }
                 ur.ChangePassword(request.Id, request.Password);
-                return Ok("Password changed");
+                return Ok("Пароль успешно изменен");
             }
             catch(Exception)
             {
-                return BadRequest("Password not changed");
+                return BadRequest("Пароль не был изменен");
             }
         }
     }

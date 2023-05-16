@@ -36,7 +36,7 @@ namespace UP.Controllers
                     if (user.IsDeleted)
                     {
                         _logger.LogInformation($"There is no such user");
-                        return NotFound("Пользователь не найден");
+                        return NotFound("Пользователь удален");
                     }
                     _logger.LogInformation($"User login: {user.Login}", user.Login);
                     return Ok(user);
@@ -48,7 +48,7 @@ namespace UP.Controllers
             catch (Exception exception)
             {
                 _logger.LogInformation($"Unknown error");
-                return BadRequest("Произошла неизвестная ошибка");
+                return BadRequest("Пользователь не найден");
             }
         }
 

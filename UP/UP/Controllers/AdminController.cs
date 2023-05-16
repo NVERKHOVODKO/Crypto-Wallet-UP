@@ -8,6 +8,13 @@ namespace UP.Controllers
     [Route("[controller]")]
     public class AdminController: ControllerBase
     {
+        private readonly ILogger<AdminController> _logger;
+
+        public AdminController(ILogger<AdminController> logger)
+        {
+            _logger = logger;
+        }
+        
         [HttpPost, Route("blockUser")]
         public async Task<ActionResult> BlockUser(int id, string reason)
         {
@@ -15,10 +22,12 @@ namespace UP.Controllers
             try
             {
                 ar.BlockUser(id, reason);
+                _logger.LogInformation($"User(id: " + id + ") is blocked. Reason: " + reason);
                 return Ok("Пользователь заблокирован");
             }
             catch(Exception)
             {
+                _logger.LogInformation($"Unable to block user");
                 return BadRequest("Не удалось заблокировать пользователя");
             }
         }
@@ -30,10 +39,12 @@ namespace UP.Controllers
             try
             {
                 ar.DeleteUser(id);
+                _logger.LogInformation($"User(id: " + id + ") deleted");
                 return Ok("Пльзователь удален");
             }
             catch(Exception)
             {
+                _logger.LogInformation($"Unable to delete user");
                 return BadRequest("Пользователь не был удален");
             }
         }
@@ -45,10 +56,12 @@ namespace UP.Controllers
             {
                 var ur = new UserRepository();
                 ur.SetUserStatusDel(id, status);
+                _logger.LogInformation($"User status changed: id(" + id + ") status(" + status + ")");
                 return Ok("Статус изменен");
             }
             catch(Exception)
             {
+                _logger.LogInformation($"Unable to change user status");
                 return BadRequest("Не удалось изменить статус");
             }
         }
@@ -60,10 +73,12 @@ namespace UP.Controllers
             {
                 var ur = new UserRepository();
                 ur.SetUserStatusBlock(id, status);
+                _logger.LogInformation($"User status changed: id(" + id + ") status(" + status + ")");
                 return Ok("Статус изменен");
             }
             catch(Exception)
             {
+                _logger.LogInformation($"Unable to change user status");
                 return BadRequest("Не удалось изменить статус");
             }
         }

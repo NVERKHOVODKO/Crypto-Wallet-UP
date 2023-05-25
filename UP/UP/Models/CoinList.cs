@@ -17,7 +17,7 @@ public class CoinList
         {"luna", "Terra"},
         {"link", "Chainlink"},
         {"avax", "Avalanche"},
-        /*{"matic", "Polygon"},
+        {"matic", "Polygon"},
         {"shib", "Shiba Inu"},
         {"atom", "Cosmos"},
         {"fil", "Filecoin"},
@@ -32,7 +32,7 @@ public class CoinList
         {"cake", "PancakeSwap"},
         {"tfuel", "Theta Fuel"},
         {"sushi", "SushiSwap"},
-        {"dcr", "Decred"},*/
+        {"dcr", "Decred"},
         {"fet", "Fetch.ai"}
     };
 

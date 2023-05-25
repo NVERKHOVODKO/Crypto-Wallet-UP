@@ -8,6 +8,19 @@ namespace UP.Repositories;
 
 public class UserRepository: RepositoryBase
 {
+
+    public string? GetUserLoginById(int id)
+    {
+        using var connection = new NpgsqlConnection(connectionString);
+        var sql = "SELECT login FROM users WHERE id = @id";
+        using var command = new NpgsqlCommand(sql, connection);
+        command.Parameters.AddWithValue("@id", id);
+        OpenConnection(connection);
+        string login = Convert.ToString(command.ExecuteScalar());
+        CloseConnection(connection);
+        return login;
+    }
+    
     public User? GetUserById(int userId)
     {
         NpgsqlConnection connection = new NpgsqlConnection(connectionString);

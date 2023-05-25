@@ -67,6 +67,14 @@ namespace UP.Controllers
                     _logger.LogInformation($"Passwords doesn't match");
                     return UnprocessableEntity("Пароли не совпадают");
                 }
+                if (request.Login.Length < 4)
+                {
+                    return BadRequest("Логин должен быть больше 4 символов");
+                }
+                if (request.Login.Length > 10)
+                {
+                    return BadRequest("Логин не должен быть больше 10 символов");
+                }
                 var ur = new Repositories.UserRepository();
                 if (ur.IsLoginUnique(request.Login))
                 {
@@ -75,7 +83,6 @@ namespace UP.Controllers
                 }
                 var ar = new Repositories.AuthorizationRepository();
                 ur.WriteNewUserToDatabase(request.Login, request.Password);
-                _logger.LogInformation($"User created successfully");
                 _logger.LogInformation($"User created successfully");
                 return Ok("Аккаунт успешно создан");
             }

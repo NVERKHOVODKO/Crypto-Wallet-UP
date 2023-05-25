@@ -3,9 +3,9 @@
 public class ReplenishTheBalanceRequest
 {
     public int UserId { get; set; }
-    public int QuantityUsd { get; set; }
+    public double QuantityUsd { get; set; }
 
-    public ReplenishTheBalanceRequest(int userId, int quantityUsd)
+    public ReplenishTheBalanceRequest(int userId, double quantityUsd)
     {
         UserId = userId;
         QuantityUsd = quantityUsd;

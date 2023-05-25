@@ -25,6 +25,10 @@ namespace UP.Controllers
                 {
                     return BadRequest("Логин должен быть больше 4 символов");
                 }
+                if (request.Login.Length > 10)
+                {
+                    return BadRequest("Логин не должен быть больше 10 символов");
+                }
                 if (ur.IsLoginUnique(request.Login))
                 {
                     return BadRequest("Этот логин уже используется");
@@ -33,7 +37,7 @@ namespace UP.Controllers
                 {
                     ur.ChangeUserLogin(request.Id, request.Login);
                 }
-                return Ok("User edited");
+                return Ok("Логин успешно изменен");
             }
             catch(Exception)
             {
@@ -86,15 +90,8 @@ namespace UP.Controllers
                 {
                     return BadRequest("Email должен быть больше 4 символов");
                 }
-                if (ur.IsLoginUnique(request.Email))
-                {
-                    return BadRequest("Этот Email уже используется");
-                }
-                if (request.Email != null)
-                {
-                    ur.ChangeUserEmail(request.Id, request.Email);
-                }
-                return Ok("Email edited");
+                ur.ChangeUserEmail(request.Id, request.Email);
+                return Ok("Email успешно изменен");
             }
             catch(Exception)
             {
@@ -125,7 +122,7 @@ namespace UP.Controllers
                     }
                     else
                     {
-                        return BadRequest("Passwords are doesn't match");
+                        return BadRequest("Пароли не совпадают");
                     }
                 }
                 if (request.Email.Length < 4)
@@ -144,11 +141,11 @@ namespace UP.Controllers
                 {
                     ur.ChangeUserLogin(request.Id, request.Login);
                 }
-                return Ok("User edited");
+                return Ok("Логин успешно изменен");
             }
             catch(Exception)
             {
-                return BadRequest("Status not changed");
+                return BadRequest("Не удалось изменить логин");
             }
         }
         
@@ -183,6 +180,20 @@ namespace UP.Controllers
                 return BadRequest("Не удалось вернуть историю входов");
             }
         }
+        
+        [HttpGet, Route("getUserLoginById")]
+        public async Task<IActionResult> GetUserLoginById(int id)
+        {
+            var ur = new Repositories.UserRepository();
+            try
+            {
+                return Ok(ur.GetUserLoginById(id));
+            }
+            catch(Exception)
+            {
+                return BadRequest("Не удалось получить имя пользователя");
+            }
+        }
 
         [HttpDelete, Route("deleteAccount")]
         public async Task<ActionResult> DeleteAccount(int id)
@@ -210,7 +221,7 @@ namespace UP.Controllers
             }
             catch(Exception)
             {
-                return BadRequest("Логин УСПЕШНОК изменен");
+                return BadRequest("Логин успешно изменен");
             }
         }
         

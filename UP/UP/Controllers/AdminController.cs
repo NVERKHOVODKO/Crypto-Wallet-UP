@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using UP.Models;
 using UP.Repositories;
 
 namespace UP.Controllers
@@ -95,6 +96,25 @@ namespace UP.Controllers
             catch(Exception)
             {
                 return BadRequest("Не удалось вернуть список пользователя");
+            }
+        }
+        
+        [HttpGet, Route("getUserById")]
+        public async Task<IActionResult> GetUserById(int id)
+        {
+            try
+            {
+                var ur = new UserRepository();
+                var user = ur.GetUserById(id);
+                if (user != null)
+                {
+                    return Ok(user);
+                }
+                return NotFound("Пользователь не найден");
+            }
+            catch(Exception)
+            {
+                return BadRequest("Не удалось получить пользователя");
             }
         }
     }

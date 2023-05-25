@@ -147,7 +147,7 @@ namespace UP.Controllers
                 double coinQuantity = await cr.GetCoinQuantity(request.Quantity, request.CoinName);
                 cr.AddCryptoToUserWallet(request.UserId, request.CoinName, coinQuantity);
                 _logger.LogInformation($"UserId(" + request.UserId + ") bought " + coinQuantity + " " + request.CoinName);
-                return Ok("Transaction completed successfully");
+                return Ok("Транзакция совершена успешно");
             }
             catch (Exception e)
             {
@@ -182,7 +182,7 @@ namespace UP.Controllers
                 }
                 cr.SubtractCoinFromUser(request.UserId, request.CoinName, request.QuantityForSell);
                 cr.AddCryptoToUserWallet(request.UserId, "usdt", await cr.GetCoinPrice(request.QuantityForSell, request.CoinName));
-                return Ok("Transaction completed successfully");
+                return Ok("Транзакция совершена успешно");
             }
             catch (Exception e)
             {

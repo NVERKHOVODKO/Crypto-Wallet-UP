@@ -83,6 +83,7 @@ namespace UP.Controllers
             {
                 var cr = new CurrencyRepository();
                 double balance = await cr.GetUserBalance(userId);
+                _logger.LogInformation($"User balance: " + balance);
                 return Ok(balance);
             }
             catch (Exception e)

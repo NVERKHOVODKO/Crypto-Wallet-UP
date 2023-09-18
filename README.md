@@ -1,44 +1,29 @@
-Description of the .NET Application Example project
+Description of the project "Cryptowallet"
 Introduction
-The .NET Application Example project is an example of a web application developed on the .NET platform using modern technologies and tools. This project serves as a demonstration of best practices in developing web applications on the .NET platform and includes a number of key components and technologies.
+The Crypto Wallet project is a modern web application designed to manage cryptocurrency assets and provide secure storage, sending and receiving of cryptocurrencies. This application combines client and server architectures to provide a complete set of tools for working with cryptocurrencies.
 
 Technologies and tools
-The .NET Application Example project uses the following technologies and tools:
+The Cryptowallet project uses modern technologies and tools to achieve its goals:
 
-C#: The C# programming language is used to develop the application and its business logic.
+ASP.NET Core: This web framework enables fast and scalable web application development. It is used to create application server components.
 
-ASP.NET Core: The ASP.NET Core web framework enables the creation of web applications with high performance and scalability.
+PostgreSQL: PostgreSQL relational database is used to store data about users, their cryptocurrency accounts and transactions. It provides reliable and scalable storage.
 
-Entity Framework Core: ORM (Object-Relational Mapping) Entity Framework Core allows you to conveniently interact with a PostgreSQL database, providing object-oriented access to data.
+HTML and CSS: HTML and CSS are used to create the user interface of the application, providing a pleasant and intuitive user experience with the system.
 
-Swagger: The Swagger tool is used to automatically generate interactive API documentation, making it easier to develop, test, and document APIs.
+React: React is a JavaScript library that is used to create dynamic and interactive user interface elements. He is responsible for the client side of the application.
 
-PostgreSQL: PostgreSQL relational database is used to store application data.
+API and REST: The project implements a RESTful API for interaction between the client and server parts of the application. The API provides a standardized way to exchange data.
 
-AutoMapper: AutoMapper makes it easy to map data between objects, which improves performance and reduces the amount of code you write.
+ILogger: ILogger is a logging mechanism that serves to log events and errors in an application, making it easier to debug and monitor system performance.
 
-Main components of the project
-The .NET Application Example project includes the following key components:
+Client-Server Architecture
+The Cryptowallet project implements a client-server architecture, which allows you to effectively manage data and business logic of the application. Here's how it works:
 
-API Controllers: ASP.NET Core API controllers process incoming HTTP requests, interacting with clients and providing access to application data.
+Server side: The backend of the application, based on ASP.NET Core and PostgreSQL, is responsible for processing business logic and storing data. This is where all transaction processing, query validation, and database management takes place.
 
-PostgreSQL Database: This project uses PostgreSQL to store data. Entity Framework Core provides easy interaction with the database.
+Client side: The client side is developed using React, HTML and CSS. This part provides the user interface and interaction with the server via an API. Users can view their accounts, perform transactions, and manage cryptocurrency assets.
 
-Models: Data models define the structure and schema of the data that is stored in the database.
+API: A RESTful API serves as a bridge between the client and server sides. It defines the structure of requests and responses, which provides a standardized way of exchanging data. The API allows clients to send requests to the server to perform various operations.
 
-Swagger UI: Interactive API documentation generated using Swagger. It allows developers and testers to easily explore and test APIs.
-
-Dependency Injection (DI): The project uses Dependency Injection (DI) to manage dependencies and provide flexibility to the application. DI allows you to inject dependencies such as services and repositories into controllers and other components.
-
-Dependency Injection (DI)
-Dependency Injection (DI) is a popular design pattern that is used in the .NET Application Example project. DI allows you to manage application component dependencies and provides a more flexible and testable design.
-
-The benefits of Dependency Injection in a project include:
-
-Separation of Responsibility: DI allows you to separate the creation of objects and their use. This improves readability and ensures compliance with single responsibility principles.
-
-Testability: Thanks to DI, application components can be easily replaced with mocks or mocks when writing unit tests.
-
-Reduced coupling: DI reduces coupling between components, making code more flexible and maintainable.
-
-Ease of Dependency Injection: Dependency injection makes code more explicit and understandable, making it easier to maintain.
+Client-server architecture ensures scalability, security and ease of project maintenance. Users can interact with the application through a browser or mobile device, which makes the Crypto Wallet project convenient and accessible to anyone interested in cryptocurrencies.

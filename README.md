@@ -1,55 +1,44 @@
-(ENG) Technical description of the project
-Key technologies and tools:
-C# WinForms: The project is developed using C# and WinForms library to create a GUI.
+Description of the .NET Application Example project
+Introduction
+The .NET Application Example project is an example of a web application developed on the .NET platform using modern technologies and tools. This project serves as a demonstration of best practices in developing web applications on the .NET platform and includes a number of key components and technologies.
 
-SQLite: A lightweight SQLite database is used to store data about users, their balances and game statistics. SQLite was chosen for its ease of implementation and management, as well as excellent performance for small applications.
+Technologies and tools
+The .NET Application Example project uses the following technologies and tools:
 
-Sounds and Sound Effects: Sound effects are used to create the atmosphere of a real casino, including the sounds of coins dropping, slot machine noises and applause when winning.
+C#: The C# programming language is used to develop the application and its business logic.
 
-Project functionality:
-Registration and Authentication: Users can register by creating an account with a unique username and password. After successful registration, they can authenticate to access the games.
+ASP.NET Core: The ASP.NET Core web framework enables the creation of web applications with high performance and scalability.
 
-Slot machines: The project features slot machines with exciting games and a variety of winning opportunities. Each slot machine has unique rules and bets.
+Entity Framework Core: ORM (Object-Relational Mapping) Entity Framework Core allows you to conveniently interact with a PostgreSQL database, providing object-oriented access to data.
 
-Roulette and Blackjack: The project includes classic casino games such as roulette and blackjack. Users can try their luck in these games and win prizes.
+Swagger: The Swagger tool is used to automatically generate interactive API documentation, making it easier to develop, test, and document APIs.
 
-User account: For each registered user, information about his account, balance and game statistics is stored. This allows users to track their progress and results.
+PostgreSQL: PostgreSQL relational database is used to store application data.
 
-GUI: The GUI of the application is designed using WinForms to ensure simplicity and ease of use. The interface design creates the atmosphere of a Las Vegas casino.
+AutoMapper: AutoMapper makes it easy to map data between objects, which improves performance and reduces the amount of code you write.
 
-Project architecture:
-The project is organized in accordance with the principles of modular architecture. It involves separation into layers including the user interface, application logic, and database interaction.
+Main components of the project
+The .NET Application Example project includes the following key components:
 
-User Interface (UI): Forms, controls, and user experience are designed in this layer. The interface ensures comfortable user interaction with the application.
+API Controllers: ASP.NET Core API controllers process incoming HTTP requests, interacting with clients and providing access to application data.
 
-Application Logic (Business Logic): This layer contains classes and methods responsible for the business logic of the application, including game rules, authentication and bet processing.
+PostgreSQL Database: This project uses PostgreSQL to store data. Entity Framework Core provides easy interaction with the database.
 
-Database (Data Access): Interaction with the SQLite database is implemented here. Classes for working with the database provide storage of user data and game statistics.
+Models: Data models define the structure and schema of the data that is stored in the database.
 
-(RUS)Техническое описание проекта
-Основные технологии и инструменты:
-C# WinForms: Проект разработан с использованием C# и библиотеки WinForms для создания графического интерфейса пользователя.
+Swagger UI: Interactive API documentation generated using Swagger. It allows developers and testers to easily explore and test APIs.
 
-SQLite: Для хранения данных о пользователях, их балансах и игровой статистики используется легковесная база данных SQLite. SQLite выбрана из-за своей простоты внедрения и управления, а также отличной производительности для небольших приложений.
+Dependency Injection (DI): The project uses Dependency Injection (DI) to manage dependencies and provide flexibility to the application. DI allows you to inject dependencies such as services and repositories into controllers and other components.
 
-Звуки и звуковые эффекты: Для создания атмосферы реального казино используются звуковые эффекты, включая звуки выпадения монет, шумы игровых автоматов и аплодисменты при выигрыше.
+Dependency Injection (DI)
+Dependency Injection (DI) is a popular design pattern that is used in the .NET Application Example project. DI allows you to manage application component dependencies and provides a more flexible and testable design.
 
-Функциональные возможности проекта:
-Регистрация и аутентификация: Пользователи могут зарегистрироваться, создав учетную запись с уникальным логином и паролем. После успешной регистрации они могут аутентифицироваться для доступа к играм.
+The benefits of Dependency Injection in a project include:
 
-Игровые автоматы: В проекте реализованы игровые автоматы с увлекательными играми и разнообразными возможностями выигрыша. Каждый игровой автомат имеет уникальные правила и ставки.
+Separation of Responsibility: DI allows you to separate the creation of objects and their use. This improves readability and ensures compliance with single responsibility principles.
 
-Рулетка и блэкджек: Проект включает в себя классические казино-игры, такие как рулетка и блэкджек. Пользователи могут испытать свою удачу в этих играх и выиграть призы.
+Testability: Thanks to DI, application components can be easily replaced with mocks or mocks when writing unit tests.
 
-Учетная запись пользователя: Для каждого зарегистрированного пользователя хранится информация о его учетной записи, балансе и статистике игр. Это позволяет пользователям отслеживать свой прогресс и результаты.
+Reduced coupling: DI reduces coupling between components, making code more flexible and maintainable.
 
-Графический интерфейс: Графический интерфейс приложения разработан с использованием WinForms, что обеспечивает простоту и удобство использования. Оформление интерфейса создает атмосферу казино Лас-Вегаса.
-
-Архитектура проекта:
-Проект организован в соответствии с принципами модульной архитектуры. Он включает в себя разделение на слои, включая пользовательский интерфейс, логику приложения и взаимодействие с базой данных.
-
-Пользовательский интерфейс (UI): В этом слое разработаны формы, элементы управления и пользовательский опыт. Интерфейс обеспечивает комфортное взаимодействие пользователя с приложением.
-
-Логика приложения (Business Logic): В этом слое содержатся классы и методы, отвечающие за бизнес-логику приложения, включая правила игры, аутентификацию и обработку ставок.
-
-База данных (Data Access): Здесь реализовано взаимодействие с базой данных SQLite. Классы для работы с базой данных обеспечивают сохранение данных о пользователях и игровой статистики.
+Ease of Dependency Injection: Dependency injection makes code more explicit and understandable, making it easier to maintain.

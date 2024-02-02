@@ -6,7 +6,7 @@ public class CoinList
     {
         {"btc", "Bitcoin"},
         {"eth", "Ethereum"},
-        {"usdt", "Tether"},
+        /*{"usdt", "Tether"},
         {"bnb", "Binance Coin"},
         {"sol", "Solana"},
         {"ada", "Cardano"},
@@ -32,7 +32,7 @@ public class CoinList
         {"cake", "PancakeSwap"},
         {"tfuel", "Theta Fuel"},
         {"sushi", "SushiSwap"},
-        {"dcr", "Decred"},
+        {"dcr", "Decred"},*/
         {"fet", "Fetch.ai"}
     };
 

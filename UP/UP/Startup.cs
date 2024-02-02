@@ -1,4 +1,4 @@
-namespace UP
+/*namespace UP
 {
     public class Startup
     {
@@ -30,4 +30,4 @@ namespace UP
             app.UseCors();
         }
     }
-}
+}*/

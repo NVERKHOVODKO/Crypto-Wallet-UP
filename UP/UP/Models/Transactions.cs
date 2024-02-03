@@ -2,14 +2,14 @@
 {
     public class Transactions
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string CoinName { get; set; }
         public double Quantity { get; set; }
         public DateTime Date { get; set; }
-        public int SenderId { get; set; }
-        public int ReceiverId { get; set; }
+        public Guid SenderId { get; set; }
+        public Guid ReceiverId { get; set; }
 
-        public Transactions(int id, string coinName, double quantity, DateTime date, int senderId, int receiverId)
+        public Transactions(Guid id, string coinName, double quantity, DateTime date, Guid senderId, Guid receiverId)
         {
             Id = id;
             CoinName = coinName;

@@ -1,26 +1,46 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using Npgsql;
+using Repository;
+using TestApplication.Data;
 using UP.Models;
 using UP.Models.Base;
 
 namespace UP.Repositories
 {
-    public class CurrencyRepository: RepositoryBase
+    public class CurrencyRepository: RepositoryBase, ICurrencyRepository
     {
-        public void BuyCrypto(int userId, string shortname, double quantity)
+        private readonly IUserRepository _userRepository;
+        private readonly DataContext _context;
+
+        public CurrencyRepository(DataContext context)
+        {
+            _context = context;
+        }
+        public void BuyCrypto(Guid userId, string shortname, double quantity)
         {
             AddCryptoToUserWallet(userId, shortname, quantity);
         }
-
-        public void AddCryptoToUserWallet(int userId, string shortname, double quantity)
+        
+        public List<ModelsEF.Coin> GetUserCoins(Guid userId)
         {
-            var ur = new UserRepository();
-            List<Coin> coins = ur.GetUserCoins(userId);
+            var userCoins = _context.Users
+                .Where(u => u.Id == userId)
+                .SelectMany(u => u.UsersCoins)
+                .Select(uc => uc.Coin)
+                .ToList();
+
+            return userCoins;
+        }
+
+        public void AddCryptoToUserWallet(Guid userId, string shortname, double quantity)
+        {
+            List<ModelsEF.Coin> coins = GetUserCoins(userId);
             
             if (IsCoinAlreadyPurchased(coins, shortname)) {
-                int coinId = GetPurchasedCoinId(coins, shortname);
+                Guid coinId = GetPurchasedCoinId(coins, shortname);
                 int coinIdInTheList = GetPurchasedCoinNumberInTheList(coins, shortname);
-                if (coinId != -1)
+                if (coinId != Guid.Empty)
                 {
                     double finalQuantity = coins[coinIdInTheList].Quantity + quantity; 
                     UpdateCoinQuantity(coins[coinIdInTheList].Id, finalQuantity);
@@ -52,19 +72,19 @@ namespace UP.Repositories
             }
         }
         
-        public void SendCrypto(int receiverId, int senderId, string shortname, double quantity)
+        public void SendCrypto(Guid receiverId, Guid senderId, string shortname, double quantity)
         {
             SubtractCoinFromUser(senderId, shortname, quantity);
             AddCryptoToUserWallet(receiverId, shortname, quantity);
         }
 
-        public bool IsCoinAlreadyPurchased(List<Coin> coins, string shortName)
+        public bool IsCoinAlreadyPurchased(List<ModelsEF.Coin> coins, string shortName)
         {
             try
             {
                 foreach (var i in coins)
                 {
-                    if (i.ShortName == shortName)
+                    if (i.Shortname == shortName)
                     {
                         return true;
                     }
@@ -77,33 +97,33 @@ namespace UP.Repositories
             }
         }
         
-        private int GetPurchasedCoinId(List<Coin> coins, string shortName)
+        private Guid GetPurchasedCoinId(List<ModelsEF.Coin> coins, string shortName)
         {
             try
             {
                 foreach (var i in coins)
                 {
-                    if (i.ShortName == shortName)
+                    if (i.Shortname == shortName)
                     {
                         return i.Id;
                     }
                 }
-                return -1;
+                return Guid.Empty;
             }
             catch (Exception e)
             {
-                return -1;
+                return Guid.Empty;
             }
         }
         
-        private int GetPurchasedCoinNumberInTheList(List<Coin> coins, string shortName)
+        private int GetPurchasedCoinNumberInTheList(List<ModelsEF.Coin> coins, string shortName)
         {
             try
             {
                 int j = 0;
                 foreach (var i in coins)
                 {
-                    if (i.ShortName == shortName)
+                    if (i.Shortname == shortName)
                     {
                         return j;
                     }
@@ -118,10 +138,9 @@ namespace UP.Repositories
             }
         }
         
-        public async void SellCrypto(int userId, string shortname, double quantityForSale)
+        public async void SellCrypto(Guid userId, string shortname, double quantityForSale)
         {
-            var ur = new UserRepository();
-            double quantityInUserWallet = ur.GetCoinQuantityInUserWallet(userId, "usdt");
+            double quantityInUserWallet = _userRepository.GetCoinQuantityInUserWallet(userId, "usdt");
             if (await GetCoinPrice(quantityInUserWallet, "usdt") < await GetCoinPrice(quantityForSale, shortname))
             {
                 return;
@@ -129,17 +148,16 @@ namespace UP.Repositories
             SubtractCoinFromUser(userId, shortname, quantityForSale);
         }
         
-        public void SubtractCoinFromUser(int userId, string shortname, double quantityForSubtract)
+        public void SubtractCoinFromUser(Guid userId, string shortname, double quantityForSubtract)
         {
             Console.WriteLine("Id: " + userId + " Name: " + shortname + " quantityForSubtract: " + quantityForSubtract);
-            var ur = new UserRepository();
-            List<Coin> coins = ur.GetUserCoins(userId);
-            int coinId = GetPurchasedCoinId(coins, shortname);
+            List<ModelsEF.Coin> coins = _userRepository.GetUserCoins(userId);
+            Guid coinId = GetPurchasedCoinId(coins, shortname);
             int coinIdInTheList = GetPurchasedCoinNumberInTheList(coins, shortname);
-            if (coinId != -1)
+            if (coinId != Guid.Empty)
             {
-                Console.WriteLine("Id: " + coins[coinIdInTheList].Id + " Quantity: " + coins[coinIdInTheList].Quantity + " ShortName: " + coins[coinIdInTheList].ShortName);
-                var coin = new Coin(coins[coinIdInTheList].Id, coins[coinIdInTheList].Quantity, coins[coinIdInTheList].ShortName);
+                Console.WriteLine("Id: " + coins[coinIdInTheList].Id + " Quantity: " + coins[coinIdInTheList].Quantity + " ShortName: " + coins[coinIdInTheList].Shortname);
+                var coin = new ModelsEF.Coin(coins[coinIdInTheList].Id, coins[coinIdInTheList].Quantity, coins[coinIdInTheList].Shortname);
                 double finalQuantity = coin.Quantity - quantityForSubtract;
                 if (finalQuantity == 0) {
                     DeleteCoin(coin.Id);
@@ -168,19 +186,23 @@ namespace UP.Repositories
             return quantityUSD / price;
         }
         
-        public async Task<double> GetUserBalance(int userId)
+        public async Task<double> GetUserBalance(Guid userId)
         {
-            var ur = new UserRepository();
-            List<Coin> coins = ur.GetUserCoins(userId);
+            var coins = _context.Users
+                .Where(u => u.Id == userId)
+                .Include(u => u.UsersCoins)
+                .ThenInclude(uc => uc.Coin)
+                .SelectMany(u => u.UsersCoins.Select(uc => uc.Coin))
+                .ToList();
             double balance = 0;
             foreach (var i in coins)
             {
-                balance += await GetCoinPrice(i.Quantity, i.ShortName);
+                balance += await GetCoinPrice(i.Quantity, i.Shortname);
             }
             return balance;
         }
         
-        public void DeleteCoin(int coinId)
+        public void DeleteCoin(Guid coinId)
         {
             using var connection = new NpgsqlConnection(connectionString);
             var sql = "DELETE FROM coins WHERE id = @id";
@@ -191,7 +213,7 @@ namespace UP.Repositories
             CloseConnection(connection);
         }
 
-        //3 sec
+        /*//3 sec
         public async Task<double> GetDailyPriceImpact(string shortName)
         {
             using var httpClient = new HttpClient();
@@ -203,7 +225,7 @@ namespace UP.Repositories
             var priceData = data["RAW"]["BTC"]["USD"];
             var priceChange = (double)priceData["CHANGEDAY"];
             return priceChange;
-        }
+        }*/
 
         /*public async Task<CoinsInformation> GetFullCoinInformation(string shortName) 10 sec
         {
@@ -255,7 +277,7 @@ namespace UP.Repositories
             return new CoinsInformation(fullName, shortName, @"C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\cryptoicons_png\128\" + shortName.ToLower(), dailyVolume, priceChange, price, percentagePriceChangePerDay);
         }
 
-        public void UpdateCoinQuantity(int id, double quantity)
+        public void UpdateCoinQuantity(Guid id, double quantity)
         {
             using var connection = new NpgsqlConnection(connectionString);
             var sql = "UPDATE coins SET quantity = @quantity WHERE id = @id";
@@ -267,7 +289,7 @@ namespace UP.Repositories
             CloseConnection(connection);
         }
         
-        public void WriteTransactionToDatabase(string coinName, double quantity, int senderId, int receiverId)
+        public void WriteTransactionToDatabase(string coinName, double quantity, Guid senderId, Guid receiverId)
         {
             using var connection = new NpgsqlConnection(connectionString);
             var sql = "INSERT INTO transactions (coin_name, quantity, date, sender_id, receiver_id) VALUES " +
@@ -283,7 +305,7 @@ namespace UP.Repositories
             CloseConnection(connection);
         }
         
-        public void WriteWithdrawToDatabase(double quantity, double commission, int userId)
+        public void WriteWithdrawToDatabase(double quantity, double commission, Guid userId)
         {
             using var connection = new NpgsqlConnection(connectionString);
             var sql = "INSERT INTO withdrawals (date, quantity, commission, user_id) VALUES " +

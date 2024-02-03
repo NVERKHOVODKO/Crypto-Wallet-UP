@@ -2,12 +2,12 @@
 
 public class SendCryptoRequest
 {
-    public int ReceiverId { get; set; }
-    public int SenderId { get; set; }
+    public Guid ReceiverId { get; set; }
+    public Guid SenderId { get; set; }
     public string CoinName { get; set; }
     public double QuantityForSend { get; set; }
 
-    public SendCryptoRequest(int receiverId, int senderId, string coinName, double quantityForSend)
+    public SendCryptoRequest(Guid receiverId, Guid senderId, string coinName, double quantityForSend)
     {
         ReceiverId = receiverId;
         SenderId = senderId;

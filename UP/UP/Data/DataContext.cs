@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using UP.ModelsEF;
 
 namespace TestApplication.Data;
 
@@ -10,30 +11,32 @@ public class DataContext : DbContext
         Database.EnsureCreated();*/
     }
 
-    /*public DbSet<UserModel> Users { get; set; }
-    public DbSet<RoleModel> Roles { get; set; }
-    public DbSet<UserRoleModel> UserRoles { get; set; }
-    public DbSet<LoginHistoryModel> LoginHistory { get; set; }
-    public DbSet<ChatModel> Chats { get; set; }
+    public DbSet<User> Users { get; set; }
+    public DbSet<Blocking> Blockings { get; set; }
+    public DbSet<Coin> Coins { get; set; }
+    public DbSet<Conversion> Conversions { get; set; }
+    public DbSet<LoginHistory> LoginHistories { get; set; }
     public DbSet<RestorePasswordCodeModel> RestorePasswordCodes { get; set; }
-    public DbSet<MessageModel> Messages { get; set; }
+    public DbSet<PreviousPassword> PreviousPasswords { get; set; }
     public DbSet<EmailVerificationCodeModel> VerifyEmailCode { get; set; }
-
-
+    public DbSet<Transactions> Transactions { get; set; }
+    public DbSet<UsersCoins> UsersCoins { get; set; }
+    public DbSet<Withdrawal> Withdrawals { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<UserRoleModel>()
-            .HasOne(u => u.UserModel)
-            .WithMany(ur => ur.UserRoleModels)
-            .HasForeignKey(ui => ui.UserId);
+        modelBuilder.Entity<Transactions>()
+            .HasOne(t => t.Sender)
+            .WithMany(u => u.SentTransactions)
+            .HasForeignKey(t => t.SenderId)
+            .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<UserRoleModel>()
-            .HasOne(r => r.RoleModel)
-            .WithMany(ur => ur.UserRoleModels)
-            .HasForeignKey(ri => ri.RoleId);
+        modelBuilder.Entity<Transactions>()
+            .HasOne(t => t.Receiver)
+            .WithMany(u => u.ReceivedTransactions)
+            .HasForeignKey(t => t.ReceiverId)
+            .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<UserModel>()
-            .HasIndex(u => u.Id)
-            .IsUnique();
-    }*/
+        base.OnModelCreating(modelBuilder);
+    }
 }

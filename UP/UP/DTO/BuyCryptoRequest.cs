@@ -2,11 +2,11 @@
 
 public class BuyCryptoRequest
 {
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
     public string CoinName { get; set; }
     public double Quantity { get; set; }
 
-    public BuyCryptoRequest(int userId, string coinName, double quantity)
+    public BuyCryptoRequest(Guid userId, string coinName, double quantity)
     {
         UserId = userId;
         CoinName = coinName;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using Repository;
 using UP.Models;
 using UP.Models.Base;
 using UP.Repositories;
@@ -11,20 +12,23 @@ namespace UP.Controllers
     public class CurrencyController : ControllerBase
     {
         private readonly ILogger<CurrencyController> _logger;
+        private readonly IUserRepository _userRepository;
+        private readonly ICurrencyRepository _currencyRepository;
 
-        public CurrencyController(ILogger<CurrencyController> logger)
+        public CurrencyController(ILogger<CurrencyController> logger, IUserRepository userRepository, ICurrencyRepository currencyRepository)
         {
             _logger = logger;
+            _userRepository = userRepository;
+            _currencyRepository = currencyRepository;
         }
         
         [HttpGet, Route("getUserCoins")]
-        public async Task<ActionResult> GetUserCoins(int userId)
+        public async Task<ActionResult> GetUserCoins(Guid userId)
         {
             try
             {
                 _logger.LogInformation($"Return user coinList. Id: " + userId);
-                var ur = new UserRepository();
-                return Ok(ur.GetUserCoins(userId));
+                return Ok(_userRepository.GetUserCoins(userId));
             }
             catch (Exception e)
             {
@@ -33,13 +37,12 @@ namespace UP.Controllers
         }
         
         [HttpGet, Route("getUserCoinsFull")]
-        public async Task<IActionResult> GetUserCoinsFull(int userId)
+        public async Task<IActionResult> GetUserCoinsFull(Guid userId)
         {
             try
             {
                 _logger.LogInformation($"Return user coinList. Id: " + userId);
-                var ur = new UserRepository();
-                return Ok(await ur.GetUserCoinsFull(userId));
+                return Ok(await _userRepository.GetUserCoinsFull(userId));
             }
             catch (Exception e)
             {
@@ -50,7 +53,7 @@ namespace UP.Controllers
         
         
         [HttpGet, Route("getQuantityAfterConversion")]
-        public async Task<IActionResult> GetQuantityAfterConversion(string shortNameStart, string shortNameFinal, double quantity, int userId)
+        public async Task<IActionResult> GetQuantityAfterConversion(string shortNameStart, string shortNameFinal, double quantity, Guid userId)
         {
             try
             {
@@ -64,7 +67,6 @@ namespace UP.Controllers
                 JObject json = JObject.Parse(responseContent);
                 double priceRatio =   (double)json[shortNameFinal.ToUpper()];
                 double finalQuantity = priceRatio * quantity;
-                var ur = new Repositories.UserRepository();
                 _logger.LogInformation($"User:" + userId + "Converted " + quantity + "(" + shortNameStart + ") to " + shortNameFinal + "(" + finalQuantity + ")");
                 return Ok(finalQuantity);
             }
@@ -77,12 +79,11 @@ namespace UP.Controllers
         
         
         [HttpGet, Route("getUserBalance")]
-        public async Task<ActionResult> GetUserBalance(int userId)
+        public async Task<ActionResult> GetUserBalance(Guid userId)
         {
             try
             {
-                var cr = new CurrencyRepository();
-                double balance = await cr.GetUserBalance(userId);
+                double balance = await _currencyRepository.GetUserBalance(userId);
                 _logger.LogInformation($"User balance: " + balance);
                 return Ok(balance);
             }
@@ -93,12 +94,11 @@ namespace UP.Controllers
         }
         
         [HttpGet, Route("getCoinQuantityInUserWallet")]
-        public async Task<ActionResult> GetCoinQuantityInUserWallet(int userId, string coinName)
+        public async Task<ActionResult> GetCoinQuantityInUserWallet(Guid userId, string coinName)
         {
             try
             {
-                var ur = new UserRepository();
-                double quantity = ur.GetCoinQuantityInUserWallet(userId, coinName);
+                double quantity = _userRepository.GetCoinQuantityInUserWallet(userId, coinName);
                 return Ok(quantity);
             }
             catch (Exception e)
@@ -113,8 +113,7 @@ namespace UP.Controllers
         {
             try
             {
-                var cr = new CurrencyRepository();
-                double price = await cr.GetCoinPrice(quantity, coinName);
+                double price = await _currencyRepository.GetCoinPrice(quantity, coinName);
                 return Ok(price);
             }
             catch (Exception e)
@@ -132,11 +131,10 @@ namespace UP.Controllers
                 Dictionary<string, string> cryptoDictionary = CoinList.GetCryptoDictionary();
                 var coins = new List<CoinsInformation>();
                 int i = 0;
-                var cr = new CurrencyRepository();
                 var coin = new CoinsInformation();
                 foreach (string key in cryptoDictionary.Keys)
                 {
-                    coin = await cr.GetFullCoinInformation(key);
+                    coin = await _currencyRepository.GetFullCoinInformation(key);
                     coins.Add(new (i, coin.ShortName, coin.FullName, coin.IconPath, coin.DailyVolume, coin.DailyImpact, coin.Price, coin.PercentagePriceChangePerDay));
                     i++;
                 }

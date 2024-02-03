@@ -2,10 +2,10 @@
 
 public class ReplenishTheBalanceRequest
 {
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
     public double QuantityUsd { get; set; }
 
-    public ReplenishTheBalanceRequest(int userId, double quantityUsd)
+    public ReplenishTheBalanceRequest(Guid userId, double quantityUsd)
     {
         UserId = userId;
         QuantityUsd = quantityUsd;

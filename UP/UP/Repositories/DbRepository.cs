@@ -1,4 +1,4 @@
-﻿/*using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using Entities;
 using Microsoft.EntityFrameworkCore;
 using TestApplication.Data;
@@ -76,4 +76,4 @@ public class DbRepository : IDbRepository
     {
         return _context.Set<T>().AsQueryable();
     }
-}*/
+}

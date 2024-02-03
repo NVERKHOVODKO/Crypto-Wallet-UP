@@ -1,96 +1,92 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using System.Text.RegularExpressions;
+using Analitique.BackEnd.Handlers;
+using Api.OpenAI.Handlers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ProjectX.Exceptions;
+using Repository;
 using UP.DTO;
-using System.Web;
-using System.Web.Http.Cors; 
+using UP.ModelsEF;
 
 namespace UP.Controllers
 {
+    [ApiController]
     [Route("[controller]")]
-    //[System.Web.Http.Cors.EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AuthorizationController : ControllerBase
     {
         private readonly ILogger<AuthorizationController> _logger;
+        private readonly IDbRepository _dbRepository;
+        private readonly IHashHelpers _hashHelpers;
 
-        public AuthorizationController(ILogger<AuthorizationController> logger)
+        public AuthorizationController(ILogger<AuthorizationController> logger, IDbRepository dbRepository, IHashHelpers hashHelpers)
         {
             _logger = logger;
+            _dbRepository = dbRepository;
+            _hashHelpers = hashHelpers;
         }
-        
-        [HttpPost]
-        public async Task<IActionResult> Login([FromBody] AuthenticationRequest request) {
-            _logger.LogInformation($"Index request at {DateTime.Now:hh:mm:ss}");
-            _logger.LogInformation($"Login: " + request.Login);
-            _logger.LogInformation($"Password: " + request.Password);
-            try
+
+        [HttpPost, Route("login")]
+        public async Task<IActionResult> Login([FromBody] AuthenticationRequest request)
+        {
+            _logger.LogInformation($"Логин: " + request.Login);
+            _logger.LogInformation($"Пароль: " + request.Password);
+
+            var users = await _dbRepository.Get<User>()
+                .Where(x => x.Login == request.Login)
+                .ToListAsync();
+
+            var user = users.FirstOrDefault(x => x.Password == HashHandler.HashPassword(request.Password, x.Salt));
+
+            if (user == null) throw new EntityNotFoundException("Пользователь не найден");
+
+            var record = new LoginHistory
             {
-                var ur = new Repositories.UserRepository();
-                var user = ur.Login(request.Login, request.Password);
-                if (user != null) {
-                    ur.SaveAccountLoginHistory(user.Id);
-                    if (user.IsBlocked)
-                    {
-                        _logger.LogInformation($"Account is blocked");
-                        return BadRequest("Ваш аккаунт заблокирован: " + ur.GetUserBlockingReason(user.Id));
-                    }
-                    if (user.IsDeleted)
-                    {
-                        _logger.LogInformation($"There is no such user");
-                        return NotFound("Пользователь удален");
-                    }
-                    _logger.LogInformation($"User login: {user.Login}", user.Login);
-                    return Ok(user);
-                } else {
-                    _logger.LogInformation($"There is no such user. Try again");
-                    return NotFound("Пользователь не найден");
-                }
-            }
-            catch (Exception exception)
-            {
-                _logger.LogInformation($"Unknown error");
-                return BadRequest("Пользователь не найден");
-            }
+                Id = Guid.NewGuid(),
+                UserId = user.Id,
+                DateCreated = DateTime.UtcNow,
+                IPAddress = LoginHistory.GetIPAddress()
+            };
+            await _dbRepository.Add(record);
+            await _dbRepository.SaveChangesAsync();
+
+            return Ok(user);
         }
 
         [HttpPost, Route("register")]
-        public async Task<IActionResult> RegisterNewUser([FromBody] RegisterRequest request) {
-            try
+        public async Task<IActionResult> RegisterNewUser([FromBody] RegisterRequest request)
+        {
+            bool IsEmailValid(string email)
             {
-                _logger.LogInformation($"Login: " + request.Login + "\nPassword: " + request.Password + "\nPasswordRep: " + request.PasswordRepeat);
-                if (request.Password.Length < 4)
-                {
-                    _logger.LogInformation($"Passwords must be more that 4 symbols");
-                    return UnprocessableEntity("Пароль должен быть больше 4 символов");
-                }
-                if (request.Password != request.PasswordRepeat)
-                {
-                    _logger.LogInformation($"Passwords doesn't match");
-                    return UnprocessableEntity("Пароли не совпадают");
-                }
-                if (request.Login.Length < 4)
-                {
-                    return BadRequest("Логин должен быть больше 4 символов");
-                }
-                if (request.Login.Length > 10)
-                {
-                    return BadRequest("Логин не должен быть больше 10 символов");
-                }
-                var ur = new Repositories.UserRepository();
-                if (ur.IsLoginUnique(request.Login))
-                {
-                    _logger.LogInformation($"Username already used");
-                    return UnprocessableEntity("Имя пользователя уже занято");
-                }
-                var ar = new Repositories.AuthorizationRepository();
-                ur.WriteNewUserToDatabase(request.Login, request.Password);
-                _logger.LogInformation($"User created successfully");
-                return Ok("Аккаунт успешно создан");
+                var regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
+                return Regex.IsMatch(email, regex, RegexOptions.IgnoreCase);
             }
-            catch (Exception)
+            
+            if (request.Login == null || request.Password == null || request.Email == null)
+                throw new IncorrectDataException("Заполните все поля");
+            if (request.Login.Length > 20) throw new IncorrectDataException("Логин должен быть короче 20 символов");
+            if (request.Login.Length < 4) throw new IncorrectDataException("Логин должен быть длиннее 4 символов");
+            if (request.Password.Length > 40) throw new IncorrectDataException("Пароль должен быть короче 40 символов");
+            if (request.Password.Length < 4) throw new IncorrectDataException("Пароль должен быть длиннее 4 символов");
+            if (!IsEmailValid(request.Email)) throw new IncorrectDataException("Неверный формат email");
+            if (await _dbRepository.Get<User>().FirstOrDefaultAsync(x => x.Email == request.Email) != null) throw new IncorrectDataException("Email уже используется");
+            if (await _dbRepository.Get<User>().FirstOrDefaultAsync(x => x.Login == request.Login) != null) throw new IncorrectDataException("Логин уже используется");
+
+            var salt = _hashHelpers.GenerateSalt(30);
+            var entity = new User
             {
-                _logger.LogInformation($"User not created");
-                return UnprocessableEntity("Не удалось создать пользователя");
-            }
+                Login = request.Login,
+                Password = _hashHelpers.HashPassword(request.Password, salt),
+                Email = request.Email,
+                DateCreated = DateTime.UtcNow,
+                IsDeleted = false,
+                IsBlocked = false,
+                RoleId = 1, 
+                Salt = salt
+            };
+            await _dbRepository.Add(entity);
+            await _dbRepository.SaveChangesAsync();
+
+            return Ok("Аккаунт успешно создан");
         }
     }
 }

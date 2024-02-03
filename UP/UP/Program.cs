@@ -1,12 +1,17 @@
 using System.Text;
 using System.Text.Json.Serialization;
+using Api.OpenAI.Handlers;
+using Api.OpenAI.Handlers.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProjectX.Middlewares;
+using Repository;
 using TestApplication.Data;
+using UP.ModelsEF;
+using UP.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,21 +54,13 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-/*
 builder.Services.AddScoped<IDbRepository, DbRepository>();
-*/
+builder.Services.AddScoped<IHashHelpers, HashHelpers>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ITransactionsRepository, TransactionsRepository>();
 
-/*builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-
-builder.Services.AddScoped<IChatGptService, ChatGptService>();
-builder.Services.AddScoped<IChatGPTRepository, ChatGPTRepository>();
-
-builder.Services.AddScoped<IChatService, ChatService>();
-builder.Services.AddScoped<IChatRepository, ChatRepository>();
-
-builder.Services.AddScoped<IMessageService, MessageService>();
-builder.Services.AddScoped<IMessageRepository, MessageRepository>();*/
 
 builder.Services.AddControllers()
     .AddJsonOptions(options => { options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve; });

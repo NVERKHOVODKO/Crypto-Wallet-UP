@@ -156,7 +156,7 @@ public class UserService : IUserService
                     : query.OrderByDescending(u => u.Email);
                 break;
         }
-        
+
         var skipCount = (request.PageNumber - 1) * request.PageSize;
         var users = await query.Skip(skipCount).Take(request.PageSize).ToListAsync();
         var userGetResponses = users.Select(user => new UserGetResponse
@@ -208,3 +208,4 @@ public class UserService : IUserService
         return roles;
     }#1#
 }*/
+

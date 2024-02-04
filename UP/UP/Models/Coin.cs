@@ -1,10 +1,13 @@
-﻿namespace UP.Models
-{
-    public class Coin
-    {
-        public int Id { get; set; }
-        public double Quantity { get; set; }
+﻿using System.ComponentModel.DataAnnotations;
+using Entities;
 
-        public string ShortName { get; set; }
-    }
+namespace UP.ModelsEF;
+
+public class Coin : BaseModel
+{
+    [Key] public Guid Id { get; set; }
+
+    [Required] public double Quantity { get; set; }
+
+    [Required] public string Shortname { get; set; }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Net.Sockets;
 
 namespace Analitique.BackEnd.Handlers;
 
@@ -8,9 +9,9 @@ public class IPHandler
     {
         try
         {
-            string? ipAddress = Dns.GetHostEntry(Dns.GetHostName())
+            var ipAddress = Dns.GetHostEntry(Dns.GetHostName())
                 .AddressList
-                .FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?
+                .FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork)?
                 .ToString();
 
             return ipAddress ?? "IP address not found";

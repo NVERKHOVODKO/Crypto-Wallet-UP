@@ -10,7 +10,8 @@ using Microsoft.OpenApi.Models;
 using ProjectX.Middlewares;
 using Repository;
 using TestApplication.Data;
-using UP.ModelsEF;
+using UP.Migrations.Services;
+using UP.Migrations.Services.Interfaces;
 using UP.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -50,7 +51,7 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "Analitique API",
+        Title = "Analitique API"
     });
 });
 
@@ -60,6 +61,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITransactionsRepository, TransactionsRepository>();
+builder.Services.AddScoped<IServiceService, ServiceService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 
 builder.Services.AddControllers()

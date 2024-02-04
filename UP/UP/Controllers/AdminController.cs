@@ -1,5 +1,4 @@
 ﻿using Api.OpenAI.Handlers.Interfaces;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectX.Exceptions;
@@ -10,11 +9,11 @@ namespace UP.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class AdminController: ControllerBase
+public class AdminController : ControllerBase
 {
-    private readonly ILogger<UserController> _logger;
     private readonly IDbRepository _dbRepository;
     private readonly IHashHelpers _hashHelpers;
+    private readonly ILogger<UserController> _logger;
 
     public AdminController(ILogger<UserController> logger, IDbRepository dbRepository, IHashHelpers hashHelpers)
     {
@@ -22,60 +21,65 @@ public class AdminController: ControllerBase
         _dbRepository = dbRepository;
         _hashHelpers = hashHelpers;
     }
-    
-    [HttpPost, Route("blockUser")]
+
+    [HttpPost]
+    [Route("blockUser")]
     public async Task<ActionResult> BlockUser(Guid id, string reason)
     {
         var existingUser = await _dbRepository.Get<User>().FirstOrDefaultAsync(x => x.Id == id);
         if (existingUser == null)
             throw new EntityNotFoundException("User not found");
-        
+
         existingUser.IsBlocked = true;
 
         await _dbRepository.SaveChangesAsync();
         return Ok("Пользователь заблокирован");
     }
-    
-    [HttpPost, Route("deleteUser")]
+
+    [HttpPost]
+    [Route("deleteUser")]
     public async Task<ActionResult> DeleteUser(Guid id)
     {
         var existingUser = await _dbRepository.Get<User>().FirstOrDefaultAsync(x => x.Id == id);
         if (existingUser == null)
             throw new EntityNotFoundException("User not found");
-        
+
         existingUser.IsDeleted = true;
 
         await _dbRepository.SaveChangesAsync();
         return Ok("Пользователь удален");
     }
-    
-    [HttpPut, Route("setStatusDel")]
+
+    [HttpPut]
+    [Route("setStatusDel")]
     public async Task<IActionResult> SetStatusDel(Guid id, bool status)
     {
         var existingUser = await _dbRepository.Get<User>().FirstOrDefaultAsync(x => x.Id == id);
         if (existingUser == null)
             throw new EntityNotFoundException("User not found");
-        
+
         existingUser.IsDeleted = status;
 
         await _dbRepository.SaveChangesAsync();
         return Ok("Пользователь редактирован");
     }
 
-    [HttpPut, Route("setStatusBlock")]
+    [HttpPut]
+    [Route("setStatusBlock")]
     public async Task<IActionResult> SetStatusBlock(Guid id, bool status)
     {
         var existingUser = await _dbRepository.Get<User>().FirstOrDefaultAsync(x => x.Id == id);
         if (existingUser == null)
             throw new EntityNotFoundException("User not found");
-        
+
         existingUser.IsBlocked = status;
 
         await _dbRepository.SaveChangesAsync();
         return Ok("Пользователь редактирован");
     }
 
-    [HttpGet, Route("getUserList")]
+    [HttpGet]
+    [Route("getUserList")]
     public async Task<ActionResult> GetUserList()
     {
         var users = _dbRepository.Get<User>().ToList();
@@ -83,8 +87,9 @@ public class AdminController: ControllerBase
             throw new EntityNotFoundException("Users not found");
         return Ok(users);
     }
-    
-    [HttpGet, Route("getUserById")]
+
+    [HttpGet]
+    [Route("getUserById")]
     public async Task<IActionResult> GetUserById(Guid id)
     {
         var users = _dbRepository.Get<User>().FirstOrDefaultAsync(x => x.Id == id);

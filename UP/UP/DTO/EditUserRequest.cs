@@ -2,12 +2,6 @@
 
 public class EditUserRequest
 {
-    public int Id { get; set; }
-    public string Login { get; set; }
-    public string Password { get; set; }
-    public string PasswordRepeat { get; set; }
-    public string Email { get; set; }
-
     public EditUserRequest(int id, string login, string password, string passwordRepeat, string email)
     {
         Id = id;
@@ -16,4 +10,10 @@ public class EditUserRequest
         PasswordRepeat = passwordRepeat;
         Email = email;
     }
+
+    public int Id { get; set; }
+    public string Login { get; set; }
+    public string Password { get; set; }
+    public string PasswordRepeat { get; set; }
+    public string Email { get; set; }
 }

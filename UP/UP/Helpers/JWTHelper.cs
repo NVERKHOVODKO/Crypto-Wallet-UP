@@ -1,8 +1,5 @@
-﻿using System.Security.Claims;
-
-namespace Api.OpenAI.Handlers;
+﻿namespace Api.OpenAI.Handlers;
 
 public class JWTHelper
 {
-    
 }

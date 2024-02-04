@@ -1,32 +1,25 @@
-﻿namespace UP.Models
+﻿using System.ComponentModel.DataAnnotations;
+using Entities;
+
+namespace UP.ModelsEF;
+
+public class Conversion : BaseModel
 {
-    public class Conversion
-    {
-        public Guid Id { get; set; }
-        public double Commission { get; set; }
-        public double BeginCoinQuantity { get; set; }
-        public double EndCoinQuantity { get; set; }
-        public double QuantityUsd { get; set; }
-        public String BeginCoinShortname { get; set; }
-        public String EndCoinShortname { get; set; }
-        public Guid UserId { get; set; }
-        public DateTime Date { get; set; }
+    [Key] public Guid Id { get; set; }
 
-        public Conversion(Guid id, double commission, double beginCoinQuantity, double endCoinQuantity, double quantityUsd, string beginCoinShortname, string endCoinShortname, Guid userId, DateTime date)
-        { 
-            Id = id;
-            Commission = commission;
-            BeginCoinQuantity = beginCoinQuantity;
-            EndCoinQuantity = endCoinQuantity;
-            QuantityUsd = quantityUsd;
-            BeginCoinShortname = beginCoinShortname;
-            EndCoinShortname = endCoinShortname;
-            UserId = userId;
-            Date = date;
-        }
+    [Required] public double Commission { get; set; }
 
-        public Conversion()
-        {
-        }
-    }
+    [Required] public double BeginCoinQuantity { get; set; }
+
+    [Required] public double EndCoinQuantity { get; set; }
+
+    [Required] public double QuantityUSD { get; set; }
+
+    [Required] public string BeginCoinShortname { get; set; }
+
+    [Required] public string EndCoinShortname { get; set; }
+
+    [Required] public Guid UserId { get; set; }
+
+    public virtual User User { get; set; }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using UP.Models;
 using UP.ModelsEF;
 
 namespace TestApplication.Data;
@@ -22,7 +23,12 @@ public class DataContext : DbContext
     public DbSet<Transactions> Transactions { get; set; }
     public DbSet<UsersCoins> UsersCoins { get; set; }
     public DbSet<Withdrawal> Withdrawals { get; set; }
+    public DbSet<Replenishment> Replenishments { get; set; }
     
+    public DbSet<Service> Services { get; set; }
+
+    public DbSet<EmailVerificationCodeModel> EmailVerificationCodeModels { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Transactions>()

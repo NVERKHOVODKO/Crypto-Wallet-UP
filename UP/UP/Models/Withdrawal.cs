@@ -1,24 +1,17 @@
-﻿namespace UP.Models
+﻿using System.ComponentModel.DataAnnotations;
+using Entities;
+
+namespace UP.ModelsEF;
+
+public class Withdrawal : BaseModel
 {
-    public class Withdrawal
-    {
-        public Guid Id { get; set; }
-        public DateTime Date { get; set; }
-        public double Quantity { get; set; }
-        public double Commission { get; set; }
-        public Guid UserId { get; set; }
+    [Key] public Guid Id { get; set; }
 
-        public Withdrawal(Guid id, DateTime date, double quantity, double commission, Guid userId)
-        {
-            Id = id;
-            Date = date;
-            Quantity = quantity;
-            Commission = commission;
-            UserId = userId;
-        }
+    [Required] public double Quantity { get; set; }
 
-        public Withdrawal()
-        {
-        }
-    }
+    [Required] public double Commission { get; set; }
+
+    [Required] public Guid UserId { get; set; }
+
+    public virtual User User { get; set; }
 }

@@ -18,3 +18,4 @@ public interface IUserService
     public Task<bool> IsLoginUniqueAsync(string login);
     public Task<bool> IsLoginUniqueForUserAsync(Guid userId, string login);
 }*/
+

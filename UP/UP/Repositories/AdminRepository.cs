@@ -11,7 +11,7 @@ namespace UP.Repositories;
 public class AdminRepository: RepositoryBase
 {
     private const String connectionString = "Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=root;";
-    
+
     public void BlockUser(int id, string reason)
     {
         using var connection = new NpgsqlConnection(connectionString);
@@ -26,7 +26,7 @@ public class AdminRepository: RepositoryBase
         ur.UpdateModificationDate(id);
         CreteBlockingRecordToDatabase(id, reason);
     }
-    
+
     public void CreteBlockingRecordToDatabase(int id, string reason)
     {
         using var connection = new NpgsqlConnection(connectionString);
@@ -38,8 +38,8 @@ public class AdminRepository: RepositoryBase
         command.ExecuteNonQuery();
         CloseConnection(connection);
     }
-    
-    
+
+
     public void DeleteUser(int id)
     {
         using var connection = new NpgsqlConnection(connectionString);
@@ -53,7 +53,7 @@ public class AdminRepository: RepositoryBase
         var ur = new Repositories.UserRepository();
         ur.UpdateModificationDate(id);
     }
-    
+
     public List<Models.User> GetUserList()
     {
         NpgsqlConnection connection = new NpgsqlConnection(connectionString);
@@ -77,7 +77,7 @@ public class AdminRepository: RepositoryBase
                     int roleId = reader.GetInt32(7);
                     bool isBlocked = reader.GetBoolean(8);
                     string salt = reader.GetString(9);
-                    users.Add(new Models.User(id, login, password, email, creationDate, 
+                    users.Add(new Models.User(id, login, password, email, creationDate,
                         modificationDate, isDeleted, isBlocked, roleId, salt));
                 }
             }
@@ -87,3 +87,4 @@ public class AdminRepository: RepositoryBase
     }
 
 }*/
+

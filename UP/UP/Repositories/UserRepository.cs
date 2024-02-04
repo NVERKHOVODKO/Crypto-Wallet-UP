@@ -6,7 +6,7 @@ using UP.ModelsEF;
 
 namespace UP.Repositories;
 
-public class UserRepository: RepositoryBase, IUserRepository
+public class UserRepository : RepositoryBase, IUserRepository
 {
     private readonly DataContext _context;
     private readonly ICurrencyRepository _currencyRepository;
@@ -25,28 +25,47 @@ public class UserRepository: RepositoryBase, IUserRepository
             .ThenInclude(uc => uc.Coin)
             .SelectMany(u => u.UsersCoins.Select(uc => uc.Coin))
             .ToList();
-        
+
         return userCoins;
     }
 
-    
+
     public async Task<List<CoinsInformation>> GetUserCoinsFull(Guid userId)
-    {
-        var coins = GetUserCoins(userId);
-        if (coins.Count == 0)
-            return new List<CoinsInformation>();
-        List<CoinsInformation>  coinsFull = new List<CoinsInformation>();
-        int i = 0;
-
-        foreach (var coin in coins)
+{
+    var coins = await _context.UsersCoins
+        .Where(uc => uc.UserId == userId)
+        .Include(uc => uc.Coin)
+        .Select(uc => new CoinsInformation
         {
-            CoinsInformation temp = await _currencyRepository.GetFullCoinInformation(coin.Shortname);
-            coinsFull.Add(new (i, temp.ShortName, temp.FullName, temp.DailyVolume, temp.DailyImpact, temp.Price, temp.PercentagePriceChangePerDay, coins[i].Quantity));
-            i++;
-        }
+            Id = uc.Coin.Id,
+            Quantity = uc.Coin.Quantity,
+            ShortName = uc.Coin.Shortname
+        })
+        .ToListAsync();
 
-        return coinsFull;
+    List<CoinsInformation>  coinsFull = new List<CoinsInformation>();
+    int i = 0;
+    foreach (var coin in coins)
+    {
+        CoinsInformation temp = await _currencyRepository.GetFullCoinInformation(coin.ShortName);
+        coinsFull.Add(new CoinsInformation
+        {
+            Id = temp.Id,
+            ShortName = temp.FullName,
+            FullName = temp.ShortName,
+            IconPath = temp.IconPath,
+            DailyVolume = temp.DailyVolume,
+            DailyImpact = temp.DailyImpact,
+            Price = temp.Price,
+            PercentagePriceChangePerDay = temp.PercentagePriceChangePerDay,
+            Quantity = GetCoinQuantityInUserWallet(userId, temp.FullName)
+        });
+        i++;
     }
+
+    return coinsFull;
+}
+
 
     public double GetCoinQuantityInUserWallet(Guid userId, string coinShortname)
     {

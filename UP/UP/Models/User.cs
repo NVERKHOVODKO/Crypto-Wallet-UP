@@ -1,32 +1,33 @@
-﻿namespace UP.Models
+﻿using System.ComponentModel.DataAnnotations;
+using Entities;
+
+namespace UP.ModelsEF;
+
+public class User : BaseModel
 {
-    public class User
-    {
-        public int Id { get; set; }
-        public String Login { get; set; }
-        public String Password { get; set; }
-        public String Email { get; set; }
-        public DateTime CreationData { get; set; }
-        public DateTime ModificationDate { get; set; }
-        public Boolean IsDeleted { get; set; }
-        public Boolean IsBlocked { get; set; }
-        public int RoleId { get; set; }
-        public string Salt { get; set; }
+    [Key] public Guid Id { get; set; }
 
+    [Required] public string Login { get; set; }
 
-        public User(int id, String login, String password, String email, DateTime creationData,
-            DateTime modificationDate, Boolean isDeleted, Boolean isBlocked, int roleId, string salt)
-        {
-            Id = id;
-            Login = login;
-            Password = password;
-            Email = email;
-            CreationData = creationData;
-            ModificationDate = modificationDate;
-            IsDeleted = isDeleted;
-            IsBlocked = isBlocked;
-            RoleId = roleId;
-            Salt = salt;
-        }
-    }
+    [Required] public string Password { get; set; }
+
+    public string? Email { get; set; }
+
+    [Required] public bool IsDeleted { get; set; }
+
+    [Required] public int RoleId { get; set; }
+
+    [Required] public bool IsBlocked { get; set; }
+
+    [Required] public string Salt { get; set; }
+
+    public virtual ICollection<Blocking> Blockings { get; set; }
+    public virtual ICollection<Conversion> Conversions { get; set; }
+    public virtual ICollection<UsersCoins> UsersCoins { get; set; }
+    public virtual ICollection<LoginHistory> LoginHistories { get; set; }
+    public virtual ICollection<PreviousPassword> PreviousPasswords { get; set; }
+    public virtual ICollection<Replenishment> Replenishments { get; set; }
+    public virtual ICollection<Transactions> SentTransactions { get; set; }
+    public virtual ICollection<Transactions> ReceivedTransactions { get; set; }
+    public virtual ICollection<Withdrawal> Withdrawals { get; set; }
 }

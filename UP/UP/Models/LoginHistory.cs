@@ -1,22 +1,24 @@
-﻿namespace UP.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.Net;
+using System.Net.Sockets;
+using Entities;
+
+namespace UP.ModelsEF;
+
+public class LoginHistory : BaseModel
 {
-    public class LoginHistory
+    [Key] public Guid Id { get; set; }
+
+    [Required] public string IPAddress { get; set; }
+
+    [Required] public Guid UserId { get; set; }
+
+    public virtual User User { get; set; }
+
+    public static string GetIPAddress()
     {
-        public int Id { get; set; }
-        public String Ip { get; set; }
-        public DateTime Date { get; set; }
-        public int UserId { get; set; }
-
-        public LoginHistory(int id, string ip, DateTime date, int userId)
-        {
-            Id = id;
-            Ip = ip;
-            Date = date;
-            UserId = userId;
-        }
-
-        public LoginHistory()
-        {
-        }
+        var ipAddress = Dns.GetHostEntry(Dns.GetHostName()).AddressList
+            .FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork)?.ToString();
+        return ipAddress;
     }
 }

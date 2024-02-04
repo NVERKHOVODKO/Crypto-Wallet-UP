@@ -2,12 +2,12 @@
 
 public class CoinList
 {
-    public static Dictionary<string, string> cryptoDictionary = new Dictionary<string, string>
+    public static Dictionary<string, string> cryptoDictionary = new()
     {
-        {"btc", "Bitcoin"},
-        {"eth", "Ethereum"},
-        /*{"usdt", "Tether"},
-        {"bnb", "Binance Coin"},
+        { "btc", "Bitcoin" },
+        { "eth", "Ethereum" },
+        {"usdt", "Tether"},
+        /*{"bnb", "Binance Coin"},
         {"sol", "Solana"},
         {"ada", "Cardano"},
         {"xrp", "XRP"},
@@ -33,15 +33,11 @@ public class CoinList
         {"tfuel", "Theta Fuel"},
         {"sushi", "SushiSwap"},
         {"dcr", "Decred"},*/
-        {"fet", "Fetch.ai"}
+        { "fet", "Fetch.ai" }
     };
 
     public static Dictionary<string, string> GetCryptoDictionary()
     {
         return cryptoDictionary;
-    }
-
-    public CoinList()
-    {
     }
 }

@@ -1,22 +1,23 @@
-﻿namespace UP.Models
-{
-    public class Transactions
-    {
-        public Guid Id { get; set; }
-        public string CoinName { get; set; }
-        public double Quantity { get; set; }
-        public DateTime Date { get; set; }
-        public Guid SenderId { get; set; }
-        public Guid ReceiverId { get; set; }
+﻿using System.ComponentModel.DataAnnotations;
+using Entities;
+using UP.Models;
 
-        public Transactions(Guid id, string coinName, double quantity, DateTime date, Guid senderId, Guid receiverId)
-        {
-            Id = id;
-            CoinName = coinName;
-            Quantity = quantity;
-            Date = date;
-            SenderId = senderId;
-            ReceiverId = receiverId;
-        }
-    }
+namespace UP.ModelsEF;
+
+public class Transactions : BaseModel
+{
+    [Key] public Guid Id { get; set; }
+
+    [Required] public string CoinName { get; set; }
+
+    [Required] public double Quantity { get; set; }
+
+    [Required] public Guid SenderId { get; set; }
+
+    [Required] public Guid ReceiverId { get; set; }
+
+    public virtual User Sender { get; set; }
+    public virtual User Receiver { get; set; }
+    
+    public virtual Service Service { get; set; }
 }

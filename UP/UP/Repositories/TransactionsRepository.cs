@@ -1,145 +1,162 @@
-﻿using System.Data;
-using System.Xml.Serialization;
-using Npgsql;
-using System.Globalization;
-using Microsoft.AspNetCore.Mvc;
-using UP.Models;
-using System.Net;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using ProjectX.Exceptions;
 using Repository;
 using TestApplication.Data;
 using UP.Controllers;
+using UP.ModelsEF;
 
-namespace UP.Repositories
+namespace UP.Repositories;
+
+public class TransactionsRepository : RepositoryBase, ITransactionsRepository
 {
-    public class TransactionsRepository: RepositoryBase, ITransactionsRepository
+    private readonly DataContext _context;
+    private readonly ICurrencyRepository _currencyRepository;
+
+    public TransactionsRepository(DataContext context, ICurrencyRepository currencyRepository)
     {
-        private readonly DataContext _context;
-        private readonly ILogger<TransactionController> _logger;
-        private readonly IUserRepository _userRepository;
-        private readonly ICurrencyRepository _currencyRepository;
+        _context = context;
+        _currencyRepository = currencyRepository;
+    }
 
-        public TransactionsRepository(DataContext context, ILogger<TransactionController> logger, IUserRepository userRepository, ICurrencyRepository currencyRepository)
+    public void WriteNewConversionDataToDatabase(Conversion conversion)
+    {
+        var en = new Conversion
         {
-            _logger = logger;
-            _userRepository = userRepository;
-            _context = context;
-            _currencyRepository = currencyRepository;
-        }
+            Id = Guid.NewGuid(),
+            Commission = conversion.Commission,
+            BeginCoinQuantity = conversion.BeginCoinQuantity,
+            EndCoinQuantity = conversion.EndCoinQuantity,
+            QuantityUSD = conversion.QuantityUSD,
+            BeginCoinShortname = conversion.BeginCoinShortname,
+            EndCoinShortname = conversion.EndCoinShortname,
+            UserId = conversion.UserId,
+            DateCreated = DateTime.UtcNow
+        };
 
-        public void WriteNewConversionDataToDatabase(ModelsEF.Conversion conversion)
-        {
-            using var connection = new NpgsqlConnection(connectionString);
-            var sql = "INSERT INTO conversions (commission, begin_coin_quantity, end_coin_quantity, quantity_usd, begin_coin_shortname, end_coin_shortname, user_id, date) " +
-                      "VALUES (@commission, @begin_coin_quantity, @end_coin_quantity, @quantity_usd, @begin_coin_shortname, @end_coin_shortname, @user_id, @date)";
-            using var command = new NpgsqlCommand(sql, connection);
-            command.Parameters.AddWithValue("@commission", conversion.Commission);
-            command.Parameters.AddWithValue("@begin_coin_quantity", conversion.BeginCoinQuantity);
-            command.Parameters.AddWithValue("@end_coin_quantity", conversion.EndCoinQuantity);
-            command.Parameters.AddWithValue("@quantity_usd", conversion.QuantityUSD);
-            command.Parameters.AddWithValue("@begin_coin_shortname", conversion.BeginCoinShortname);
-            command.Parameters.AddWithValue("@end_coin_shortname", conversion.EndCoinShortname);
-            command.Parameters.AddWithValue("@user_id", conversion.UserId);
-            command.Parameters.AddWithValue("@date", conversion.DateCreated);
-            OpenConnection(connection);
-            command.ExecuteNonQuery();
-            CloseConnection(connection);
-        }
-        
-        public List<ModelsEF.Conversion> GetUserConversionsHistory(Guid userId)
-        {
-            var user = _context.Users
-                .Include(u => u.Conversions).Include(user => user.Conversions)
-                .FirstOrDefault(u => u.Id == userId);
+        _context.Conversions.Add(en);
+        _context.SaveChanges();
+    }
 
-            if (user != null)
-            {
-                return user.Conversions.ToList();
-            }
-            else
-            {
-                return new List<ModelsEF.Conversion>();
-            }
-        }
+    public List<Conversion> GetUserConversionsHistory(Guid userId)
+    {
+        var user = _context.Users
+            .Include(u => u.Conversions).Include(user => user.Conversions)
+            .FirstOrDefault(u => u.Id == userId);
 
-        public async void ReplenishTheBalance(Guid userId, double quantityUsd)
-        {
-            double commission = 0.02;
-            _currencyRepository.AddCryptoToUserWallet(userId, "usdt", quantityUsd - quantityUsd * commission);
-            using var connection = new NpgsqlConnection(connectionString);
-            var sql = "INSERT INTO replenishment (date, quantity, commission, user_id) VALUES (@date, @quantity, @commission, @user_id)";
-            using var command = new NpgsqlCommand(sql, connection);
-            command.Parameters.AddWithValue("@date", DateTime.Now);
-            command.Parameters.AddWithValue("@quantity", quantityUsd - quantityUsd * commission);
-            command.Parameters.AddWithValue("@commission", commission * quantityUsd);
-            command.Parameters.AddWithValue("@user_id", userId);
-            OpenConnection(connection);
-            command.ExecuteNonQuery();
-            CloseConnection(connection);
-        }
-        
-        public List<ModelsEF.Replenishment> GetUserDepositHistory(Guid userId)
-        {
-            var user = _context.Users
-                .Include(u => u.Replenishments)
-                .FirstOrDefault(u => u.Id == userId);
+        if (user != null)
+            return user.Conversions.ToList();
+        return new List<Conversion>();
+    }
 
-            if (user != null)
-            {
-                return user.Replenishments.ToList();
-            }
-            else
-            {
-                return new List<ModelsEF.Replenishment>();
-            }
-        }
-        
-        public async void WithdrawUSDT(Guid userId, double quantityUsd)
-        {
-            double commission = 0.02;
-            _currencyRepository.SellCrypto(userId, "usdt", quantityUsd + quantityUsd * commission);
-            using var connection = new NpgsqlConnection(connectionString);
-            var sql = "INSERT INTO withdrawals (date, quantity, commission, user_id) VALUES (@date, @quantity, @commission, @user_id)";
-            using var command = new NpgsqlCommand(sql, connection);
-            command.Parameters.AddWithValue("@date", DateTime.Now);
-            command.Parameters.AddWithValue("@quantity", quantityUsd);
-            command.Parameters.AddWithValue("@commission", commission * quantityUsd);
-            command.Parameters.AddWithValue("@user_id", userId);
-            OpenConnection(connection);
-            command.ExecuteNonQuery();
-            CloseConnection(connection);
-        }
-        
-        public List<ModelsEF.Withdrawal> GetUserWithdrawalsHistory(Guid userId)
-        {
-            var user = _context.Users
-                .Include(u => u.Replenishments).Include(user => user.Withdrawals)
-                .FirstOrDefault(u => u.Id == userId);
+    public async void ReplenishTheBalance(Guid userId, double quantityUsd)
+    {
+        var userCoins = _context.UsersCoins
+            .Include(uc => uc.Coin)
+            .Where(uc => uc.UserId == userId)
+            .ToList();
 
-            if (user != null)
-            {
-                return user.Withdrawals.ToList();
-            }
-            else
-            {
-                return new List<ModelsEF.Withdrawal>();
-            }
-        }
-        
-        public List<ModelsEF.Transactions> GetUserTransactionsHistory(Guid userId)
-        {
-            var user = _context.Users
-                .Include(u => u.SentTransactions).Include(user => user.Withdrawals)
-                .FirstOrDefault(u => u.Id == userId);
+        var existingCoin = userCoins.FirstOrDefault(uc => uc.Coin.Shortname == "usdt");
 
-            if (user != null)
-            {
-                return user.SentTransactions.ToList();
-            }
-            else
-            {
-                return new List<ModelsEF.Transactions>();
-            }
+        if (existingCoin != null)
+        {
+            existingCoin.Coin.Quantity += quantityUsd;
         }
+        else
+        {
+            var user = _context.Users.Find(userId);
+
+            if (user == null)
+            {
+                throw new EntityNotFoundException("Пользователь не найден");
+            }
+
+            var newCoin = new Coin
+            {
+                Id = Guid.NewGuid(),
+                Quantity = quantityUsd,
+                Shortname = "usdt"
+            };
+
+            _context.Coins.Add(newCoin);
+
+            var userCoin = new UsersCoins
+            {
+                UserId = userId,
+                CoinId = newCoin.Id,
+                Coin = newCoin
+            };
+
+            _context.UsersCoins.Add(userCoin);
+        }
+        var replenishment = new Replenishment
+        {
+            Id = Guid.NewGuid(),
+            Quantity = quantityUsd * 0.98,
+            Commission = quantityUsd * 0.02,
+            UserId = userId
+        };
+
+        _context.Replenishments.Add(replenishment);
+
+        _context.SaveChanges();
+    }
+
+    public List<Replenishment> GetUserDepositHistory(Guid userId)
+    {
+        var user = _context.Users
+            .Include(u => u.Replenishments)
+            .FirstOrDefault(u => u.Id == userId);
+
+        if (user != null)
+            return user.Replenishments.ToList();
+        return new List<Replenishment>();
+    }
+
+    public void WithdrawUSDT(Guid userId, double quantityUsd)
+    {
+        var commission = 0.02;
+        _currencyRepository.SellCrypto(userId, "usdt", quantityUsd + quantityUsd * commission);
+
+        var withdrawal = new Withdrawal
+        {
+            Id = Guid.NewGuid(),
+            Quantity = quantityUsd,
+            Commission = commission,
+            UserId = userId
+        };
+
+        _context.Withdrawals.Add(withdrawal);
+        var replenishment = new Withdrawal
+        {
+            Id = Guid.NewGuid(),
+            Quantity = quantityUsd * 0.98,
+            Commission = quantityUsd * 0.02,
+            UserId = userId
+        };
+
+        _context.Withdrawals.Add(replenishment);
+        _context.SaveChanges();
+    }
+
+    public List<Withdrawal> GetUserWithdrawalsHistory(Guid userId)
+    {
+        var user = _context.Users
+            .Include(u => u.Replenishments).Include(user => user.Withdrawals)
+            .FirstOrDefault(u => u.Id == userId);
+
+        if (user != null)
+            return user.Withdrawals.ToList();
+        return new List<Withdrawal>();
+    }
+
+    public List<Transactions> GetUserTransactionsHistory(Guid userId)
+    {
+        var user = _context.Users
+            .Include(u => u.SentTransactions).Include(user => user.Withdrawals)
+            .FirstOrDefault(u => u.Id == userId);
+
+        if (user != null)
+            return user.SentTransactions.ToList();
+        return new List<Transactions>();
     }
 }

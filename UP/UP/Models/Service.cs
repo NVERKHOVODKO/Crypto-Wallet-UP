@@ -10,4 +10,6 @@ public class Service : BaseModel
     [Required] public string Name { get; set; }
     
     [Required] public string About { get; set; }
+    
+    [Required] public string PhotoName { get; set; }
 }

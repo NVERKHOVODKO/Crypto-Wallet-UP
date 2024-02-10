@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using Repository;
 using UP.DTO;
+using UP.Migrations.Services.Interfaces;
+using UP.Models;
 using UP.ModelsEF;
 using UP.Repositories;
 
@@ -16,16 +19,18 @@ public class TransactionController : ControllerBase
     private readonly ILogger<TransactionController> _logger;
     private readonly ITransactionsRepository _transactionsRepository;
     private readonly IUserRepository _userRepository;
+    private readonly IEmailService _emailService;
 
     public TransactionController(IDbRepository dbRepository, ILogger<TransactionController> logger,
         IUserRepository userRepository, ICurrencyRepository currencyRepository,
-        ITransactionsRepository transactionsRepository)
+        ITransactionsRepository transactionsRepository, IEmailService emailService)
     {
         _logger = logger;
         _userRepository = userRepository;
         _currencyRepository = currencyRepository;
         _transactionsRepository = transactionsRepository;
         _dbRepository = dbRepository;
+        _emailService = emailService;
     }
 
     [HttpGet]
@@ -210,10 +215,16 @@ public class TransactionController : ControllerBase
             return UnprocessableEntity("Недостаточно монет");
         }
 
-        _currencyRepository.SubtractCoinFromUser(request.SenderId, request.CoinName, request.QuantityForSend);
         _currencyRepository.AddCryptoToUserWallet(request.ReceiverId, request.CoinName, request.QuantityForSend);
+        _currencyRepository.SubtractCoinFromUser(request.SenderId, request.CoinName, request.QuantityForSend);
         _currencyRepository.WriteTransactionToDatabase(request.CoinName, request.QuantityForSend, request.SenderId,
             request.ReceiverId);
+
+        _emailService.SendEmailMessageTransactionsAsync(request.SenderId, request.CoinName, request.QuantityForSend,
+            false, request.ReceiverId);
+        _emailService.SendEmailMessageTransactionsAsync(request.ReceiverId, request.CoinName, request.QuantityForSend,
+            true, request.SenderId);
+
         _logger.LogInformation("Transfer completed successfully");
         return Ok("Перевод выполнен успешно");
     }

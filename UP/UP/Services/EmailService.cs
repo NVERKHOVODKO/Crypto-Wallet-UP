@@ -209,4 +209,87 @@ public class EmailService : IEmailService
         _dbRepository.Remove(existedCode);
         await _dbRepository.SaveChangesAsync();
     }
+    
+    /*public async Task SendEmailMessageTransactionsAsync(Guid id, string code, string coinName, double quantity, bool isGet, Guid recieverId)
+    {
+        var user = await _dbRepository.Get<User>(x => x.Id == id).FirstOrDefaultAsync();
+        if (user == null)
+            throw new IncorrectDataException("Пользователь не найден");
+    
+        var mm = new MailMessage();
+        var sc = new SmtpClient("smtp.gmail.com");
+        mm.From = new MailAddress("mikita.verkhavodka@gmail.com");
+        mm.To.Add(user.Email);
+        mm.Subject = "UP";
+
+        string transactionType = isGet ? "На ваш счет переведены" : "С вашего счета переведены";
+
+        mm.Body = $"Уведомление о транзакции<br>" +
+                  $"{transactionType} {quantity} {coinName} на кошелек {recieverId}.<br>" +
+                  $"Действие отменить невозможно.<br>" +
+                  $"Пожалуйста, не отвечайте на это сообщение.";
+
+        mm.IsBodyHtml = true;
+        sc.Port = 587;
+        sc.Credentials = new NetworkCredential("mikita.verkhavodka@gmail.com", "hors mfwv zsve lvye");
+        sc.EnableSsl = true;
+
+        await sc.SendMailAsync(mm);
+    }*/
+    
+    public async Task SendEmailMessageTransactionsAsync(Guid id, string coinName, double quantity, bool isGet, Guid recieverId)
+    {
+        var user = await _dbRepository.Get<User>(x => x.Id == id).FirstOrDefaultAsync();
+        if (user == null)
+            throw new IncorrectDataException("Пользователь не найден");
+    
+        var mm = new MailMessage();
+        var sc = new SmtpClient("smtp.gmail.com");
+        mm.From = new MailAddress("mikita.verkhavodka@gmail.com");
+        mm.To.Add(user.Email);
+        mm.Subject = "UP";
+
+        string transactionType = isGet ? "На ваш счет переведены" : "С вашего счета переведены";
+
+        mm.Body = $@"
+        <html>
+        <head>
+            <style>
+                /* CSS стили */
+                body {{
+                    font-family: Arial, sans-serif;
+                    color: #333;
+                    background-color: #f5f5f5;
+                }}
+                .container {{
+                    max-width: 600px;
+                    margin: 0 auto;
+                    padding: 20px;
+                    background-color: #fff;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                }}
+                h1 {{
+                    color: #007bff;
+                }}
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <h1>Уведомление о транзакции</h1>
+                <p>{transactionType} {quantity} {coinName} на кошелек {recieverId}.</p>
+                <p>Действие отменить невозможно.</p>
+                <p>Пожалуйста, не отвечайте на это сообщение.</p>
+            </div>
+        </body>
+        </html>
+    ";
+
+        mm.IsBodyHtml = true;
+        sc.Port = 587;
+        sc.Credentials = new NetworkCredential("mikita.verkhavodka@gmail.com", "lmqa tylg iawd ipuh");
+        sc.EnableSsl = true;
+
+        await sc.SendMailAsync(mm);
+    }
 }

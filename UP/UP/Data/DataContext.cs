@@ -24,9 +24,8 @@ public class DataContext : DbContext
     public DbSet<UsersCoins> UsersCoins { get; set; }
     public DbSet<Withdrawal> Withdrawals { get; set; }
     public DbSet<Replenishment> Replenishments { get; set; }
-    
     public DbSet<Service> Services { get; set; }
-
+    public DbSet<CoinListInfo> CoinListInfos { get; set; }
     public DbSet<EmailVerificationCodeModel> EmailVerificationCodeModels { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -1,13 +1,25 @@
-﻿namespace UP.Models;
+﻿using Api.OpenAI.Handlers.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Repository;
+using UP.Controllers;
+
+namespace UP.Models;
 
 public class CoinList
 {
+    private readonly IDbRepository _dbRepository;
+
+    public CoinList(IDbRepository dbRepository)
+    {
+        _dbRepository = dbRepository;
+    }
+    
     public static Dictionary<string, string> cryptoDictionary = new()
     {
         { "btc", "Bitcoin" },
         { "eth", "Ethereum" },
         {"usdt", "Tether"},
-        /*{"bnb", "Binance Coin"},
+        {"bnb", "Binance Coin"},
         {"sol", "Solana"},
         {"ada", "Cardano"},
         {"xrp", "XRP"},
@@ -32,12 +44,26 @@ public class CoinList
         {"cake", "PancakeSwap"},
         {"tfuel", "Theta Fuel"},
         {"sushi", "SushiSwap"},
-        {"dcr", "Decred"},*/
+        {"dcr", "Decred"},
         { "fet", "Fetch.ai" }
     };
 
     public static Dictionary<string, string> GetCryptoDictionary()
     {
         return cryptoDictionary;
+    }
+    
+    public async Task<Dictionary<string, string>> GetActiveCoins()
+    {
+        var coinsList = await _dbRepository.Get<CoinListInfo>()
+            .Where(x => x.IsActive)
+            .ToListAsync();
+
+        var coins = coinsList.ToDictionary(
+            coin => coin.ShortName.ToLower(),
+            coin => coin.FullName.ToLower()
+        );
+
+        return coins;
     }
 }

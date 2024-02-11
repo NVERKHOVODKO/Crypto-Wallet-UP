@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectX.Exceptions;
 using Repository;
+using UP.Models;
 using UP.ModelsEF;
 
 namespace UP.Controllers;
@@ -96,5 +97,59 @@ public class AdminController : ControllerBase
         if (users == null)
             throw new EntityNotFoundException("Users not found");
         return Ok(users);
+    }
+    
+    [HttpGet]
+    [Route("get-all-coins")]
+    public async Task<IActionResult> GetCoins()
+    {
+        var coinsList = await _dbRepository.Get<CoinListInfo>()
+            .ToListAsync();
+
+        return Ok(coinsList);
+    }
+    
+    [HttpGet]
+    [Route("get-active-coins")]
+    public async Task<IActionResult> GetAllCoins()
+    {
+        var coinsList = await _dbRepository.Get<CoinListInfo>()
+            .ToListAsync();
+
+        return Ok(coinsList);
+    }
+    
+    [HttpGet]
+    [Route("get-active-coins-dict")]
+    public async Task<IActionResult> GetCoinsDict()
+    {
+        var coinsList = await _dbRepository.Get<CoinListInfo>()
+            .Where(x => x.IsActive)
+            .ToListAsync();
+
+        var coins = coinsList.ToDictionary(
+            coin => coin.ShortName.ToLower(),
+            coin => coin.FullName.ToLower()
+        );
+        return Ok(coins);
+    }
+
+    [HttpPatch]
+    [Route("set-coin-status")]
+    public async Task<IActionResult> SetCoinStatus(string coinName, bool status)
+
+    {
+        var coin = await _dbRepository.Get<CoinListInfo>()
+            .Where(x => x.ShortName == coinName)
+            .FirstOrDefaultAsync();
+
+        if (coin == null)
+            throw new EntityNotFoundException("Нет такой монеты");
+
+        coin.IsActive = status;
+        coin.DateUpdated = DateTime.UtcNow;
+        await _dbRepository.SaveChangesAsync();
+        
+        return Ok("Статус обновлен");
     }
 }

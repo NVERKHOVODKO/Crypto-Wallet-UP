@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TestApplication.DTO;
+using UP.DTO;
 using UP.Migrations.Services.Interfaces;
 
 namespace UP.Controllers;
@@ -62,6 +63,14 @@ public class EmailController : ControllerBase
     public async Task<IActionResult> RestorePassword([FromBody] RestorePasswordRequest request)
     {
         await _emailService.RestorePassword(request);
+        return Ok();
+    }
+    
+    [HttpPatch("send-message-block")]
+    [AllowAnonymous]
+    public async Task<IActionResult> SendMessage([FromBody] SendMessageRequest request)
+    {
+        //await _emailService.SendMessageBlock(request);
         return Ok();
     }
 }

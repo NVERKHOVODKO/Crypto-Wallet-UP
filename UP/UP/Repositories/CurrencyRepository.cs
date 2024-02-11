@@ -16,48 +16,15 @@ namespace UP.Repositories;
 public class CurrencyRepository : RepositoryBase, ICurrencyRepository
 {
     private const string CryptoCompareApiUrl = "https://min-api.cryptocompare.com";
-
-    /*//3 sec
-    public async Task<double> GetDailyPriceImpact(string shortName)
-    {
-        using var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.Add("X-MBX-APIKEY", apiKey);
-        string url = $"https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" + shortName + "&tsyms=USD";
-        var response = await httpClient.GetAsync(url);
-        var responseContent = await response.Content.ReadAsStringAsync();
-        var data = JObject.Parse(responseContent);
-        var priceData = data["RAW"]["BTC"]["USD"];
-        var priceChange = (double)priceData["CHANGEDAY"];
-        return priceChange;
-    }*/
-
-    /*public async Task<CoinsInformation> GetFullCoinInformation(string shortName) 10 sec
-    {
-        var coin = new CoinsInformation();
-        Dictionary<string, string> cryptoDictionary = CoinList.GetCryptoDictionary();
-        string fullName = cryptoDictionary[shortName];
-        string apiKey = "4da2c4791b9c285b22c1bf08bc36f304ab2ca80bc901504742b9a42a814c4614";
-        using var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.Add("X-MBX-APIKEY", apiKey);
-        string url = $"https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" + shortName + "&tsyms=USD";
-        var response = await httpClient.GetAsync(url);
-        var responseContent = await response.Content.ReadAsStringAsync();//server response
-        var data = JObject.Parse(responseContent);
-        var priceData = data["RAW"][shortName.ToUpper()]["USD"];
-        var priceChange = (double)priceData["CHANGEDAY"];
-        var dailyVolume = (double)priceData["VOLUME24HOUR"];
-        var price = (double)priceData["PRICE"];
-
-        return new CoinsInformation(fullName, shortName, @"C:\НЕ СИСТЕМА\BSUIR\второй курс\UP\cryptoicons_png\128\" + shortName.ToUpper(), dailyVolume, priceChange, price);
-    }*/
-
     private static readonly HttpClient httpClient = new();
     private readonly DataContext _context;
     private readonly IUserRepository _userRepository;
+    private readonly IDbRepository _dbRepository;
 
-    public CurrencyRepository(DataContext context)
+    public CurrencyRepository(DataContext context, IDbRepository dbRepository)
     {
         _context = context;
+        _dbRepository = dbRepository;
     }
 
     public void BuyCrypto(Guid userId, string shortname, double quantity)
@@ -156,26 +123,6 @@ public class CurrencyRepository : RepositoryBase, ICurrencyRepository
             throw new IncorrectDataException("Невозможно удалить монету");
 
         _context.SaveChanges();
-        /*Console.WriteLine("Id: " + userId + " Name: " + shortname + " quantityForSubtract: " + quantityForSubtract);
-        List<ModelsEF.Coin> coins = _userRepository.GetUserCoins(userId);
-        Guid coinId = GetPurchasedCoinId(coins, shortname);
-        int coinIdInTheList = GetPurchasedCoinNumberInTheList(coins, shortname);
-        if (coinId != Guid.Empty)
-        {
-            Console.WriteLine("Id: " + coins[coinIdInTheList].Id + " Quantity: " + coins[coinIdInTheList].Quantity + " ShortName: " + coins[coinIdInTheList].Shortname);
-            var coin = new ModelsEF.Coin
-            {
-                Id = coins[coinIdInTheList].Id,
-                Quantity = coins[coinIdInTheList].Quantity,
-                Shortname = coins[coinIdInTheList].Shortname,
-            };
-            double finalQuantity = coin.Quantity - quantityForSubtract;
-            if (finalQuantity == 0) {
-                DeleteCoin(coin.Id);
-            }else if(finalQuantity > 0) {
-                UpdateCoinQuantity(coin.Id, finalQuantity);
-            }
-        }*/
     }
 
     public async Task<double> GetCoinPrice(double quantity, string shortName)
@@ -227,7 +174,14 @@ public class CurrencyRepository : RepositoryBase, ICurrencyRepository
 
     public async Task<CoinsInformation> GetFullCoinInformation(string shortName)
     {
-        var cryptoDictionary = CoinList.GetCryptoDictionary();
+        var coinsList = await _dbRepository.Get<CoinListInfo>()
+            .Where(x => x.IsActive)
+            .ToListAsync();
+
+        var cryptoDictionary = coinsList.ToDictionary(
+            coin => coin.ShortName.ToLower(),
+            coin => coin.FullName.ToLower()
+        );
         var fullName = cryptoDictionary[shortName];
 
         var url = $"{CryptoCompareApiUrl}/data/pricemultifull?fsyms={shortName}&tsyms=USD";
@@ -292,40 +246,5 @@ public class CurrencyRepository : RepositoryBase, ICurrencyRepository
 
         _context.Withdrawals.Add(withdrawal);
         _context.SaveChanges();
-    }
-
-    private Guid GetPurchasedCoinId(List<Coin> coins, string shortName)
-    {
-        try
-        {
-            foreach (var i in coins)
-                if (i.Shortname == shortName)
-                    return i.Id;
-            return Guid.Empty;
-        }
-        catch (Exception e)
-        {
-            return Guid.Empty;
-        }
-    }
-
-    private int GetPurchasedCoinNumberInTheList(List<Coin> coins, string shortName)
-    {
-        try
-        {
-            var j = 0;
-            foreach (var i in coins)
-            {
-                if (i.Shortname == shortName) return j;
-
-                j++;
-            }
-
-            return -1;
-        }
-        catch (Exception e)
-        {
-            return -1;
-        }
     }
 }

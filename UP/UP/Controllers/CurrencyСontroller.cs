@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using Repository;
 using UP.Models;
@@ -13,13 +14,15 @@ public class CurrencyController : ControllerBase
     private readonly ICurrencyRepository _currencyRepository;
     private readonly ILogger<CurrencyController> _logger;
     private readonly IUserRepository _userRepository;
+    private readonly IDbRepository _dbRepository;
 
     public CurrencyController(ILogger<CurrencyController> logger, IUserRepository userRepository,
-        ICurrencyRepository currencyRepository)
+        ICurrencyRepository currencyRepository, IDbRepository dbRepository)
     {
         _logger = logger;
         _userRepository = userRepository;
         _currencyRepository = currencyRepository;
+        _dbRepository = dbRepository;
     }
 
     [HttpGet]
@@ -100,8 +103,7 @@ public class CurrencyController : ControllerBase
             return BadRequest("Не удалось вернуть количество монет");
         }
     }
-
-
+    
     [HttpGet]
     [Route("getCoinPrice")]
     public async Task<ActionResult> GetCoinPrice(double quantity, string coinName)
@@ -116,15 +118,21 @@ public class CurrencyController : ControllerBase
             return BadRequest("Не удалось вернуть цену");
         }
     }
-
-
+    
     [HttpGet]
     [Route("getCurrenciesList")]
     public async Task<ActionResult> GetCoinsList()
     {
         try
         {
-            var cryptoDictionary = CoinList.GetCryptoDictionary();
+            var coinsList = await _dbRepository.Get<CoinListInfo>()
+                .Where(x => x.IsActive == true)
+                .ToListAsync();
+
+            var cryptoDictionary = coinsList.ToDictionary(
+                coin => coin.ShortName.ToLower(),
+                coin => coin.FullName.ToLower()
+            );
             var coins = new List<CoinsInformation>();
             var i = 0;
             var temp = new CoinsInformation();
@@ -145,7 +153,6 @@ public class CurrencyController : ControllerBase
                 });
                 i++;
             }
-
             return Ok(coins);
         }
         catch (Exception e)

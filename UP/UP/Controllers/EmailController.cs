@@ -70,7 +70,7 @@ public class EmailController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> SendMessage([FromBody] SendMessageRequest request)
     {
-        //await _emailService.SendMessageBlock(request);
+        await _emailService.SendMessageBlock(request);
         return Ok();
     }
 }

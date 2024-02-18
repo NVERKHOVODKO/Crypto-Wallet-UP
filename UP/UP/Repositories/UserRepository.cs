@@ -6,20 +6,12 @@ using UP.ModelsEF;
 
 namespace UP.Repositories;
 
-public class UserRepository : RepositoryBase, IUserRepository
+public class UserRepository(DataContext context, ICurrencyRepository currencyRepository)
+    : RepositoryBase, IUserRepository
 {
-    private readonly DataContext _context;
-    private readonly ICurrencyRepository _currencyRepository;
-
-    public UserRepository(DataContext context, ICurrencyRepository currencyRepository)
-    {
-        _context = context;
-        _currencyRepository = currencyRepository;
-    }
-
     public List<Coin> GetUserCoins(Guid userId)
     {
-        var userCoins = _context.Users
+        var userCoins = context.Users
             .Where(u => u.Id == userId)
             .Include(u => u.UsersCoins)
             .ThenInclude(uc => uc.Coin)
@@ -28,11 +20,10 @@ public class UserRepository : RepositoryBase, IUserRepository
 
         return userCoins;
     }
-
-
+    
     public async Task<List<CoinsInformation>> GetUserCoinsFull(Guid userId)
 {
-    var coins = await _context.UsersCoins
+    var coins = await context.UsersCoins
         .Where(uc => uc.UserId == userId)
         .Include(uc => uc.Coin)
         .Select(uc => new CoinsInformation
@@ -43,11 +34,10 @@ public class UserRepository : RepositoryBase, IUserRepository
         })
         .ToListAsync();
 
-    List<CoinsInformation>  coinsFull = new List<CoinsInformation>();
-    int i = 0;
+    var  coinsFull = new List<CoinsInformation>();
     foreach (var coin in coins)
     {
-        CoinsInformation temp = await _currencyRepository.GetFullCoinInformation(coin.ShortName);
+        var temp = await currencyRepository.GetFullCoinInformation(coin.ShortName);
         coinsFull.Add(new CoinsInformation
         {
             Id = temp.Id,
@@ -60,7 +50,6 @@ public class UserRepository : RepositoryBase, IUserRepository
             PercentagePriceChangePerDay = temp.PercentagePriceChangePerDay,
             Quantity = GetCoinQuantityInUserWallet(userId, temp.FullName)
         });
-        i++;
     }
 
     return coinsFull;
@@ -69,9 +58,9 @@ public class UserRepository : RepositoryBase, IUserRepository
 
     public double GetCoinQuantityInUserWallet(Guid userId, string coinShortname)
     {
-        var quantity = _context.Coins
+        var quantity = context.Coins
             .Join(
-                _context.UsersCoins,
+                context.UsersCoins,
                 coin => coin.Id,
                 userCoin => userCoin.CoinId,
                 (coin, userCoin) => new { coin, userCoin })

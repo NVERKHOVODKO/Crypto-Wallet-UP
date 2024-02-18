@@ -128,7 +128,7 @@ public class CurrencyRepository : RepositoryBase, ICurrencyRepository
     public async Task<double> GetCoinPrice(double quantity, string shortName)
     {
         using var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.Add("X-MBX-APIKEY", apiKey);
+        httpClient.DefaultRequestHeaders.Add("X-MBX-APIKEY", ApiKey);
         var url = "https://min-api.cryptocompare.com/data/price?fsym=" + shortName + "&tsyms=USD";
         var response = await httpClient.GetAsync(url);
         var responseContent = await response.Content.ReadAsStringAsync();
@@ -186,7 +186,7 @@ public class CurrencyRepository : RepositoryBase, ICurrencyRepository
 
         var url = $"{CryptoCompareApiUrl}/data/pricemultifull?fsyms={shortName}&tsyms=USD";
         using var request = new HttpRequestMessage(HttpMethod.Get, url);
-        request.Headers.Add("X-MBX-APIKEY", apiKey);
+        request.Headers.Add("X-MBX-APIKEY", ApiKey);
         using var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
 
         if (!response.IsSuccessStatusCode)

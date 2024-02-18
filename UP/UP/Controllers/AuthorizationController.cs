@@ -60,7 +60,7 @@ public class AuthorizationController : ControllerBase
     {
         bool IsEmailValid(string email)
         {
-            var regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
+            const string regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
             return Regex.IsMatch(email, regex, RegexOptions.IgnoreCase);
         }
 

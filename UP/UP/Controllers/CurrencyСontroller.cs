@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
+using ProjectX.Exceptions;
 using Repository;
+using UP.DTO;
 using UP.Models;
 using UP.Models.Base;
+using UP.Services.Interfaces;
 
 namespace UP.Controllers;
 
@@ -15,14 +18,16 @@ public class CurrencyController : ControllerBase
     private readonly ILogger<CurrencyController> _logger;
     private readonly IUserRepository _userRepository;
     private readonly IDbRepository _dbRepository;
+    private readonly ICurrencyService _currencyService;
 
     public CurrencyController(ILogger<CurrencyController> logger, IUserRepository userRepository,
-        ICurrencyRepository currencyRepository, IDbRepository dbRepository)
+        ICurrencyRepository currencyRepository, IDbRepository dbRepository, ICurrencyService currencyService)
     {
         _logger = logger;
         _userRepository = userRepository;
         _currencyRepository = currencyRepository;
         _dbRepository = dbRepository;
+        _currencyService = currencyService;
     }
 
     [HttpGet]
@@ -120,44 +125,70 @@ public class CurrencyController : ControllerBase
     }
     
     [HttpGet]
+    [Route("get-coin-price-history/{shortName}")]
+    public async Task<ActionResult> GetCoinRatio(string shortName)
+    {
+        var coinSnapShots = await _dbRepository.Get<CryptoCurrencyPrices>()
+            .Where(c => c.CoinShortName.ToLower() == shortName.ToLower())
+            .ToListAsync();
+        if (coinSnapShots == null)
+            throw new EntityNotFoundException($"Coin with short name {shortName} not found.");
+        
+        return Ok(coinSnapShots);
+    }
+
+    [HttpGet]
     [Route("getCurrenciesList")]
     public async Task<ActionResult> GetCoinsList()
     {
-        try
-        {
-            var coinsList = await _dbRepository.Get<CoinListInfo>()
-                .Where(x => x.IsActive == true)
-                .ToListAsync();
+        var coinsList = await _dbRepository.Get<CoinListInfo>()
+            .Where(x => x.IsActive == true)
+            .ToListAsync();
 
-            var cryptoDictionary = coinsList.ToDictionary(
-                coin => coin.ShortName.ToLower(),
-                coin => coin.FullName.ToLower()
-            );
-            var coins = new List<CoinsInformation>();
-            var i = 0;
-            var temp = new CoinsInformation();
-            foreach (var key in cryptoDictionary.Keys)
-            {
-                temp = await _currencyRepository.GetFullCoinInformation(key);
-                coins.Add(new CoinsInformation
-                {
-                    Id = temp.Id,
-                    ShortName = temp.ShortName,
-                    FullName = temp.FullName,
-                    IconPath = temp.IconPath,
-                    DailyVolume = temp.DailyVolume,
-                    DailyImpact = temp.DailyImpact,
-                    Price = temp.Price,
-                    PercentagePriceChangePerDay = temp.PercentagePriceChangePerDay,
-                    Quantity = temp.Quantity
-                });
-                i++;
-            }
-            return Ok(coins);
-        }
-        catch (Exception e)
+        var cryptoDictionary = coinsList.ToDictionary(
+            coin => coin.ShortName.ToLower(),
+            coin => coin.FullName.ToLower()
+        );
+        var coins = new List<CoinsInformation>();
+        foreach (var key in cryptoDictionary.Keys)
         {
-            return BadRequest("Произошла неивестная ошибка");
+            var temp = await _currencyRepository.GetFullCoinInformation(key);
+            coins.Add(new CoinsInformation
+            {
+                Id = temp.Id,
+                ShortName = temp.ShortName,
+                FullName = temp.FullName,
+                IconPath = temp.IconPath,
+                DailyVolume = temp.DailyVolume,
+                DailyImpact = temp.DailyImpact,
+                Price = temp.Price,
+                PercentagePriceChangePerDay = temp.PercentagePriceChangePerDay,
+                Quantity = temp.Quantity
+            });
+            
+            var coin = await _dbRepository.Get<CoinListInfo>()
+                .FirstOrDefaultAsync(c => c.ShortName.ToLower() == temp.FullName.ToLower());
+            if (coin == null)
+                throw new EntityNotFoundException($"Coin with short name {temp.FullName} not found.");
+
+            var currentTime = DateTime.UtcNow;
+            var tenMinutesAgo = currentTime.AddMinutes(-1);
+
+            var existingPrice = _dbRepository.Get<CryptoCurrencyPrices>()
+                .FirstOrDefault(p => p.CoinId == coin.Id && p.Timestamp >= tenMinutesAgo);
+
+            if (existingPrice != null) continue;
+            var newPrice = new CryptoCurrencyPrices
+            {
+                Id = Guid.NewGuid(),
+                CoinShortName = temp.FullName,
+                Price = temp.Price,
+                Timestamp = currentTime,
+                CoinId = coin.Id
+            };
+            var result = await _dbRepository.Add(newPrice);
         }
+        await _dbRepository.SaveChangesAsync();
+        return Ok(coins);
     }
 }

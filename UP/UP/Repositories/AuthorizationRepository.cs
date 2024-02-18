@@ -17,15 +17,13 @@ public class AuthorizationRepository : RepositoryBase
         return Convert.ToBase64String(salt);
     }
 
-    public string Hash(string inputString)
+    private string Hash(string inputString)
     {
-        using (var sha256 = SHA256.Create())
-        {
-            var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(inputString));
-            var sb = new StringBuilder();
-            foreach (var b in bytes) sb.Append(b.ToString("x2"));
-            return sb.ToString();
-        }
+        using var sha256 = SHA256.Create();
+        var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(inputString));
+        var sb = new StringBuilder();
+        foreach (var b in bytes) sb.Append(b.ToString("x2"));
+        return sb.ToString();
     }
 
     public bool VerifyPassword(string password, string salt, string hashedPassword)
@@ -37,9 +35,7 @@ public class AuthorizationRepository : RepositoryBase
 
     public bool IsValidEmail(string email)
     {
-        var pattern = @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";
-        if (Regex.Match(email, pattern).Success)
-            return true;
-        return false;
+        const string pattern = @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";
+        return Regex.Match(email, pattern).Success;
     }
 }

@@ -1,4 +1,5 @@
-﻿using UP.Models;
+﻿using Analitique.BackEnd.Handlers;
+using UP.Models;
 using UP.ModelsEF;
 
 namespace TestApplication.Data
@@ -76,13 +77,13 @@ namespace TestApplication.Data
                     new User
                     {
                         DateCreated = DateTime.UtcNow,
-                        Login = "string",
-                        Password = "string",
-                        Email = "string",
+                        Login = "user",
+                        Password = HashHandler.HashPassword("user", "user"),
+                        Email = "user",
                         IsDeleted = false,
                         RoleId = 1,
                         IsBlocked = false,
-                        Salt = "string",
+                        Salt = "user",
                     }
                 };
                 context.Users.AddRange(users);

@@ -1,14 +1,9 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
 using System.Security.Authentication;
-using System.Security.Claims;
-using System.Text;
 using System.Text.RegularExpressions;
 using Analitique.BackEnd.Handlers;
-using Docker.DotNet.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using ProjectX.Exceptions;
 using Repository;
 using TestApplication.DTO;
@@ -16,17 +11,14 @@ using UP.DTO;
 using UP.Migrations.Services.Interfaces;
 using UP.ModelsEF;
 
-namespace UP.Migrations.Services;
+namespace UP.Services;
 
 public class EmailService : IEmailService
 {
-    private readonly IConfiguration _configuration;
     private readonly IDbRepository _dbRepository;
 
-
-    public EmailService(IConfiguration configuration, IDbRepository dbRepository)
+    public EmailService(IDbRepository dbRepository)
     {
-        _configuration = configuration;
         _dbRepository = dbRepository;
     }
 
@@ -40,26 +32,6 @@ public class EmailService : IEmailService
         if (code.Code != request.Code) throw new AuthenticationException("Wrong code");
         DeleteEmailCodeAsync(request.Id);
     }
-
-    /*public async Task<string> VerifyPasswordRestoring(VerifyEmailRequest request)
-    {
-        if (request.Code == null) throw new EntityNotFoundException("Code can't be null");
-        var code = await _dbRepository.Get<RestorePasswordCodeModel>()
-            .FirstOrDefaultAsync(x => x.Email == request.Email);
-        if (code == null) throw new EntityNotFoundException("Wrong code");
-        if (code.Code != request.Code) throw new AuthenticationException("Wrong code");
-
-        var response = await GetTokenAsync(new GetTokenRequest
-        {
-            Email = request.Email
-        });
-
-        if (response.Token == null)
-            throw new EntityNotFoundException("User not found");
-
-        DeletePasswordCodeAsync(request.Email);
-        return response.Token;
-    }*/
 
     public async Task DeleteEmailCodeAsync(Guid id)
     {
@@ -179,16 +151,14 @@ public class EmailService : IEmailService
 
         await sc.SendMailAsync(mm);
     }
-
-
+    
     public bool IsEmailValid(string email)
     {
         if (email.Length > 100) throw new IncorrectDataException("Email isn't valid");
         var regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
         return Regex.IsMatch(email, regex, RegexOptions.IgnoreCase);
     }
-
-
+    
     public async Task RestorePassword(RestorePasswordRequest request)
     {
         if (request.NewPassword == null) throw new IncorrectDataException("Password is empty");
@@ -211,34 +181,6 @@ public class EmailService : IEmailService
         await _dbRepository.SaveChangesAsync();
     }
     
-    /*public async Task SendEmailMessageTransactionsAsync(Guid id, string code, string coinName, double quantity, bool isGet, Guid recieverId)
-    {
-        var user = await _dbRepository.Get<User>(x => x.Id == id).FirstOrDefaultAsync();
-        if (user == null)
-            throw new IncorrectDataException("Пользователь не найден");
-    
-        var mm = new MailMessage();
-        var sc = new SmtpClient("smtp.gmail.com");
-        mm.From = new MailAddress("mikita.verkhavodka@gmail.com");
-        mm.To.Add(user.Email);
-        mm.Subject = "UP";
-
-        string transactionType = isGet ? "На ваш счет переведены" : "С вашего счета переведены";
-
-        mm.Body = $"Уведомление о транзакции<br>" +
-                  $"{transactionType} {quantity} {coinName} на кошелек {recieverId}.<br>" +
-                  $"Действие отменить невозможно.<br>" +
-                  $"Пожалуйста, не отвечайте на это сообщение.";
-
-        mm.IsBodyHtml = true;
-        sc.Port = 587;
-        sc.Credentials = new NetworkCredential("mikita.verkhavodka@gmail.com", "hors mfwv zsve lvye");
-        sc.EnableSsl = true;
-
-        await sc.SendMailAsync(mm);
-    }*/
-    
-        
     public async Task SendMessageBlock(SendMessageRequest request)
     {
         var user = await _dbRepository.Get<User>(x => x.Id == request.UserId).FirstOrDefaultAsync();
@@ -248,7 +190,7 @@ public class EmailService : IEmailService
         var mm = new MailMessage();
         var sc = new SmtpClient("smtp.gmail.com");
         mm.From = new MailAddress("mikita.verkhavodka@gmail.com");
-        mm.To.Add(user.Email);
+        mm.To.Add(user.Email!);
         mm.Subject = "UP";
         
         mm.Body = $@"
@@ -282,8 +224,7 @@ public class EmailService : IEmailService
                 <p>Пожалуйста, не отвечайте на это сообщение.</p>
             </div>
         </body>
-        </html>
-    ";
+        </html>";
 
         mm.IsBodyHtml = true;
         sc.Port = 587;
@@ -301,11 +242,12 @@ public class EmailService : IEmailService
         var mm = new MailMessage();
         var sc = new SmtpClient("smtp.gmail.com");
         mm.From = new MailAddress("mikita.verkhavodka@gmail.com");
-        mm.To.Add(user.Email);
+        mm.To.Add(user.Email!);
         mm.Subject = "UP";
 
         string transactionType = isGet ? "На ваш счет переведены" : "С вашего счета переведены";
 
+        
         mm.Body = $@"
         <html>
         <head>

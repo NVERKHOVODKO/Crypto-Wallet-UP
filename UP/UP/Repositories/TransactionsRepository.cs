@@ -2,22 +2,13 @@
 using ProjectX.Exceptions;
 using Repository;
 using TestApplication.Data;
-using UP.Controllers;
 using UP.ModelsEF;
 
 namespace UP.Repositories;
 
-public class TransactionsRepository : RepositoryBase, ITransactionsRepository
+public class TransactionsRepository(DataContext context, ICurrencyRepository currencyRepository)
+    : RepositoryBase, ITransactionsRepository
 {
-    private readonly DataContext _context;
-    private readonly ICurrencyRepository _currencyRepository;
-
-    public TransactionsRepository(DataContext context, ICurrencyRepository currencyRepository)
-    {
-        _context = context;
-        _currencyRepository = currencyRepository;
-    }
-
     public void WriteNewConversionDataToDatabase(Conversion conversion)
     {
         var en = new Conversion
@@ -33,24 +24,22 @@ public class TransactionsRepository : RepositoryBase, ITransactionsRepository
             DateCreated = DateTime.UtcNow
         };
 
-        _context.Conversions.Add(en);
-        _context.SaveChanges();
+        context.Conversions.Add(en);
+        context.SaveChanges();
     }
 
     public List<Conversion> GetUserConversionsHistory(Guid userId)
     {
-        var user = _context.Users
+        var user = context.Users
             .Include(u => u.Conversions).Include(user => user.Conversions)
             .FirstOrDefault(u => u.Id == userId);
 
-        if (user != null)
-            return user.Conversions.ToList();
-        return new List<Conversion>();
+        return user != null ? user.Conversions.ToList() : [];
     }
 
     public async void ReplenishTheBalance(Guid userId, double quantityUsd)
     {
-        var userCoins = _context.UsersCoins
+        var userCoins = context.UsersCoins
             .Include(uc => uc.Coin)
             .Where(uc => uc.UserId == userId)
             .ToList();
@@ -63,7 +52,7 @@ public class TransactionsRepository : RepositoryBase, ITransactionsRepository
         }
         else
         {
-            var user = _context.Users.Find(userId);
+            var user = context.Users.Find(userId);
 
             if (user == null)
             {
@@ -77,7 +66,7 @@ public class TransactionsRepository : RepositoryBase, ITransactionsRepository
                 Shortname = "usdt"
             };
 
-            _context.Coins.Add(newCoin);
+            context.Coins.Add(newCoin);
 
             var userCoin = new UsersCoins
             {
@@ -86,7 +75,7 @@ public class TransactionsRepository : RepositoryBase, ITransactionsRepository
                 Coin = newCoin
             };
 
-            _context.UsersCoins.Add(userCoin);
+            context.UsersCoins.Add(userCoin);
         }
         var replenishment = new Replenishment
         {
@@ -96,26 +85,24 @@ public class TransactionsRepository : RepositoryBase, ITransactionsRepository
             UserId = userId
         };
 
-        _context.Replenishments.Add(replenishment);
+        context.Replenishments.Add(replenishment);
 
-        _context.SaveChanges();
+        context.SaveChanges();
     }
 
     public List<Replenishment> GetUserDepositHistory(Guid userId)
     {
-        var user = _context.Users
+        var user = context.Users
             .Include(u => u.Replenishments)
             .FirstOrDefault(u => u.Id == userId);
 
-        if (user != null)
-            return user.Replenishments.ToList();
-        return new List<Replenishment>();
+        return user != null ? user.Replenishments.ToList() : [];
     }
 
     public void WithdrawUSDT(Guid userId, double quantityUsd)
     {
-        var commission = 0.02;
-        _currencyRepository.SellCrypto(userId, "usdt", quantityUsd + quantityUsd * commission);
+        const double commission = 0.02;
+        currencyRepository.SellCrypto(userId, "usdt", quantityUsd + quantityUsd * commission);
 
         var withdrawal = new Withdrawal
         {
@@ -125,7 +112,7 @@ public class TransactionsRepository : RepositoryBase, ITransactionsRepository
             UserId = userId
         };
 
-        _context.Withdrawals.Add(withdrawal);
+        context.Withdrawals.Add(withdrawal);
         var replenishment = new Withdrawal
         {
             Id = Guid.NewGuid(),
@@ -134,29 +121,25 @@ public class TransactionsRepository : RepositoryBase, ITransactionsRepository
             UserId = userId
         };
 
-        _context.Withdrawals.Add(replenishment);
-        _context.SaveChanges();
+        context.Withdrawals.Add(replenishment);
+        context.SaveChanges();
     }
 
     public List<Withdrawal> GetUserWithdrawalsHistory(Guid userId)
     {
-        var user = _context.Users
+        var user = context.Users
             .Include(u => u.Replenishments).Include(user => user.Withdrawals)
             .FirstOrDefault(u => u.Id == userId);
 
-        if (user != null)
-            return user.Withdrawals.ToList();
-        return new List<Withdrawal>();
+        return user != null ? user.Withdrawals.ToList() : [];
     }
 
     public List<Transactions> GetUserTransactionsHistory(Guid userId)
     {
-        var user = _context.Users
+        var user = context.Users
             .Include(u => u.SentTransactions).Include(user => user.Withdrawals)
             .FirstOrDefault(u => u.Id == userId);
 
-        if (user != null)
-            return user.SentTransactions.ToList();
-        return new List<Transactions>();
+        return user != null ? user.SentTransactions.ToList() : [];
     }
 }

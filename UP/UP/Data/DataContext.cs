@@ -21,6 +21,7 @@ public class DataContext : DbContext
     public DbSet<PreviousPassword> PreviousPasswords { get; set; }
     public DbSet<EmailVerificationCodeModel> VerifyEmailCode { get; set; }
     public DbSet<Transactions> Transactions { get; set; }
+    public DbSet<CryptoCurrencyPrices> CoinHistory { get; set; }
     public DbSet<UsersCoins> UsersCoins { get; set; }
     public DbSet<Withdrawal> Withdrawals { get; set; }
     public DbSet<Replenishment> Replenishments { get; set; }

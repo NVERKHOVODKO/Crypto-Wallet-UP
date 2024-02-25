@@ -10,6 +10,7 @@ using Microsoft.OpenApi.Models;
 using ProjectX.Middlewares;
 using Repository;
 using TestApplication.Data;
+using UP.Data;
 using UP.Migrations.Services;
 using UP.Migrations.Services.Interfaces;
 using UP.Repositories;

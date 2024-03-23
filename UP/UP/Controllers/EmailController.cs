@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TestApplication.DTO;
 using UP.DTO;
-using UP.Migrations.Services.Interfaces;
+using UP.Services.Interfaces;
 
 namespace UP.Controllers;
 
@@ -17,11 +17,11 @@ public class EmailController : ControllerBase
         _emailService = emailService;
     }
     
-    /*[HttpPost("sendVerificationCode")]
+    [HttpPost("sendVerificationCode")]
     [AllowAnonymous]
     public async Task<IActionResult> SendVerificationCode(SendVerificationCodeRequest request)
     {
-        await _emailService.SendVerificationCode(request.Email);
+        await _emailService.SendVerificationCode(request.Id);
         return Ok();
     }
 
@@ -32,15 +32,14 @@ public class EmailController : ControllerBase
         await _emailService.VerifyEmail(request);
         return Ok();
     }
-    */
     
-    [HttpPost("send-restore-password-code")]
+    /*[HttpPost("send-restore-password-code")]
     [AllowAnonymous]
     public async Task<IActionResult> SendRestorePasswordCode([FromBody] RestorePasswordCodeDto request)
     {
-        await _emailService.SendVerificationCode(request.Id);
+        await _emailService.SendRestorePasswordCode(request.Id);
         return Ok();
-    }
+    }*/
     
     [HttpPost("confirm-restore-password")]
     [AllowAnonymous]

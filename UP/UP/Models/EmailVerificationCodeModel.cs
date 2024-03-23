@@ -9,7 +9,7 @@ public class EmailVerificationCodeModel : BaseModel
 
     [Required] public string Code { get; set; }
 
-    [Required] public string Email { get; set; }
+    [Required] public string? Email { get; set; }
 
     [Required] public bool IsApproved { get; set; } = false;
     

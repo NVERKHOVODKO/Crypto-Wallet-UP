@@ -8,8 +8,8 @@ using ProjectX.Exceptions;
 using Repository;
 using TestApplication.DTO;
 using UP.DTO;
-using UP.Migrations.Services.Interfaces;
 using UP.ModelsEF;
+using UP.Services.Interfaces;
 
 namespace UP.Services;
 
@@ -21,7 +21,7 @@ public class EmailService : IEmailService
     {
         _dbRepository = dbRepository;
     }
-
+    
 
     public async Task VerifyEmail(VerifyEmailRequest request)
     {
@@ -91,13 +91,15 @@ public class EmailService : IEmailService
         if (existedCode != null)
         {
             existedCode.Code = code;
+            existedCode.DateUpdated = DateTime.UtcNow;
             await _dbRepository.SaveChangesAsync();
-            SendVerificationCodeAsync(id, code); // correct
+            await SendVerificationCodeAsync(id, code); // correct
             return;
         }
         var user = await _dbRepository.Get<User>(x => x.Id == id).FirstOrDefaultAsync();
         if (user == null)
             throw new IncorrectDataException("Пользователь не найден");
+        
         var entity = new EmailVerificationCodeModel
         {
             Id = Guid.NewGuid(),
@@ -129,7 +131,7 @@ public class EmailService : IEmailService
 
         mm.IsBodyHtml = true;
         sc.Port = 587;
-        sc.Credentials = new NetworkCredential("mikita.verkhavodka@gmail.com", "hors mfwv zsve lvye");
+        sc.Credentials = new NetworkCredential("mikita.verkhavodka@gmail.com", "lmqa tylg iawd ipuh");
         sc.EnableSsl = true;
 
         await sc.SendMailAsync(mm);
@@ -146,7 +148,7 @@ public class EmailService : IEmailService
         mm.Body = code;
         mm.IsBodyHtml = true;
         sc.Port = 587;
-        sc.Credentials = new NetworkCredential("mikita.verkhavodka@gmail.com", "hors mfwv zsve lvye");
+        sc.Credentials = new NetworkCredential("mikita.verkhavodka@gmail.com", "lmqa tylg iawd ipuh");
         sc.EnableSsl = true;
 
         await sc.SendMailAsync(mm);

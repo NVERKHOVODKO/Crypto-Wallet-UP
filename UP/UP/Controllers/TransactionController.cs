@@ -5,6 +5,7 @@ using UP.DTO;
 using UP.Migrations.Services.Interfaces;
 using UP.ModelsEF;
 using UP.Repositories;
+using UP.Services.Interfaces;
 
 namespace UP.Controllers;
 

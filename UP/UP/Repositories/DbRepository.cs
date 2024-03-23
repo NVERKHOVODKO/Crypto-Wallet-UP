@@ -1,9 +1,10 @@
 ﻿using System.Linq.Expressions;
 using Entities;
 using Microsoft.EntityFrameworkCore;
+using Repository;
 using TestApplication.Data;
 
-namespace Repository;
+namespace UP.Repositories;
 
 public class DbRepository : IDbRepository
 {

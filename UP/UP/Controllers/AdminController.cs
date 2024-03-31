@@ -1,4 +1,4 @@
-﻿using Api.OpenAI.Handlers.Interfaces;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectX.Exceptions;
@@ -13,17 +13,14 @@ namespace UP.Controllers;
 public class AdminController : ControllerBase
 {
     private readonly IDbRepository _dbRepository;
-    private readonly IHashHelpers _hashHelpers;
-    private readonly ILogger<UserController> _logger;
 
-    public AdminController(ILogger<UserController> logger, IDbRepository dbRepository, IHashHelpers hashHelpers)
+    public AdminController(IDbRepository dbRepository)
     {
-        _logger = logger;
         _dbRepository = dbRepository;
-        _hashHelpers = hashHelpers;
     }
 
     [HttpPost]
+    [Authorize]
     [Route("blockUser")]
     public async Task<ActionResult> BlockUser(Guid id, string reason)
     {
@@ -38,6 +35,7 @@ public class AdminController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     [Route("deleteUser")]
     public async Task<ActionResult> DeleteUser(Guid id)
     {
@@ -52,6 +50,7 @@ public class AdminController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize]
     [Route("setStatusDel")]
     public async Task<IActionResult> SetStatusDel(Guid id, bool status)
     {
@@ -66,6 +65,7 @@ public class AdminController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize]
     [Route("setStatusBlock")]
     public async Task<IActionResult> SetStatusBlock(Guid id, bool status)
     {
@@ -80,23 +80,24 @@ public class AdminController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     [Route("getUserList")]
-    public async Task<ActionResult> GetUserList()
+    public Task<ActionResult> GetUserList()
     {
         var users = _dbRepository.Get<User>().ToList();
         if (users == null)
             throw new EntityNotFoundException("Users not found");
-        return Ok(users);
+        return Task.FromResult<ActionResult>(Ok(users));
     }
 
     [HttpGet]
     [Route("getUserById")]
-    public async Task<IActionResult> GetUserById(Guid id)
+    public Task<IActionResult> GetUserById(Guid id)
     {
         var users = _dbRepository.Get<User>().FirstOrDefaultAsync(x => x.Id == id);
         if (users == null)
             throw new EntityNotFoundException("Users not found");
-        return Ok(users);
+        return Task.FromResult<IActionResult>(Ok(users));
     }
     
     [HttpGet]

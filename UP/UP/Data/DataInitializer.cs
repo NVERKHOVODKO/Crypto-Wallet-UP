@@ -119,55 +119,54 @@ namespace UP.Data
                 context.Users.AddRange(users);
                 context.SaveChanges();
             }
-            if (!context.CoinListInfos.Any())
+
+            if (context.CoinListInfos.Any()) return;
+            var coins = new Dictionary<string, string>
             {
-                var coins = new Dictionary<string, string>
-                {
-                    {"btc", "Bitcoin"},
-                    {"eth", "Ethereum"},
-                    {"usdt", "Tether"},
-                    {"bnb", "Binance Coin"},
-                    {"sol", "Solana"},
-                    {"ada", "Cardano"},
-                    {"xrp", "XRP"},
-                    {"dot", "Polkadot"},
-                    {"doge", "Dogecoin"},
-                    {"uni", "Uniswap"},
-                    {"luna", "Terra"},
-                    {"link", "Chainlink"},
-                    {"avax", "Avalanche"},
-                    {"matic", "Polygon"},
-                    {"shib", "Shiba Inu"},
-                    {"atom", "Cosmos"},
-                    {"fil", "Filecoin"},
-                    {"xtz", "Tezos"},
-                    {"ltc", "Litecoin"},
-                    {"ftt", "FTX Token"},
-                    {"algo", "Algorand"},
-                    {"vet", "VeChain"},
-                    {"eos", "EOS"},
-                    {"trb", "Tellor"},
-                    {"ksm", "Kusama"},
-                    {"cake", "PancakeSwap"},
-                    {"tfuel", "Theta Fuel"},
-                    {"sushi", "SushiSwap"},
-                    {"dcr", "Decred"},
-                    {"fet", "Fetch.ai"}
-                };
+                {"btc", "Bitcoin"},
+                {"eth", "Ethereum"},
+                {"usdt", "Tether"},
+                {"bnb", "Binance Coin"},
+                {"sol", "Solana"},
+                {"ada", "Cardano"},
+                {"xrp", "XRP"},
+                {"dot", "Polkadot"},
+                {"doge", "Dogecoin"},
+                {"uni", "Uniswap"},
+                {"luna", "Terra"},
+                {"link", "Chainlink"},
+                {"avax", "Avalanche"},
+                {"matic", "Polygon"},
+                {"shib", "Shiba Inu"},
+                {"atom", "Cosmos"},
+                {"fil", "Filecoin"},
+                {"xtz", "Tezos"},
+                {"ltc", "Litecoin"},
+                {"ftt", "FTX Token"},
+                {"algo", "Algorand"},
+                {"vet", "VeChain"},
+                {"eos", "EOS"},
+                {"trb", "Tellor"},
+                {"ksm", "Kusama"},
+                {"cake", "PancakeSwap"},
+                {"tfuel", "Theta Fuel"},
+                {"sushi", "SushiSwap"},
+                {"dcr", "Decred"},
+                {"fet", "Fetch.ai"}
+            };
 
-                foreach (var coin in coins)
+            foreach (var coin in coins)
+            {
+                context.CoinListInfos.Add(new CoinListInfo
                 {
-                    context.CoinListInfos.Add(new CoinListInfo
-                    {
-                        Id = Guid.NewGuid(),
-                        ShortName = coin.Key,
-                        FullName = coin.Value,
-                        IsActive = true
-                    });
-                }
-
-                context.SaveChanges();
+                    Id = Guid.NewGuid(),
+                    ShortName = coin.Key,
+                    FullName = coin.Value,
+                    IsActive = true
+                });
             }
+
+            context.SaveChanges();
         }
     }
 }

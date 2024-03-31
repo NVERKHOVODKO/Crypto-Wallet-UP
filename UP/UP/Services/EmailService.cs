@@ -110,24 +110,57 @@ public class EmailService : IEmailService
         };
         var result = await _dbRepository.Add(entity);
         await _dbRepository.SaveChangesAsync();
-        SendVerificationCodeAsync(id, code); // correct
+        await SendVerificationCodeAsync(id, code); // correct
     }
 
-    public async Task SendVerificationCodeAsync(Guid id, string code)
+    private async Task SendVerificationCodeAsync(Guid id, string code)
     {
         var user = await _dbRepository.Get<User>(x => x.Id == id).FirstOrDefaultAsync();
         if (user == null)
             throw new IncorrectDataException("Пользователь не найден");
-        
+
         var mm = new MailMessage();
         var sc = new SmtpClient("smtp.gmail.com");
         mm.From = new MailAddress("mikita.verkhavodka@gmail.com");
-        mm.To.Add(user.Email);
+        if (user.Email != null) 
+            mm.To.Add(user.Email);
         mm.Subject = "Подтверждение изменения пароля";
-        mm.Body = $"Привет!<br>" +
-                  $"Не сообщайте код никому.<br><br>" +
-                  $"Для завершения процесса подтверждения, введите следующий код: <strong style='font-size: 25px;'>{code}</strong><br><br><br>" +
-                  $"Пожалуйста, не отвечайте на это сообщение.";
+        mm.Body = $$"""
+                    
+                            <html>
+                            <head>
+                                <style>
+                                    /* CSS стили */
+                                    body {
+                                        font-family: Arial, sans-serif;
+                                        color: #333;
+                                        background-color: #f5f5f5;
+                                    }
+                                    .container {
+                                        max-width: 600px;
+                                        margin: 0 auto;
+                                        padding: 20px;
+                                        background-color: #fff;
+                                        border: 1px solid #ddd;
+                                        border-radius: 5px;
+                                    }
+                                    h1 {
+                                        color: #007bff;
+                                    }
+                                </style>
+                            </head>
+                            <body>
+                                <div class='container'>
+                                    <h1>Подтверждение изменения пароля</h1>
+                                    <p>Привет!</p>
+                                    <p>Не сообщайте код никому.</p>
+                                    <p>Для завершения процесса подтверждения, введите следующий код: <strong style='font-size: 25px;'>{{code}}</strong></p>
+                                    <p>Пожалуйста, не отвечайте на это сообщение.</p>
+                                </div>
+                            </body>
+                            </html>
+                            
+                    """;
 
         mm.IsBodyHtml = true;
         sc.Port = 587;
@@ -138,7 +171,7 @@ public class EmailService : IEmailService
     }
 
 
-    private async Task SendRestorePasswordCodeAsync(string email, string code)
+    private static async Task SendRestorePasswordCodeAsync(string email, string code)
     {
         var mm = new MailMessage();
         var sc = new SmtpClient("smtp.gmail.com");

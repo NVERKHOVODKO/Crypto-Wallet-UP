@@ -13,8 +13,8 @@ public class CoinList
     {
         _dbRepository = dbRepository;
     }
-    
-    public static Dictionary<string, string> cryptoDictionary = new()
+
+    private static readonly Dictionary<string, string> CryptoDictionary = new()
     {
         { "btc", "Bitcoin" },
         { "eth", "Ethereum" },
@@ -48,11 +48,6 @@ public class CoinList
         { "fet", "Fetch.ai" }
     };
 
-    public static Dictionary<string, string> GetCryptoDictionary()
-    {
-        return cryptoDictionary;
-    }
-    
     public async Task<Dictionary<string, string>> GetActiveCoins()
     {
         var coinsList = await _dbRepository.Get<CoinListInfo>()

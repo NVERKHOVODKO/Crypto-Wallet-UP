@@ -32,10 +32,10 @@ public class CurrencyController : ControllerBase
 
     [HttpGet]
     [Route("getUserCoins")]
-    public async Task<ActionResult> GetUserCoins(Guid userId)
+    public Task<ActionResult> GetUserCoins(Guid userId)
     {
-        _logger.LogInformation("Return user coinList. Id: " + userId);
-        return Ok(_userRepository.GetUserCoins(userId));
+        _logger.LogInformation($"Return user coinList. Id: {userId}");
+        return Task.FromResult<ActionResult>(Ok(_userRepository.GetUserCoins(userId)));
     }
 
     [HttpGet]
@@ -96,16 +96,16 @@ public class CurrencyController : ControllerBase
 
     [HttpGet]
     [Route("getCoinQuantityInUserWallet")]
-    public async Task<ActionResult> GetCoinQuantityInUserWallet(Guid userId, string coinName)
+    public Task<ActionResult> GetCoinQuantityInUserWallet(Guid userId, string coinName)
     {
         try
         {
             var quantity = _userRepository.GetCoinQuantityInUserWallet(userId, coinName);
-            return Ok(quantity);
+            return Task.FromResult<ActionResult>(Ok(quantity));
         }
         catch (Exception e)
         {
-            return BadRequest("Не удалось вернуть количество монет");
+            return Task.FromResult<ActionResult>(BadRequest("Не удалось вернуть количество монет"));
         }
     }
     

@@ -37,7 +37,7 @@ public class TransactionsRepository(DataContext context, ICurrencyRepository cur
         return user != null ? user.Conversions.ToList() : [];
     }
 
-    public async void ReplenishTheBalance(Guid userId, double quantityUsd)
+    public void ReplenishTheBalance(Guid userId, double quantityUsd)
     {
         var userCoins = context.UsersCoins
             .Include(uc => uc.Coin)

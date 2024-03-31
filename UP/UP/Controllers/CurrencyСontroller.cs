@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using ProjectX.Exceptions;
 using Repository;
-using UP.DTO;
 using UP.Models;
 using UP.Models.Base;
 using UP.Services.Interfaces;

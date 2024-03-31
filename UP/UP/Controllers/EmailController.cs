@@ -33,14 +33,6 @@ public class EmailController : ControllerBase
         return Ok();
     }
     
-    /*[HttpPost("send-restore-password-code")]
-    [AllowAnonymous]
-    public async Task<IActionResult> SendRestorePasswordCode([FromBody] RestorePasswordCodeDto request)
-    {
-        await _emailService.SendRestorePasswordCode(request.Id);
-        return Ok();
-    }*/
-    
     [HttpPost("confirm-restore-password")]
     [AllowAnonymous]
     public async Task<IActionResult> ConfirmRestorePassword([FromBody] VerifyEmailRequest request)
@@ -48,14 +40,6 @@ public class EmailController : ControllerBase
         await _emailService.VerifyEmail(request);
         return Ok();
     }
-    
-    /*[HttpPatch("restore-password")]
-    [Authorize]
-    public async Task<IActionResult> ConfirmRestorePassword([FromBody] RestorePasswordRequest request)
-    {
-        await _emailService.RestorePassword(request, User.FindFirst("id").ToString());
-        return Ok();
-    }*/
     
     [HttpPatch("restore-password")]
     [AllowAnonymous]

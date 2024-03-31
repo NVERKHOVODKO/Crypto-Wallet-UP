@@ -1,12 +1,14 @@
 ﻿using System.Text.RegularExpressions;
 using Analitique.BackEnd.Handlers;
 using Api.OpenAI.Handlers.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectX.Exceptions;
 using Repository;
 using UP.DTO;
 using UP.ModelsEF;
+using UP.Services.Interfaces;
 
 namespace UP.Controllers;
 
@@ -16,13 +18,15 @@ public class AuthorizationController : ControllerBase
 {
     private readonly IDbRepository _dbRepository;
     private readonly IHashHelpers _hashHelpers;
+    private readonly IAuthService _authService;
     private readonly ILogger<AuthorizationController> _logger;
 
     public AuthorizationController(ILogger<AuthorizationController> logger, IDbRepository dbRepository,
-        IHashHelpers hashHelpers)
+        IHashHelpers hashHelpers, IAuthService authService)
     {
         _logger = logger;
         _dbRepository = dbRepository;
+        _authService = authService;
         _hashHelpers = hashHelpers;
     }
 
@@ -58,18 +62,24 @@ public class AuthorizationController : ControllerBase
     [Route("register")]
     public async Task<IActionResult> RegisterNewUser([FromBody] RegisterRequest request)
     {
-        bool IsEmailValid(string email)
-        {
-            const string regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
-            return Regex.IsMatch(email, regex, RegexOptions.IgnoreCase);
-        }
-
         if (request.Login == null || request.Password == null || request.Email == null)
             throw new IncorrectDataException("Заполните все поля");
-        if (request.Login.Length > 20) throw new IncorrectDataException("Логин должен быть короче 20 символов");
-        if (request.Login.Length < 4) throw new IncorrectDataException("Логин должен быть длиннее 4 символов");
-        if (request.Password.Length > 40) throw new IncorrectDataException("Пароль должен быть короче 40 символов");
-        if (request.Password.Length < 4) throw new IncorrectDataException("Пароль должен быть длиннее 4 символов");
+        switch (request.Login.Length)
+        {
+            case > 20:
+                throw new IncorrectDataException("Логин должен быть короче 20 символов");
+            case < 4:
+                throw new IncorrectDataException("Логин должен быть длиннее 4 символов");
+        }
+
+        switch (request.Password.Length)
+        {
+            case > 40:
+                throw new IncorrectDataException("Пароль должен быть короче 40 символов");
+            case < 4:
+                throw new IncorrectDataException("Пароль должен быть длиннее 4 символов");
+        }
+
         if (!IsEmailValid(request.Email)) throw new IncorrectDataException("Неверный формат email");
         if (await _dbRepository.Get<User>().FirstOrDefaultAsync(x => x.Email == request.Email) != null)
             throw new IncorrectDataException("Email уже используется");
@@ -92,5 +102,19 @@ public class AuthorizationController : ControllerBase
         await _dbRepository.SaveChangesAsync();
 
         return Ok("Аккаунт успешно создан");
+
+        bool IsEmailValid(string email)
+        {
+            const string regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
+            return Regex.IsMatch(email, regex, RegexOptions.IgnoreCase);
+        }
+    }
+    
+    [HttpPost("getToken")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetToken([FromBody] GetTokenRequest request)
+    {
+        var response = await _authService.GetTokenAsync(request);
+        return Ok(response);
     }
 }

@@ -13,8 +13,8 @@ public class ServiceService : IServiceService
         _repository = repository;
     }
     
-    public async Task<IEnumerable<Service>> GetServices()
+    public Task<IEnumerable<Service>> GetServices()
     {
-        return _repository.GetAll<Service>();
+        return Task.FromResult<IEnumerable<Service>>(_repository.GetAll<Service>());
     }
 }

@@ -88,10 +88,7 @@ public class CurrencyRepository : RepositoryBase, ICurrencyRepository
     {
         try
         {
-            foreach (var i in coins)
-                if (i.Shortname == shortName)
-                    return true;
-            return false;
+            return coins.Any(i => i.Shortname == shortName);
         }
         catch (Exception e)
         {
@@ -210,11 +207,9 @@ public class CurrencyRepository : RepositoryBase, ICurrencyRepository
     {
         var coinToUpdate = _context.Coins.Find(id);
 
-        if (coinToUpdate != null)
-        {
-            coinToUpdate.Quantity = quantity;
-            _context.SaveChanges();
-        }
+        if (coinToUpdate == null) return;
+        coinToUpdate.Quantity = quantity;
+        _context.SaveChanges();
     }
 
     public void WriteTransactionToDatabase(string coinName, double quantity, Guid senderId, Guid receiverId)

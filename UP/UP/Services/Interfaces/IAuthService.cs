@@ -1,15 +1,10 @@
-﻿/*using TestApplication.DTO;
+﻿using UP.DTO;
+using AuthResponse = UP.DTO.AuthResponse;
 
-namespace TestApplication.Services;
+namespace UP.Services.Interfaces;
 
 public interface IAuthService
 {
-    public Task<AuthResponse> GetTokenAsync(AuthRequest request);
     public Task<AuthResponse> GetTokenAsync(GetTokenRequest request);
-    public Task SendVerificationCode(string email);
-    public Task VerifyEmail(VerifyEmailRequest request);
-    public Task SendRestorePasswordCode(string email);
-    public Task<string> VerifyPasswordRestoring(VerifyEmailRequest request);
-    public Task RestorePassword(RestorePasswordRequest request, string userId);
-}*/
+}
 

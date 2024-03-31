@@ -30,56 +30,16 @@ public class EmailService : IEmailService
             .FirstOrDefaultAsync(x => x.UserId == request.Id);
         if (code == null) throw new EntityNotFoundException("Wrong code");
         if (code.Code != request.Code) throw new AuthenticationException("Wrong code");
-        DeleteEmailCodeAsync(request.Id);
+        await DeleteEmailCodeAsync(request.Id);
     }
 
-    public async Task DeleteEmailCodeAsync(Guid id)
+    private async Task DeleteEmailCodeAsync(Guid id)
     {
         var code = await _dbRepository.Get<EmailVerificationCodeModel>().FirstOrDefaultAsync(x => x.UserId == id);
         if (code == null) throw new EntityNotFoundException("Code not found");
         code.IsApproved = true;
         code.DateUpdated = DateTime.UtcNow;
         await _dbRepository.SaveChangesAsync();
-    }
-
-    public async Task DeletePasswordCodeAsync(string email)
-    {
-        var code = await _dbRepository.Get<RestorePasswordCodeModel>().FirstOrDefaultAsync(x => x.Email == email);
-        if (code == null) throw new EntityNotFoundException("Code not found");
-        await _dbRepository.Remove<RestorePasswordCodeModel>(code);
-        await _dbRepository.SaveChangesAsync();
-    }
-
-    public async Task SendRestorePasswordCode(string email)
-    {
-        if (!IsEmailValid(email)) throw new IncorrectDataException("Email isn't valid");
-        /*var user = await _dbRepository.Get<UserModel>()
-            .FirstOrDefaultAsync(x => x.Email == email);
-        if (user == null)
-            throw new EntityNotFoundException("User not found");*/
-
-        var existedCode =
-            await _dbRepository.Get<RestorePasswordCodeModel>().FirstOrDefaultAsync(x => x.Email == email);
-        var random = new Random();
-        var code = random.Next(1000, 9999).ToString();
-        if (existedCode != null)
-        {
-            existedCode.Code = code;
-            await _dbRepository.SaveChangesAsync();
-            SendRestorePasswordCodeAsync(email, code); // correct
-            return;
-        }
-
-        var entity = new RestorePasswordCodeModel
-        {
-            Id = Guid.NewGuid(),
-            Email = email,
-            Code = code,
-            DateCreated = DateTime.UtcNow,
-        };
-        var result = await _dbRepository.Add(entity);
-        await _dbRepository.SaveChangesAsync();
-        SendRestorePasswordCodeAsync(email, code);
     }
 
     public async Task SendVerificationCode(Guid id)
@@ -186,11 +146,11 @@ public class EmailService : IEmailService
 
         await sc.SendMailAsync(mm);
     }
-    
-    public bool IsEmailValid(string email)
+
+    private static bool IsEmailValid(string email)
     {
         if (email.Length > 100) throw new IncorrectDataException("Email isn't valid");
-        var regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
+        const string regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
         return Regex.IsMatch(email, regex, RegexOptions.IgnoreCase);
     }
     
@@ -212,7 +172,7 @@ public class EmailService : IEmailService
             throw new EntityNotFoundException("User not found");
 
         userToUpdate.Password = HashHandler.HashPassword(request.NewPassword, userToUpdate.Salt);
-        _dbRepository.Remove(existedCode);
+        await _dbRepository.Remove(existedCode);
         await _dbRepository.SaveChangesAsync();
     }
     
@@ -280,7 +240,7 @@ public class EmailService : IEmailService
         mm.To.Add(user.Email!);
         mm.Subject = "UP";
 
-        string transactionType = isGet ? "На ваш счет переведены" : "С вашего счета переведены";
+        var transactionType = isGet ? "На ваш счет переведены" : "С вашего счета переведены";
 
         
         mm.Body = $@"

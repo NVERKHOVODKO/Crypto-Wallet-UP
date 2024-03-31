@@ -17,16 +17,14 @@ public class CurrencyController : ControllerBase
     private readonly ILogger<CurrencyController> _logger;
     private readonly IUserRepository _userRepository;
     private readonly IDbRepository _dbRepository;
-    private readonly ICurrencyService _currencyService;
 
     public CurrencyController(ILogger<CurrencyController> logger, IUserRepository userRepository,
-        ICurrencyRepository currencyRepository, IDbRepository dbRepository, ICurrencyService currencyService)
+        ICurrencyRepository currencyRepository, IDbRepository dbRepository)
     {
         _logger = logger;
         _userRepository = userRepository;
         _currencyRepository = currencyRepository;
         _dbRepository = dbRepository;
-        _currencyService = currencyService;
     }
 
     [HttpGet]
@@ -65,8 +63,6 @@ public class CurrencyController : ControllerBase
             var json = JObject.Parse(responseContent);
             var priceRatio = (double)json[shortNameFinal.ToUpper()];
             var finalQuantity = priceRatio * quantity;
-            _logger.LogInformation("User:" + userId + "Converted " + quantity + "(" + shortNameStart + ") to " +
-                                   shortNameFinal + "(" + finalQuantity + ")");
             return Ok(finalQuantity);
         }
         catch (Exception e)
@@ -84,7 +80,6 @@ public class CurrencyController : ControllerBase
         try
         {
             var balance = await _currencyRepository.GetUserBalance(userId);
-            _logger.LogInformation("User balance: " + balance);
             return Ok(balance);
         }
         catch (Exception e)

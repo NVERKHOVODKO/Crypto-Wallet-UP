@@ -1,14 +1,12 @@
 ﻿using System.Text.RegularExpressions;
 using Analitique.BackEnd.Handlers;
 using Api.OpenAI.Handlers.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectX.Exceptions;
 using Repository;
 using UP.DTO;
 using UP.ModelsEF;
-using UP.Services.Interfaces;
 
 namespace UP.Controllers;
 
@@ -18,15 +16,13 @@ public class AuthorizationController : ControllerBase
 {
     private readonly IDbRepository _dbRepository;
     private readonly IHashHelpers _hashHelpers;
-    private readonly IAuthService _authService;
     private readonly ILogger<AuthorizationController> _logger;
 
     public AuthorizationController(ILogger<AuthorizationController> logger, IDbRepository dbRepository,
-        IHashHelpers hashHelpers, IAuthService authService)
+        IHashHelpers hashHelpers)
     {
         _logger = logger;
         _dbRepository = dbRepository;
-        _authService = authService;
         _hashHelpers = hashHelpers;
     }
 
@@ -108,13 +104,5 @@ public class AuthorizationController : ControllerBase
             const string regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
             return Regex.IsMatch(email, regex, RegexOptions.IgnoreCase);
         }
-    }
-    
-    [HttpPost("getToken")]
-    [AllowAnonymous]
-    public async Task<IActionResult> GetToken([FromBody] GetTokenRequest request)
-    {
-        var response = await _authService.GetTokenAsync(request);
-        return Ok(response);
     }
 }

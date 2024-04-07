@@ -48,8 +48,9 @@ public class AuthService : IAuthService
     {
         var claims = new List<Claim>
         {
-            new Claim("id", user.Id.ToString()),
-            new Claim("name", user.Login)
+            new ("id", user.Id.ToString()),
+            new ("name", user.Login),
+            new ("role", "admin")
         };
         
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"] ?? string.Empty));
@@ -63,18 +64,17 @@ public class AuthService : IAuthService
             signingCredentials: signIn));
     }
 
-    public async Task<AuthResponse> GetTokenAsync(GetTokenRequest request)
+    public async Task<AuthResponse> GetTokenAsync(string email)
     {
         var user = await _dbRepository.Get<User>()
-            .FirstOrDefaultAsync(x => x.Email == request.Email || x.Login == request.Email);
+            .FirstOrDefaultAsync(x => x.Email == email || x.Login == email);
         if(user == null) throw new EntityNotFoundException("There is no such user");
 
         var token = await GenerateTokenAsync(user);
 
         return new AuthResponse
         {
-            Token = new JwtSecurityTokenHandler().WriteToken(token),
-            UserId = user.Id,
+            Token = new JwtSecurityTokenHandler().WriteToken(token)
         };
     }
 }

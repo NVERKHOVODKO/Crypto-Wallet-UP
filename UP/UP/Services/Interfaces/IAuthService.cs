@@ -5,6 +5,6 @@ namespace UP.Services.Interfaces;
 
 public interface IAuthService
 {
-    public Task<AuthResponse> GetTokenAsync(GetTokenRequest request);
+    public Task<AuthResponse> GetTokenAsync(string email);
 }
 

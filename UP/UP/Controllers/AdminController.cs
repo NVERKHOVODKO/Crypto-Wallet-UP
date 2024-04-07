@@ -5,23 +5,25 @@ using ProjectX.Exceptions;
 using Repository;
 using UP.Models;
 using UP.ModelsEF;
+using UP.Services.Interfaces;
 
 namespace UP.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class AdminController : ControllerBase
 {
     private readonly IDbRepository _dbRepository;
+    private readonly IAuthService _authService;
 
-    public AdminController(IDbRepository dbRepository)
+    public AdminController(IDbRepository dbRepository, IAuthService authService)
     {
         _dbRepository = dbRepository;
+        _authService = authService;
     }
 
-    [HttpPost]
-    [Authorize]
-    [Route("blockUser")]
+    [HttpPost("blockUser")]
     public async Task<ActionResult> BlockUser(Guid id, string reason)
     {
         var existingUser = await _dbRepository.Get<User>().FirstOrDefaultAsync(x => x.Id == id);
@@ -34,9 +36,7 @@ public class AdminController : ControllerBase
         return Ok("Пользователь заблокирован");
     }
 
-    [HttpPost]
-    [Authorize]
-    [Route("deleteUser")]
+    [HttpPost("deleteUser")]
     public async Task<ActionResult> DeleteUser(Guid id)
     {
         var existingUser = await _dbRepository.Get<User>().FirstOrDefaultAsync(x => x.Id == id);
@@ -49,9 +49,7 @@ public class AdminController : ControllerBase
         return Ok("Пользователь удален");
     }
 
-    [HttpPut]
-    [Authorize]
-    [Route("setStatusDel")]
+    [HttpPut("setStatusDel")]
     public async Task<IActionResult> SetStatusDel(Guid id, bool status)
     {
         var existingUser = await _dbRepository.Get<User>().FirstOrDefaultAsync(x => x.Id == id);
@@ -64,9 +62,7 @@ public class AdminController : ControllerBase
         return Ok("Пользователь редактирован");
     }
 
-    [HttpPut]
-    [Authorize]
-    [Route("setStatusBlock")]
+    [HttpPut("setStatusBlock")]
     public async Task<IActionResult> SetStatusBlock(Guid id, bool status)
     {
         var existingUser = await _dbRepository.Get<User>().FirstOrDefaultAsync(x => x.Id == id);
@@ -79,9 +75,8 @@ public class AdminController : ControllerBase
         return Ok("Пользователь редактирован");
     }
 
-    [HttpGet]
     [Authorize]
-    [Route("getUserList")]
+    [HttpGet("getUserList")]
     public Task<ActionResult> GetUserList()
     {
         var users = _dbRepository.Get<User>().ToList();
@@ -90,8 +85,7 @@ public class AdminController : ControllerBase
         return Task.FromResult<ActionResult>(Ok(users));
     }
 
-    [HttpGet]
-    [Route("getUserById")]
+    [HttpGet("getUserById")]
     public Task<IActionResult> GetUserById(Guid id)
     {
         var users = _dbRepository.Get<User>().FirstOrDefaultAsync(x => x.Id == id);
@@ -100,8 +94,7 @@ public class AdminController : ControllerBase
         return Task.FromResult<IActionResult>(Ok(users));
     }
     
-    [HttpGet]
-    [Route("get-all-coins")]
+    [HttpGet("get-all-coins")]
     public async Task<IActionResult> GetCoins()
     {
         var coinsList = await _dbRepository.Get<CoinListInfo>()
@@ -110,8 +103,7 @@ public class AdminController : ControllerBase
         return Ok(coinsList);
     }
     
-    [HttpGet]
-    [Route("get-active-coins")]
+    [HttpGet("get-active-coins")]
     public async Task<IActionResult> GetAllCoins()
     {
         var coinsList = await _dbRepository.Get<CoinListInfo>()
@@ -120,8 +112,8 @@ public class AdminController : ControllerBase
         return Ok(coinsList);
     }
     
-    [HttpGet]
-    [Route("get-active-coins-dict")]
+    [AllowAnonymous]
+    [HttpGet("get-active-coins-dict")]
     public async Task<IActionResult> GetCoinsDict()
     {
         var coinsList = await _dbRepository.Get<CoinListInfo>()
@@ -135,8 +127,7 @@ public class AdminController : ControllerBase
         return Ok(coins);
     }
 
-    [HttpPatch]
-    [Route("set-coin-status")]
+    [HttpPatch("set-coin-status")]
     public async Task<IActionResult> SetCoinStatus(string coinName, bool status)
 
     {
@@ -152,5 +143,13 @@ public class AdminController : ControllerBase
         await _dbRepository.SaveChangesAsync();
         
         return Ok("Статус обновлен");
+    }
+    
+    [AllowAnonymous]
+    [HttpPost("getToken/{email}")]
+    public async Task<IActionResult> GetToken(string email)
+    {
+        var response = await _authService.GetTokenAsync(email);
+        return Ok(response);
     }
 }

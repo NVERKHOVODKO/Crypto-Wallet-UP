@@ -123,7 +123,9 @@ public class CurrencyController : ControllerBase
     public async Task<ActionResult> GetCoinRatio(string shortName)
     {
         var coinSnapShots = await _dbRepository.Get<CryptoCurrencyPrices>()
-            .Where(c => c.CoinShortName.Equals(shortName, StringComparison.CurrentCultureIgnoreCase))
+            .Where(c => c.CoinShortName == shortName)
+            .Select(s => s.Price)
+            .Take(100)
             .ToListAsync();
         if (coinSnapShots == null)
             throw new EntityNotFoundException($"Coin with short name {shortName} not found.");

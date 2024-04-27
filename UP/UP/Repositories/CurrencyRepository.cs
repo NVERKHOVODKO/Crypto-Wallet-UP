@@ -75,7 +75,14 @@ public class CurrencyRepository : RepositoryBase, ICurrencyRepository
             _context.UsersCoins.Add(userCoin);
         }
 
-        _context.SaveChanges();
+        try
+        {
+            _context.SaveChanges();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
 
     public void SendCrypto(Guid receiverId, Guid senderId, string shortname, double quantity)
@@ -119,7 +126,14 @@ public class CurrencyRepository : RepositoryBase, ICurrencyRepository
         else
             throw new IncorrectDataException("Невозможно удалить монету");
 
-        _context.SaveChanges();
+        try
+        {
+            _context.SaveChanges();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
 
     public async Task<double> GetCoinPrice(double quantity, string shortName)
@@ -225,7 +239,14 @@ public class CurrencyRepository : RepositoryBase, ICurrencyRepository
         };
 
         _context.Transactions.Add(transaction);
-        _context.SaveChanges();
+        try
+        {
+            _context.SaveChanges();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
 
     public void WriteWithdrawToDatabase(double quantity, double commission, Guid userId)

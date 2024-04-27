@@ -45,8 +45,6 @@ public class TransactionController(
     [Route("convert")]
     public async Task<ActionResult> Convert([FromBody] ConvertRequest request)
     {
-        logger.LogInformation("User:" + request.UserId + "Converted " + request.Quantity + " " +
-                               request.ShortNameStart + " to " + request.ShortNameFinal);
         switch (request.Quantity)
         {
             case 0:

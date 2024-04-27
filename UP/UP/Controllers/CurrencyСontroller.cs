@@ -39,7 +39,6 @@ public class CurrencyController : ControllerBase
     [Route("getUserCoinsFull")]
     public async Task<IActionResult> GetUserCoinsFull(Guid userId)
     {
-        _logger.LogInformation("Return user coinList. Id: " + userId);
         return Ok(await _userRepository.GetUserCoinsFull(userId));
     }
 
@@ -125,12 +124,48 @@ public class CurrencyController : ControllerBase
         var coinSnapShots = await _dbRepository.Get<CryptoCurrencyPrices>()
             .Where(c => c.CoinShortName == shortName)
             .Select(s => s.Price)
-            .Take(100)
             .ToListAsync();
-        if (coinSnapShots == null)
+    
+        if (coinSnapShots == null || coinSnapShots.Count == 0)
             throw new EntityNotFoundException($"Coin with short name {shortName} not found.");
-        
-        return Ok(coinSnapShots);
+    
+        var result = AnalyzePrices(coinSnapShots);
+
+        return Ok(result);
+    }
+
+    private static List<double> AnalyzePrices(IReadOnlyList<double> prices)
+    {
+        List<double> result = [];
+
+        switch (prices.Count)
+        {
+            case 0:
+                return result;
+            case 1:
+                result.Add(prices[0]);
+                return result;
+        }
+
+        var changes = new List<double>();
+        for (var i = 1; i < prices.Count; i++)
+        {
+            changes.Add(prices[i] - prices[i - 1]);
+        }
+
+        var interval = Math.Max(1, changes.Count / 10);
+        for (var i = 0; i < changes.Count; i += interval)
+        {
+            var value = prices[i];
+            if (changes[i] > 0)
+                result.Add(value);
+            else
+            {
+                result.Add(i > 0 ? prices[i - 1] : value);
+            }
+        }
+
+        return result;
     }
 
     [HttpGet]

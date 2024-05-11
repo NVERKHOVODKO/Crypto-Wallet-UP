@@ -30,11 +30,10 @@ public class TransactionsRepository(DataContext context, ICurrencyRepository cur
 
     public List<Conversion> GetUserConversionsHistory(Guid userId)
     {
-        var user = context.Users
-            .Include(u => u.Conversions).Include(user => user.Conversions)
-            .FirstOrDefault(u => u.Id == userId);
+        var conversions = context.Conversions
+            .Where(c => c.UserId == userId).ToList();
 
-        return user != null ? user.Conversions.ToList() : [];
+        return conversions;
     }
 
     public void ReplenishTheBalance(Guid userId, double quantityUsd)
@@ -92,11 +91,11 @@ public class TransactionsRepository(DataContext context, ICurrencyRepository cur
 
     public List<Replenishment> GetUserDepositHistory(Guid userId)
     {
-        var user = context.Users
-            .Include(u => u.Replenishments)
-            .FirstOrDefault(u => u.Id == userId);
+        var replenishments = context.Replenishments
+            .Where(c => c.UserId == userId)
+            .ToList();
 
-        return user != null ? user.Replenishments.ToList() : [];
+        return replenishments;
     }
 
     public void WithdrawUSDT(Guid userId, double quantityUsd)
@@ -127,19 +126,19 @@ public class TransactionsRepository(DataContext context, ICurrencyRepository cur
 
     public List<Withdrawal> GetUserWithdrawalsHistory(Guid userId)
     {
-        var user = context.Users
-            .Include(u => u.Replenishments).Include(user => user.Withdrawals)
-            .FirstOrDefault(u => u.Id == userId);
+        var withdrawals = context.Withdrawals
+            .Where(c => c.UserId == userId)
+            .ToList();
 
-        return user != null ? user.Withdrawals.ToList() : [];
+        return withdrawals;
     }
 
     public List<Transactions> GetUserTransactionsHistory(Guid userId)
     {
-        var user = context.Users
-            .Include(u => u.SentTransactions).Include(user => user.Withdrawals)
-            .FirstOrDefault(u => u.Id == userId);
+        var transactions = context.Transactions
+            .Where(c => c.ReceiverId == userId || c.SenderId == userId)
+            .ToList();
 
-        return user != null ? user.SentTransactions.ToList() : [];
+        return transactions;
     }
 }

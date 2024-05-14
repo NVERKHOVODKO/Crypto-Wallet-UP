@@ -102,8 +102,8 @@ public class AdminController : ControllerBase
             throw new EntityNotFoundException("User not found");
 
         existingUser.IsBlocked = status;
-
         await _dbRepository.SaveChangesAsync();
+        
         return Ok("Пользователь редактирован");
     }
 
@@ -118,6 +118,7 @@ public class AdminController : ControllerBase
         var users = _dbRepository.Get<User>().ToList();
         if (users == null)
             throw new EntityNotFoundException("Users not found");
+        
         return Task.FromResult<ActionResult>(Ok(users));
     }
 
@@ -132,6 +133,7 @@ public class AdminController : ControllerBase
         var users = _dbRepository.Get<User>().FirstOrDefaultAsync(x => x.Id == id);
         if (users == null)
             throw new EntityNotFoundException("Users not found");
+        
         return Task.FromResult<IActionResult>(Ok(users));
     }
     

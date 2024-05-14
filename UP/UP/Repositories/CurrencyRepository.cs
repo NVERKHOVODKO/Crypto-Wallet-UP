@@ -45,6 +45,11 @@ public class CurrencyRepository : RepositoryBase, ICurrencyRepository
 
     public void AddCryptoToUserWallet(Guid userId, string shortname, double quantity)
     {
+        var user = _context.Users.FirstOrDefault(uc => uc.Id == userId);
+        
+        if(user?.Login == "Service" || user == null)
+            return;
+        
         var userCoins = _context.UsersCoins
             .Include(uc => uc.Coin)
             .Where(uc => uc.UserId == userId)
@@ -74,15 +79,7 @@ public class CurrencyRepository : RepositoryBase, ICurrencyRepository
 
             _context.UsersCoins.Add(userCoin);
         }
-
-        try
-        {
-            _context.SaveChanges();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
+        _context.SaveChanges();
     }
 
     public void SendCrypto(Guid receiverId, Guid senderId, string shortname, double quantity)
@@ -121,19 +118,16 @@ public class CurrencyRepository : RepositoryBase, ICurrencyRepository
 
         var existingCoin = userCoins.FirstOrDefault(uc => uc.Coin.Shortname == shortname);
 
-        if (existingCoin != null)
+        if (existingCoin?.Coin.Shortname != null)
+        {
             existingCoin.Coin.Quantity -= quantityForSubtract;
-        else
-            throw new IncorrectDataException("Невозможно удалить монету");
-
-        try
-        {
-            _context.SaveChanges();
+            if (existingCoin.Coin.Quantity / quantityForSubtract < 1.05)
+            {
+                _context.Remove(existingCoin);
+            }
         }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
+        
+        _context.SaveChanges();
     }
 
     public async Task<double> GetCoinPrice(double quantity, string shortName)

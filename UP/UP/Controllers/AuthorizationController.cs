@@ -30,9 +30,6 @@ public class AuthorizationController : ControllerBase
     [Route("login")]
     public async Task<IActionResult> Login([FromBody] AuthenticationRequest request)
     {
-        _logger.LogInformation("Логин: " + request.Login);
-        _logger.LogInformation("Пароль: " + request.Password);
-
         var users = await _dbRepository.Get<User>()
             .Where(x => x.Login == request.Login)
             .ToListAsync();
@@ -40,6 +37,9 @@ public class AuthorizationController : ControllerBase
         var user = users.FirstOrDefault(x => x.Password == HashHandler.HashPassword(request.Password, x.Salt));
 
         if (user == null) throw new EntityNotFoundException("Пользователь не найден");
+
+        if (user.IsBlocked)
+            throw new EntityNotFoundException("Ваш аккаунт заблокирован");
 
         var record = new LoginHistory
         {

@@ -2,7 +2,6 @@
 using Newtonsoft.Json.Linq;
 using Repository;
 using UP.DTO;
-using UP.Migrations.Services.Interfaces;
 using UP.ModelsEF;
 using UP.Repositories;
 using UP.Services.Interfaces;
@@ -190,7 +189,14 @@ public class TransactionController(
             return Task.FromResult<ActionResult>(UnprocessableEntity("Недостаточно монет"));
         }
 
-        currencyRepository.AddCryptoToUserWallet(request.ReceiverId, request.CoinName, request.QuantityForSend);
+        try
+        {
+            currencyRepository.AddCryptoToUserWallet(request.ReceiverId, request.CoinName, request.QuantityForSend);
+        }
+        catch (Exception e)
+        {
+            //ignored
+        }
         currencyRepository.SubtractCoinFromUser(request.SenderId, request.CoinName, request.QuantityForSend);
         currencyRepository.WriteTransactionToDatabase(request.CoinName, request.QuantityForSend, request.SenderId,
             request.ReceiverId);

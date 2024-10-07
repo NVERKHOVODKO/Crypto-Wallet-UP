@@ -1,0 +1,14 @@
+﻿global using Microsoft.EntityFrameworkCore;
+global using Up.Core.Exceptions;
+global using Up.Core.Models;
+global using Up.Core.Handlers;
+global using System.Text;
+global using System.Text.RegularExpressions;
+global using System.Security.Cryptography;
+global using System.Net;
+global using System.Net.Sockets;
+global using System.Security.Authentication;
+global using Up.Core.DTO;
+global using Up.Core.Models.interfaces;
+global using System.ComponentModel.DataAnnotations;
+global using Microsoft.AspNetCore.Http;

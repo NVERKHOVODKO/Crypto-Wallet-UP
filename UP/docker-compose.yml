@@ -1,6 +1,0 @@
-﻿services:
-  up:
-    image: up
-    build:
-      context: .
-      dockerfile: UP/Dockerfile

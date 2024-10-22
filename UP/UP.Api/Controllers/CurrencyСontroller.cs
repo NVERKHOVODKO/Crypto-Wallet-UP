@@ -96,15 +96,8 @@ public class CurrencyController : ControllerBase
     [Route("get-coin-price")]
     public async Task<ActionResult> GetCoinPrice(double quantity, string coinName)
     {
-        try
-        {
-            var price = await _currencyRepository.GetCoinPrice(quantity, coinName);
-            return Ok(price);
-        }
-        catch (Exception e)
-        {
-            return BadRequest("Не удалось вернуть цену");
-        }
+        var price = await _currencyRepository.GetCoinPrice(quantity, coinName);
+        return Ok(price);
     }
     
     [HttpGet]
@@ -207,9 +200,10 @@ public class CurrencyController : ControllerBase
                 Timestamp = currentTime,
                 CoinId = coin.Id
             };
-            var result = await _dbRepository.Add(newPrice);
+            await _dbRepository.Add(newPrice);
         }
         await _dbRepository.SaveChangesAsync();
+        
         return Ok(coins);
     }
 }
